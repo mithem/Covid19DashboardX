@@ -9,27 +9,26 @@ import SwiftUI
 
 struct SummaryView: View {
     @StateObject var manager = DataManager()
-    var globalConfirmed: String {
-        if let tc = manager.latestGlobal?.totalConfirmed {
-            let formatter = NumberFormatter()
-            formatter.usesGroupingSeparator = true
-            formatter.numberStyle = .decimal
-            return formatter.string(from: NSNumber(value: tc)) ?? "unkown"
-        }
-        return "unkown"
-    }
+    let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     var body: some View {
         NavigationView {
             Group {
-                if manager.latestMeasurements.count > 0 {
-                    List {
-                        Text("Global: \(globalConfirmed)")
-                        ForEach(manager.latestMeasurements, id: \.countryCode) { measurement in
-                            Text("\(measurement.country.capitalized): \(measurement.totalConfirmed)")
+//                if manager.latestMeasurements.count > 0 {
+//                    List {
+//                        Text("Global: \(globalConfirmed)")
+//                        ForEach(manager.latestMeasurements, id: \.countryCode) { measurement in
+//                            Text("\(measurement.country.capitalized): \(measurement.totalConfirmed)")
+//                        }
+//                    }
+//                } else {
+//                    Text("No data.")
+//                }
+                LazyVGrid(columns: columns) {
+                    ForEach(manager.latestMeasurements) { measurement in
+                        ForEach(measurement) { description in
+                            Text(description)
                         }
                     }
-                } else {
-                    Text("No data.")
                 }
             }
             .onAppear(perform: manager.loadFromApi)

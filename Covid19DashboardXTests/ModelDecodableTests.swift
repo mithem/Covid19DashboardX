@@ -55,6 +55,6 @@ class ModelDecodableTests: XCTestCase {
         }
         let expected = Response(global: myGlobalMeasurement, countries: [myCountryMeasurement], date: Calendar.current.date(from: DateComponents(timeZone: TimeZone(secondsFromGMT: 0), year: 2020, month: 8, day: 23, hour: 12, minute: 12, second: 37))!)
         
-        XCTAssertEqual(result!, expected)
+        XCTAssertEqual(result, expected)
     }
 }
