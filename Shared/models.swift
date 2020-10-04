@@ -38,7 +38,7 @@ struct CountryMeasurement: Decodable, Equatable, Identifiable, SummaryProvider {
     /// - Returns: stats
     /// - Parameter stats: statistics to get
     /// Order: [country, countryCode, totalConfirmed, newConfirmed, totalDeaths, newDeaths, totalRecovered, newRecovered, date, slug]
-    func getStats(_ stats: [MeasureableRelevantParameters]) -> [String] {
+    func getStats(_ stats: [MeasurementMetric]) -> [String] {
         var result = [String]()
         var c = false
         var cc = false
@@ -119,10 +119,6 @@ struct CountryMeasurement: Decodable, Equatable, Identifiable, SummaryProvider {
         return result
     }
     
-    enum MeasureableRelevantParameters {
-        case country, countryCode, date, totalConfirmed, newConfirmed, totalDeaths, newDeaths, totalRecovered, newRecovered, slug
-    }
-    
     static func ==(_ lhs: CountryMeasurement, _ rhs: CountryMeasurement) -> Bool {
         let c = lhs.country == rhs.country
         let cc = lhs.countryCode == rhs.countryCode
@@ -157,15 +153,64 @@ struct Response: Decodable, Equatable {
 protocol SummaryProvider {
     var totalConfirmed: Int { get }
     var newConfirmed: Int { get }
+    var totalDeaths: Int { get }
+    var newDeaths: Int { get }
+    var totalRecovered: Int { get }
+    var newRecovered: Int { get }
+    
     var confirmedSummary: String { get }
+    var deathsSummary: String { get }
+    var recoveredSummary: String { get }
+    
+    func summary(total: Int, new: Int) -> String
+    func summaryFor(metric: SummaryViewMetric) -> String
 }
 
 extension SummaryProvider {
-    var confirmedSummary: String {
+    func summary(total: Int, new: Int) -> String {
         let numberFormatter = NumberFormatter()
         numberFormatter.usesGroupingSeparator = true
         numberFormatter.numberStyle = .decimal
-        let sign = newConfirmed > 0 ? "+" : (newConfirmed < 0 ? "-" : "=")
-        return "\(numberFormatter.string(from: NSNumber(value: totalConfirmed)) ?? notAvailableString) (\(sign)\(numberFormatter.string(from: NSNumber(value: newConfirmed)) ?? notAvailableString))"
+        let sign = new > 0 ? "+" : (new < 0 ? "-" : "=")
+        return "\(numberFormatter.string(from: NSNumber(value: total)) ?? notAvailableString) (\(sign)\(numberFormatter.string(from: NSNumber(value: new)) ?? notAvailableString))"
     }
+    
+    var confirmedSummary: String {
+        return summary(total: totalConfirmed, new: newConfirmed)
+    }
+    var deathsSummary: String {
+        return summary(total: totalDeaths, new: newDeaths)
+    }
+    var recoveredSummary: String {
+        return summary(total: totalRecovered, new: newRecovered)
+    }
+    
+    func summaryFor(metric: SummaryViewMetric) -> String {
+        switch metric {case .confirmed:
+            return confirmedSummary
+        case .deaths:
+            return deathsSummary
+        case .recovered:
+            return recoveredSummary
+        }
+    }
+}
+
+enum MeasurementMetric {
+    case country
+    case countryCode
+    case date
+    case totalConfirmed
+    case newConfirmed
+    case totalDeaths
+    case newDeaths
+    case totalRecovered
+    case newRecovered
+    case slug
+}
+
+enum SummaryViewMetric: String {
+    case confirmed = "confirmed"
+    case deaths = "deaths"
+    case recovered = "recovered"
 }

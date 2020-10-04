@@ -10,14 +10,21 @@ import SwiftUI
 struct SummaryView: View {
     @StateObject var manager = DataManager()
     @State private var showingSortActionSheet = false
+    @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = SummaryViewMetric.confirmed
     var body: some View {
         NavigationView {
             Group {
                 if manager.latestMeasurements.count > 0 {
                     List {
-                        Text("Global: \(manager.latestGlobal?.confirmedSummary ?? "N/A")")
+                        Picker("Measurement metric", selection: $activeMetric) {
+                            Text("Confirmed").tag(SummaryViewMetric.confirmed)
+                            Text("Deaths").tag(SummaryViewMetric.deaths)
+                            Text("Recovered").tag(SummaryViewMetric.recovered)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        Text("Global: \(manager.latestGlobal?.summaryFor(metric: activeMetric) ?? "N/A")")
                         ForEach(manager.latestMeasurements, id: \.countryCode) { measurement in
-                            Text("\(measurement.country.capitalized): \(measurement.confirmedSummary)")
+                            Text("\(measurement.country.capitalized): \(measurement.summaryFor(metric: activeMetric))")
                         }
                     }
                     .listStyle(InsetGroupedListStyle())

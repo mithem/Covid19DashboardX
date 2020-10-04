@@ -8,3 +8,8 @@
 import Foundation
 
 let notAvailableString = "N/A"
+
+struct UserDefaultsKeys {
+    /// Metric/Measurement shown in summary view
+    static let ativeMetric = "activeMetric"
+}
