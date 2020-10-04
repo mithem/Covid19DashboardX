@@ -30,7 +30,7 @@ struct SummaryView: View {
                             if searchTerm.isEmpty { return true }
                             return m.country.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(m.countryCode.lowercased())
                         }, id: \.countryCode) { measurement in
-                            Text("\(measurement.country.capitalized): \(measurement.summaryFor(metric: activeMetric))")
+                            return NavigationLink("\(measurement.country.capitalized): \(measurement.summaryFor(metric: activeMetric))", destination: CountryView(manager: manager, countryName: measurement.country))
                         }
                     }
                     .listStyle(InsetGroupedListStyle())
@@ -42,9 +42,7 @@ struct SummaryView: View {
             .onChange(of: searchTerm, perform: { value in
                 lowercasedSearchTerm = searchTerm.lowercased()
             })
-            .onAppear {
-                manager.loadFromApi()
-            }
+            .onAppear(perform: manager.loadSummary)
             .actionSheet(isPresented: $showingSortActionSheet) {
                 ActionSheet(title: Text("Sort countries"), message: Text("By which criteria would you like to sort countries?"), buttons: [.default(Text("Country code"), action: {manager.sortBy = .countryCode}), .default(Text("Country name"), action: {manager.sortBy = .countryName}), .default(Text("Total confirmed"), action: {manager.sortBy = .totalConfirmed}), .default(Text("New confirmed"), action: {manager.sortBy = .newConfirmed}), .default(Text("Total deaths"), action: {manager.sortBy = .totalDeaths}), .default(Text("New deaths"), action: {manager.sortBy = .newDeaths}), .default(Text("Total recovered"), action: {manager.sortBy = .totalRecovered}), .default(Text("New recovered"), action: {manager.sortBy = .newRecovered}), .default(Text("Slug"), action: {manager.sortBy = .slug}), .default(Text(manager.reversed ? "Dereverse" : "Reverse"), action: {manager.reversed.toggle()}), .cancel()])
             }

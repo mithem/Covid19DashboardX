@@ -8,7 +8,9 @@
 import Foundation
 import SwiftUI
 
-struct CountryMeasurement: Decodable, Equatable, Identifiable, SummaryProvider {
+// MARK: Models for summary (decoding & using)
+
+struct CountrySummaryMeasurement: Decodable, Equatable, Identifiable, SummaryProvider {
     
     var id: String { countryCode }
     let country: String
@@ -121,7 +123,7 @@ struct CountryMeasurement: Decodable, Equatable, Identifiable, SummaryProvider {
         return result
     }
     
-    static func ==(_ lhs: CountryMeasurement, _ rhs: CountryMeasurement) -> Bool {
+    static func ==(_ lhs: CountrySummaryMeasurement, _ rhs: CountrySummaryMeasurement) -> Bool {
         let c = lhs.country == rhs.country
         let cc = lhs.countryCode == rhs.countryCode
         let d = lhs.date == rhs.date
@@ -146,9 +148,9 @@ struct GlobalMeasurement: Decodable, Equatable, SummaryProvider {
     let newRecovered: Int
 }
 
-struct Response: Decodable, Equatable {
+struct SummaryResponse: Decodable, Equatable {
     let global: GlobalMeasurement
-    let countries: [CountryMeasurement]
+    let countries: [CountrySummaryMeasurement]
     let date: Date
 }
 
@@ -222,4 +224,59 @@ enum SummaryViewMetric: String {
     case confirmed = "confirmed"
     case deaths = "deaths"
     case recovered = "recovered"
+}
+
+// MARK: Models for decoding country history
+
+struct CountryHistoryMeasurementForDecodingOnly: Decodable {
+    var cases: Int?
+    var confirmed: Int?
+    var deaths: Int?
+    var recovered: Int?
+    var active: Int?
+    var date: Date
+    var status: CountryHistoryMeasurementStatusMetric?
+    var country: String
+    var countryCode: String
+    var lat: String
+    var lon: String
+}
+
+// MARK: Models for later use
+
+class Country: Equatable {
+    static func == (lhs: Country, rhs: Country) -> Bool {
+        let c = lhs.code == rhs.code
+        let n = lhs.name == rhs.name
+        let m = lhs.measurements == rhs.measurements
+        
+        return c && n && m
+    }
+    // No struct, so it passes by reference
+    let id: UUID
+    var code: String
+    var name: String
+    var measurements: [CountryHistoryMeasurement]
+    
+    init(code: String, name: String, measurements: [CountryHistoryMeasurement]) {
+        self.id = UUID()
+        self.code = code
+        self.name = name
+        self.measurements = measurements
+    }
+}
+
+enum CountryHistoryMeasurementStatusMetric: String, Decodable {
+    case confirmed = "confirmed"
+    case deaths = "deaths"
+    case recovered = "recovered"
+}
+
+struct CountryHistoryMeasurement: Equatable {
+    var confirmed: Int
+    var deaths: Int?
+    var recovered: Int?
+    var active: Int?
+    var date: Date
+    var status: CountryHistoryMeasurementStatusMetric
 }
