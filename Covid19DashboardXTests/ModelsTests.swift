@@ -23,7 +23,7 @@ class ModelsTests: XCTestCase {
             numberFormatter.string(from: NSNumber(value: n)) ?? "unkown"
         }
         
-        for string in measurement {
+        for string in measurement.getStats([.countryCode, .totalConfirmed, .newConfirmed, .totalDeaths, .newDeaths, .totalRecovered, .newRecovered, .date]) {
             strings.append(string)
         }
         

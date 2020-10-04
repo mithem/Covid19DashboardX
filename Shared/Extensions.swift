@@ -26,6 +26,10 @@ extension JSONDecoder.KeyDecodingStrategy {
     }
 }
 
+extension String: Identifiable {
+    public var id: String { self }
+}
+
 private extension String {
     // https://stackoverflow.com/questions/60746366/decode-a-pascalcase-json-with-jsondecoder
     func firstCharLowercased() -> String {

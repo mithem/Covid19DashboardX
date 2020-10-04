@@ -10,7 +10,26 @@ import Foundation
 class DataManager: ObservableObject {
     @Published var latestMeasurements: [CountryMeasurement]
     @Published var latestGlobal: GlobalMeasurement?
-    private var subscribers: [DataManagerSubscriber]
+    private var _sortBy: CountrySortingCriteria
+    var sortBy: CountrySortingCriteria {
+        get {
+            _sortBy
+        }
+        set {
+            _sortBy = newValue
+            sort()
+        }
+    }
+    private var _reversed: Bool
+    var reversed: Bool {
+        get {
+            _reversed
+        }
+        set {
+            _reversed = newValue
+            sort()
+        }
+    }
     
     func loadFromApi() {
         guard let url = URL(string: "https://api.covid19api.com/summary") else { return }
@@ -23,10 +42,8 @@ class DataManager: ObservableObject {
                 if let serverResponse = serverResponse {
                     DispatchQueue.main.async {
                         self.latestMeasurements = serverResponse.countries
+                        self.sort()
                         self.latestGlobal = serverResponse.global
-                    }
-                    for subscriber in self.subscribers {
-                        subscriber.managerDidUpdateMeasurements()
                     }
                 } else {
                     print("Invalid response.")
@@ -37,17 +54,45 @@ class DataManager: ObservableObject {
         }.resume()
     }
     
-    func subscribe(_ someone: DataManagerSubscriber) {
-        subscribers.append(someone)
+    private func sort() {
+        latestMeasurements.sort(by: { lhs, rhs in
+            var lt: Bool
+            switch sortBy {
+            case .countryCode:
+                lt =  lhs.countryCode < rhs.countryCode
+            case .countryName:
+                lt =  lhs.country < rhs.country
+            case .totalConfirmed:
+                lt =  lhs.totalConfirmed < rhs.totalConfirmed
+            case .newConfirmed:
+                lt =  lhs.newConfirmed < rhs.newConfirmed
+            case .totalDeaths:
+                lt =  lhs.totalDeaths < rhs.totalDeaths
+            case .newDeaths:
+                lt =  lhs.newDeaths < rhs.newDeaths
+            case .totalRecovered:
+                lt =  lhs.totalRecovered < rhs.totalRecovered
+            case .newRecovered:
+                lt =  lhs.newRecovered < rhs.newRecovered
+            case .slug:
+                lt =  lhs.slug ?? "N/A" < rhs.slug ?? "N/A"
+            }
+            if reversed {
+                return !lt
+            } else {
+                return lt
+            }
+        })
     }
     
     init() {
         latestMeasurements = [CountryMeasurement]()
-        subscribers = [DataManagerSubscriber]()
         latestGlobal = nil
+        _sortBy = .countryCode
+        _reversed = false
     }
-}
-
-protocol DataManagerSubscriber {
-    func managerDidUpdateMeasurements()
+    
+    enum CountrySortingCriteria {
+        case countryCode, countryName, totalConfirmed, newConfirmed, totalDeaths, newDeaths, totalRecovered, newRecovered, slug
+    }
 }
