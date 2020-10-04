@@ -38,6 +38,7 @@ struct CountryMeasurement: Decodable, Equatable, Identifiable, SummaryProvider {
     /// Calculate textual representations of measurements
     /// - Returns: stats
     /// - Parameter stats: statistics to get
+    ///
     /// Order: [country, countryCode, totalConfirmed, newConfirmed, totalDeaths, newDeaths, totalRecovered, newRecovered, date, slug]
     func getStats(_ stats: [MeasurementMetric]) -> [String] {
         var result = [String]()

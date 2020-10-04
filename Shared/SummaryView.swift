@@ -23,8 +23,8 @@ struct SummaryView: View {
                             Text("Deaths").tag(SummaryViewMetric.deaths)
                             Text("Recovered").tag(SummaryViewMetric.recovered)
                         }
-                        SearchBar(searchTerm: $searchTerm)
                         .pickerStyle(SegmentedPickerStyle())
+                        SearchBar(searchTerm: $searchTerm)
                         Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric) ?? Text("N/A"))
                         ForEach(manager.latestMeasurements.filter { m in
                             if searchTerm.isEmpty { return true }
