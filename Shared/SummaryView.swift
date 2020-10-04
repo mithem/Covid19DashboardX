@@ -10,7 +10,9 @@ import SwiftUI
 struct SummaryView: View {
     @StateObject var manager = DataManager()
     @State private var showingSortActionSheet = false
+    @State private var searchTerm = ""
     @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = SummaryViewMetric.confirmed
+    @State private var lowercasedSearchTerm = ""
     var body: some View {
         NavigationView {
             Group {
@@ -21,9 +23,13 @@ struct SummaryView: View {
                             Text("Deaths").tag(SummaryViewMetric.deaths)
                             Text("Recovered").tag(SummaryViewMetric.recovered)
                         }
+                        SearchBar(searchTerm: $searchTerm)
                         .pickerStyle(SegmentedPickerStyle())
                         Text("Global: \(manager.latestGlobal?.summaryFor(metric: activeMetric) ?? "N/A")")
-                        ForEach(manager.latestMeasurements, id: \.countryCode) { measurement in
+                        ForEach(manager.latestMeasurements.filter { m in
+                            if searchTerm.isEmpty { return true }
+                            return m.country.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(m.countryCode.lowercased())
+                        }, id: \.countryCode) { measurement in
                             Text("\(measurement.country.capitalized): \(measurement.summaryFor(metric: activeMetric))")
                         }
                     }
@@ -33,6 +39,9 @@ struct SummaryView: View {
                     Text("No data.")
                 }
             }
+            .onChange(of: searchTerm, perform: { value in
+                lowercasedSearchTerm = searchTerm.lowercased()
+            })
             .onAppear {
                 manager.loadFromApi()
             }

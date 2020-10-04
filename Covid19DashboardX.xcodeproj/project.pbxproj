@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49325AE62529B29200A438C4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49325AE52529B29200A438C4 /* SearchBar.swift */; };
+		49325AE72529B29200A438C4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49325AE52529B29200A438C4 /* SearchBar.swift */; };
 		493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E08252383A70060BA27 /* ModelDecodableTests.swift */; };
 		493C2E15252386D00060BA27 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E14252386D00060BA27 /* Extensions.swift */; };
 		493C2E16252386D00060BA27 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E14252386D00060BA27 /* Extensions.swift */; };
@@ -42,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		49325AE52529B29200A438C4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		493C2DF8252383620060BA27 /* Covid19DashboardXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Covid19DashboardXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		493C2DFC252383620060BA27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		493C2E08252383A70060BA27 /* ModelDecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDecodableTests.swift; sourceTree = "<group>"; };
@@ -117,6 +120,7 @@
 				493C2E14252386D00060BA27 /* Extensions.swift */,
 				4954F5C824E7F4D200399145 /* ContentView.swift */,
 				4954F5EE24E7F9B100399145 /* SummaryView.swift */,
+				49325AE52529B29200A438C4 /* SearchBar.swift */,
 				4954F5E824E7F50200399145 /* DataManager.swift */,
 				4954F5F724E8051300399145 /* shared.swift */,
 				4942F2BE2529955100EE2959 /* constants.swift */,
@@ -297,6 +301,7 @@
 				4954F5DA24E7F4D300399145 /* Covid19DashboardXApp.swift in Sources */,
 				4954F5F824E8051300399145 /* shared.swift in Sources */,
 				4954F5EC24E7F51400399145 /* models.swift in Sources */,
+				49325AE62529B29200A438C4 /* SearchBar.swift in Sources */,
 				493C2E15252386D00060BA27 /* Extensions.swift in Sources */,
 				4942F2BF2529955100EE2959 /* constants.swift in Sources */,
 			);
@@ -313,6 +318,7 @@
 				4954F5DB24E7F4D300399145 /* Covid19DashboardXApp.swift in Sources */,
 				4954F5F924E8051300399145 /* shared.swift in Sources */,
 				4954F5ED24E7F51400399145 /* models.swift in Sources */,
+				49325AE72529B29200A438C4 /* SearchBar.swift in Sources */,
 				493C2E16252386D00060BA27 /* Extensions.swift in Sources */,
 				4942F2C02529955100EE2959 /* constants.swift in Sources */,
 			);
