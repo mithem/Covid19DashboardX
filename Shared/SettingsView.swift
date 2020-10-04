@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = false
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Form {
+            Toggle("Color numbers", isOn: $colorNumbers)
+        }
+        .navigationTitle("Settings")
     }
 }
 

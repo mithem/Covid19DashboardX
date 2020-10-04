@@ -25,7 +25,7 @@ struct SummaryView: View {
                         }
                         SearchBar(searchTerm: $searchTerm)
                         .pickerStyle(SegmentedPickerStyle())
-                        Text("Global: \(manager.latestGlobal?.summaryFor(metric: activeMetric) ?? "N/A")")
+                        Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric) ?? Text("N/A"))
                         ForEach(manager.latestMeasurements.filter { m in
                             if searchTerm.isEmpty { return true }
                             return m.country.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(m.countryCode.lowercased())

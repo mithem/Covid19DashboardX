@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct CountryMeasurement: Decodable, Equatable, Identifiable, SummaryProvider {
     
@@ -158,34 +159,41 @@ protocol SummaryProvider {
     var totalRecovered: Int { get }
     var newRecovered: Int { get }
     
-    var confirmedSummary: String { get }
-    var deathsSummary: String { get }
-    var recoveredSummary: String { get }
+    var confirmedSummary: Text { get }
+    var deathsSummary: Text { get }
+    var recoveredSummary: Text { get }
     
-    func summary(total: Int, new: Int) -> String
-    func summaryFor(metric: SummaryViewMetric) -> String
+    func summary(total: Int, new: Int) -> Text
+    func summaryFor(metric: SummaryViewMetric) -> Text
 }
 
 extension SummaryProvider {
-    func summary(total: Int, new: Int) -> String {
+    func summary(total: Int, new: Int) -> Text {
+        let colorNumbers = UserDefaults().bool(forKey: UserDefaultsKeys.colorNumbers)
         let numberFormatter = NumberFormatter()
         numberFormatter.usesGroupingSeparator = true
         numberFormatter.numberStyle = .decimal
         let sign = new > 0 ? "+" : (new < 0 ? "-" : "=")
-        return "\(numberFormatter.string(from: NSNumber(value: total)) ?? notAvailableString) (\(sign)\(numberFormatter.string(from: NSNumber(value: new)) ?? notAvailableString))"
+        let t1 = Text("\(numberFormatter.string(from: NSNumber(value: total)) ?? notAvailableString) (")
+        let t2 = Text("\(sign)\(numberFormatter.string(from: NSNumber(value: new)) ?? notAvailableString)")
+        let t3 = Text(")")
+        if colorNumbers {
+            return t1 + t2.foregroundColor(new > 0 ? .red : (new < 0 ? .green : .gray)) + t3
+        }
+        return t1 + t2 + t3
     }
     
-    var confirmedSummary: String {
+    var confirmedSummary: Text {
         return summary(total: totalConfirmed, new: newConfirmed)
     }
-    var deathsSummary: String {
+    var deathsSummary: Text {
         return summary(total: totalDeaths, new: newDeaths)
     }
-    var recoveredSummary: String {
+    var recoveredSummary: Text {
         return summary(total: totalRecovered, new: newRecovered)
     }
     
-    func summaryFor(metric: SummaryViewMetric) -> String {
+    func summaryFor(metric: SummaryViewMetric) -> Text {
         switch metric {case .confirmed:
             return confirmedSummary
         case .deaths:
