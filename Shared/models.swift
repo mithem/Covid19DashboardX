@@ -10,7 +10,7 @@ import SwiftUI
 
 // MARK: Models for summary (decoding & using)
 
-struct CountrySummaryMeasurement: Decodable, Equatable, Identifiable, SummaryProvider {
+struct CountrySummaryMeasurementForDecodingOnly: Decodable, Equatable, Identifiable, SummaryProvider {
     
     var id: String { countryCode }
     let country: String
@@ -123,7 +123,7 @@ struct CountrySummaryMeasurement: Decodable, Equatable, Identifiable, SummaryPro
         return result
     }
     
-    static func ==(_ lhs: CountrySummaryMeasurement, _ rhs: CountrySummaryMeasurement) -> Bool {
+    static func ==(_ lhs: CountrySummaryMeasurementForDecodingOnly, _ rhs: CountrySummaryMeasurementForDecodingOnly) -> Bool {
         let c = lhs.country == rhs.country
         let cc = lhs.countryCode == rhs.countryCode
         let d = lhs.date == rhs.date
@@ -150,7 +150,7 @@ struct GlobalMeasurement: Decodable, Equatable, SummaryProvider {
 
 struct SummaryResponse: Decodable, Equatable {
     let global: GlobalMeasurement
-    let countries: [CountrySummaryMeasurement]
+    let countries: [CountrySummaryMeasurementForDecodingOnly]
     let date: Date
 }
 
@@ -244,6 +244,16 @@ struct CountryHistoryMeasurementForDecodingOnly: Decodable {
 
 // MARK: Models for later use
 
+struct CountrySummaryMeasurement {
+    let date: Date
+    let totalConfirmed: Int
+    let newConfirmed: Int
+    let totalDeaths: Int
+    let newDeaths: Int
+    let totalRecovered: Int
+    let newRecovered: Int
+}
+
 class Country: Equatable {
     static func == (lhs: Country, rhs: Country) -> Bool {
         let c = lhs.code == rhs.code
@@ -252,16 +262,17 @@ class Country: Equatable {
         
         return c && n && m
     }
-    // No struct, so it passes by reference
     let id: UUID
     var code: String
     var name: String
+    var latest: CountrySummaryMeasurement
     var measurements: [CountryHistoryMeasurement]
     
-    init(code: String, name: String, measurements: [CountryHistoryMeasurement]) {
+    init(code: String, name: String, latest: CountrySummaryMeasurement, measurements: [CountryHistoryMeasurement] = []) {
         self.id = UUID()
         self.code = code
         self.name = name
+        self.latest = latest
         self.measurements = measurements
     }
 }

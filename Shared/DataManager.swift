@@ -9,16 +9,11 @@ import Foundation
 
 class DataManager: ObservableObject, Equatable {
     static func == (lhs: DataManager, rhs: DataManager) -> Bool {
-        let m = lhs.latestMeasurements == rhs.latestMeasurements
-        let g = lhs.latestGlobal == rhs.latestGlobal
-        let c = lhs.countries == rhs.countries
-        return m && g && c
+        return lhs.countries == rhs.countries
     }
     
-    
-    @Published var latestMeasurements: [CountrySummaryMeasurement]
-    @Published var latestGlobal: GlobalMeasurement?
     @Published var countries: [Country]
+    @Published var latestGlobal: GlobalMeasurement?
     private var subscribers: [DataManagerHistorySubscriber]
     
     private var _sortBy: CountrySortingCriteria
@@ -28,7 +23,7 @@ class DataManager: ObservableObject, Equatable {
         }
         set {
             _sortBy = newValue
-            sortLatestMeasurements()
+            sortCountries()
         }
     }
     private var _reversed: Bool
@@ -38,7 +33,7 @@ class DataManager: ObservableObject, Equatable {
         }
         set {
             _reversed = newValue
-            sortLatestMeasurements()
+            sortCountries()
         }
     }
     
@@ -51,9 +46,17 @@ class DataManager: ObservableObject, Equatable {
                 decoder.dateDecodingStrategy = .iso8601
                 let serverResponse = try? decoder.decode(SummaryResponse.self, from: data)
                 if let serverResponse = serverResponse {
+                    var tempCountries = [Country]()
+                    for country in serverResponse.countries {
+                        
+                        let measurement = CountrySummaryMeasurement(date: country.date, totalConfirmed: country.totalConfirmed, newConfirmed: country.newConfirmed, totalDeaths: country.totalDeaths, newDeaths: country.newDeaths, totalRecovered: country.totalRecovered, newRecovered: country.newRecovered)
+                        
+                        let newCountry = Country(code: country.countryCode, name: country.country, latest: measurement)
+                        tempCountries.append(newCountry)
+                    }
                     DispatchQueue.main.async {
-                        self.latestMeasurements = serverResponse.countries
-                        self.sortLatestMeasurements()
+                        self.sortCountries()
+                        self.countries = tempCountries
                         self.latestGlobal = serverResponse.global
                     }
                 } else {
@@ -69,8 +72,8 @@ class DataManager: ObservableObject, Equatable {
         return countries.first(where: {country == $0.code || country == $0.name})?.measurements
     }
     
-    func loadData(for country: String) {
-        guard let url = URL(string: "https://api.covid19api.com/total/country/\(country)") else { return }
+    func loadData(for country: Country) {
+        guard let url = URL(string: "https://api.covid19api.com/total/country/\(country.code)") else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let data = data {
                 let decoder = JSONDecoder()
@@ -81,23 +84,18 @@ class DataManager: ObservableObject, Equatable {
                     serverResponse = try decoder.decode([CountryHistoryMeasurementForDecodingOnly].self, from: data)
                 } catch {
                     print(error)
-                    print(String(data: data, encoding: .utf8))
                 }
                 if let serverResponse = serverResponse {
-                    var tempCountries = [Country]() // only wanna call the main thread once
-                    guard let countryName = serverResponse.first?.country.lowercased() else { return }
-                    guard let countryCode = serverResponse.first?.countryCode.lowercased() else { return }
-                    
-                    var country = Country(code: countryCode, name: countryName, measurements: [])
+                    guard let country = self.countries.first(where: {$0 == country}) else { return }
                     
                     for measurement in serverResponse {
                         country.measurements.append(CountryHistoryMeasurement(confirmed: measurement.cases ?? measurement.confirmed ?? 0, deaths: measurement.deaths, recovered: measurement.recovered, active: measurement.active, date: measurement.date, status: measurement.status ?? .confirmed))
                     }
-                    tempCountries.append(country)
-                    
-                    DispatchQueue.main.async {
-                        self.countries = tempCountries
-                        print("loaded successfully: \(self.countries.count) items")
+                    print("loaded successfully: \(self.countries.count) items")
+                    if let idx = self.countries.firstIndex(of: country) {
+                        DispatchQueue.main.async {
+                            self.countries[idx] = country
+                        }
                     }
                     for subscriber in self.subscribers {
                         subscriber.didUpdateHistory(new: self.countries)
@@ -111,28 +109,26 @@ class DataManager: ObservableObject, Equatable {
         }.resume()
     }
     
-    private func sortLatestMeasurements() {
-        latestMeasurements.sort(by: { lhs, rhs in
+    private func sortCountries() {
+        countries.sort(by: { lhs, rhs in
             var lt: Bool
             switch sortBy {
             case .countryCode:
-                lt =  lhs.countryCode < rhs.countryCode
+                lt = lhs.code < rhs.code
             case .countryName:
-                lt =  lhs.country < rhs.country
+                lt =  lhs.name < rhs.name
             case .totalConfirmed:
-                lt =  lhs.totalConfirmed < rhs.totalConfirmed
+                lt =  lhs.latest.totalConfirmed < rhs.latest.totalConfirmed
             case .newConfirmed:
-                lt =  lhs.newConfirmed < rhs.newConfirmed
+                lt =  lhs.latest.newConfirmed < rhs.latest.newConfirmed
             case .totalDeaths:
-                lt =  lhs.totalDeaths < rhs.totalDeaths
+                lt =  lhs.latest.totalDeaths < rhs.latest.totalDeaths
             case .newDeaths:
-                lt =  lhs.newDeaths < rhs.newDeaths
+                lt =  lhs.latest.newDeaths < rhs.latest.newDeaths
             case .totalRecovered:
-                lt =  lhs.totalRecovered < rhs.totalRecovered
+                lt =  lhs.latest.totalRecovered < rhs.latest.totalRecovered
             case .newRecovered:
-                lt =  lhs.newRecovered < rhs.newRecovered
-            case .slug:
-                lt =  lhs.slug ?? "N/A" < rhs.slug ?? "N/A"
+                lt =  lhs.latest.newRecovered < rhs.latest.newRecovered
             }
             if reversed {
                 return !lt
@@ -143,7 +139,6 @@ class DataManager: ObservableObject, Equatable {
     }
     
     init() {
-        latestMeasurements = [CountrySummaryMeasurement]()
         latestGlobal = nil
         countries = [Country]()
         _sortBy = .countryCode
@@ -152,10 +147,10 @@ class DataManager: ObservableObject, Equatable {
     }
     
     enum CountrySortingCriteria {
-        case countryCode, countryName, totalConfirmed, newConfirmed, totalDeaths, newDeaths, totalRecovered, newRecovered, slug
+        case countryCode, countryName, totalConfirmed, newConfirmed, totalDeaths, newDeaths, totalRecovered, newRecovered
     }
 }
 
-protocol DataManagerHistorySubscriber: Equatable {
+protocol DataManagerHistorySubscriber {
     func didUpdateHistory(new countries: [Country])
 }

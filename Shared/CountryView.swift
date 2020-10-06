@@ -9,43 +9,38 @@ import SwiftUI
 import SwiftUICharts
 
 struct CountryView: View {
-    @ObservedObject var manager: DataManager
-    let countryName: String
-    @State private var history: [CountryHistoryMeasurement]?
+    @EnvironmentObject var manager: DataManager
+    let country: Country
     var body: some View {
         Group {
-            if let history = history {
-                LineView(data: history.map {Double($0.confirmed)}, title: "Confirmed cases")
+            if country.measurements.count > 0 {
+                LineView(data: country.measurements.map {Double($0.confirmed)}, title: "Confirmed cases")
                     .padding()
             } else {
-                ProgressView()
-                    .onAppear {
-                        manager.loadData(for: countryName)
-                        print("loading")
-                    }
+                VStack {
+                    ProgressView()
+                    Text("Loading or so…")
+                }
+                .onAppear {
+                    manager.loadData(for: country)
+                    print("loading")
+                }
             }
         }
-        .navigationTitle(countryName.localizedCapitalized)
-    }
-    
-    init(manager: DataManager, countryName: String) {
-        self.manager = manager
-        self.countryName = countryName
-        history = manager.getHistory(for: countryName)
-        manager.subscribers.append(self)
+        .navigationTitle(country.name.localizedCapitalized)
     }
 }
 
 extension CountryView: DataManagerHistorySubscriber {
     func didUpdateHistory(new countries: [Country]) {
         print("got \(countries.count) values")
-        history = countries.first(where: {$0.name == countryName})?.measurements
-        print("updated: \(history?.count ?? -1) values in total!")
+//        history = countries.first(where: {$0.name == countryName})?.measurements
+//        print("updated: \(history?.count ?? -1) values in total!")
     }
 }
 
 struct CountryView_Previews: PreviewProvider {
     static var previews: some View {
-        CountryView(manager: DataManager(), countryName: countriesForPreviews[0].name)
+        CountryView(country: countriesForPreviews[0])
     }
 }
