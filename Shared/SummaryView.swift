@@ -13,6 +13,27 @@ struct SummaryView: View {
     @State private var searchTerm = ""
     @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = SummaryViewMetric.confirmed
     @State private var lowercasedSearchTerm = ""
+    
+    var actionSheetButtonsForSorting: [ActionSheet.Button] {
+        var buttons: [ActionSheet.Button] = [.default(Text("Country code"), action: {manager.sortBy = .countryCode}), .default(Text("Country name"), action: {manager.sortBy = .countryName})]
+        
+        let confirmed: [ActionSheet.Button] = [.default(Text("Total confirmed"), action: {manager.sortBy = .totalConfirmed}), .default(Text("New confirmed"), action: {manager.sortBy = .newConfirmed})]
+        let deaths: [ActionSheet.Button] = [.default(Text("Total deaths"), action: {manager.sortBy = .totalDeaths}), .default(Text("New deaths"), action: {manager.sortBy = .newDeaths})]
+        let recovered: [ActionSheet.Button] = [.default(Text("Total recovered"), action: {manager.sortBy = .totalRecovered}), .default(Text("New recovered"), action: {manager.sortBy = .newRecovered})]
+        
+        switch activeMetric {
+        case .confirmed:
+            buttons.append(contentsOf: confirmed)
+        case .deaths:
+            buttons.append(contentsOf: deaths)
+        case .recovered:
+            buttons.append(contentsOf: recovered)
+        }
+            
+        buttons.append(contentsOf: [.default(Text(manager.reversed ? "Dereverse" : "Reverse"), action: {manager.reversed.toggle()}), .cancel()])
+        return buttons
+    }
+    
     var body: some View {
         NavigationView {
             Group {
@@ -46,7 +67,7 @@ struct SummaryView: View {
             })
             .onAppear(perform: manager.loadSummary)
             .actionSheet(isPresented: $showingSortActionSheet) {
-                ActionSheet(title: Text("Sort countries"), message: Text("By which criteria would you like to sort countries?"), buttons: [.default(Text("Country code"), action: {manager.sortBy = .countryCode}), .default(Text("Country name"), action: {manager.sortBy = .countryName}), .default(Text("Total confirmed"), action: {manager.sortBy = .totalConfirmed}), .default(Text("New confirmed"), action: {manager.sortBy = .newConfirmed}), .default(Text("Total deaths"), action: {manager.sortBy = .totalDeaths}), .default(Text("New deaths"), action: {manager.sortBy = .newDeaths}), .default(Text("Total recovered"), action: {manager.sortBy = .totalRecovered}), .default(Text("New recovered"), action: {manager.sortBy = .newRecovered}), .default(Text(manager.reversed ? "Dereverse" : "Reverse"), action: {manager.reversed.toggle()}), .cancel()])
+                ActionSheet(title: Text("Sort countries"), message: Text("By which criteria would you like to sort countries?"), buttons: actionSheetButtonsForSorting)
             }
             .navigationBarItems(leading:
                                     Button(action: {

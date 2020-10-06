@@ -31,14 +31,6 @@ struct CountryView: View {
     }
 }
 
-extension CountryView: DataManagerHistorySubscriber {
-    func didUpdateHistory(new countries: [Country]) {
-        print("got \(countries.count) values")
-//        history = countries.first(where: {$0.name == countryName})?.measurements
-//        print("updated: \(history?.count ?? -1) values in total!")
-    }
-}
-
 struct CountryView_Previews: PreviewProvider {
     static var previews: some View {
         CountryView(country: countriesForPreviews[0])

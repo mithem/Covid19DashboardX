@@ -14,7 +14,6 @@ class DataManager: ObservableObject, Equatable {
     
     @Published var countries: [Country]
     @Published var latestGlobal: GlobalMeasurement?
-    private var subscribers: [DataManagerHistorySubscriber]
     
     private var _sortBy: CountrySortingCriteria
     var sortBy: CountrySortingCriteria {
@@ -68,10 +67,6 @@ class DataManager: ObservableObject, Equatable {
         }.resume()
     }
     
-    func getHistory(for country: String) -> [CountryHistoryMeasurement]? {
-        return countries.first(where: {country == $0.code || country == $0.name})?.measurements
-    }
-    
     func loadData(for country: Country) {
         guard let url = URL(string: "https://api.covid19api.com/total/country/\(country.code)") else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
@@ -91,14 +86,10 @@ class DataManager: ObservableObject, Equatable {
                     for measurement in serverResponse {
                         country.measurements.append(CountryHistoryMeasurement(confirmed: measurement.cases ?? measurement.confirmed ?? 0, deaths: measurement.deaths, recovered: measurement.recovered, active: measurement.active, date: measurement.date, status: measurement.status ?? .confirmed))
                     }
-                    print("loaded successfully: \(self.countries.count) items")
-                    if let idx = self.countries.firstIndex(of: country) {
-                        DispatchQueue.main.async {
+                    DispatchQueue.main.async {
+                        if let idx = self.countries.firstIndex(of: country) {
                             self.countries[idx] = country
                         }
-                    }
-                    for subscriber in self.subscribers {
-                        subscriber.didUpdateHistory(new: self.countries)
                     }
                 } else {
                     print("Invalid response.")
@@ -143,14 +134,9 @@ class DataManager: ObservableObject, Equatable {
         countries = [Country]()
         _sortBy = .countryCode
         _reversed = false
-        subscribers = []
     }
     
     enum CountrySortingCriteria {
         case countryCode, countryName, totalConfirmed, newConfirmed, totalDeaths, newDeaths, totalRecovered, newRecovered
     }
-}
-
-protocol DataManagerHistorySubscriber {
-    func didUpdateHistory(new countries: [Country])
 }
