@@ -17,13 +17,12 @@ struct CountryView: View {
                 LineView(data: country.measurements.map {Double($0.confirmed)}, title: "Confirmed cases")
                     .padding()
             } else {
-                VStack {
+                VStack(spacing: 10) {
                     ProgressView()
-                    Text("Loading or so…")
+                    Text("Loading…")
                 }
                 .onAppear {
                     manager.loadData(for: country)
-                    print("loading")
                 }
             }
         }
