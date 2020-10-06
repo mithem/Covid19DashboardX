@@ -30,7 +30,9 @@ struct SummaryView: View {
                             if searchTerm.isEmpty { return true }
                             return c.name.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(c.code.lowercased())
                         }, id: \.code) { country in
-                            NavigationLink(country.name, destination: CountryView(country: country).environmentObject(manager))
+                            NavigationLink(destination: CountryView(country: country).environmentObject(manager)) {
+                                Text(country.name.localizedCapitalized + " ") + country.summaryFor(metric: activeMetric)
+                            }
                         }
                     }
                     .listStyle(InsetGroupedListStyle())
