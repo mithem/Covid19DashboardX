@@ -32,6 +32,16 @@ struct CountryView: View {
 
 struct CountryView_Previews: PreviewProvider {
     static var previews: some View {
-        CountryView(country: countriesForPreviews[0])
+        Group {
+            NavigationView {
+                CountryView(country: countriesForPreviews[0])
+            }
+            .previewDisplayName("Success")
+            NavigationView {
+                CountryView(country: SpecialCountries.emptyCountry)
+                    .environmentObject(DataManager())
+            }
+            .previewDisplayName("No internet")
+        }
     }
 }
