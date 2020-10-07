@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		49325AE62529B29200A438C4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49325AE52529B29200A438C4 /* SearchBar.swift */; };
 		49325AE72529B29200A438C4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49325AE52529B29200A438C4 /* SearchBar.swift */; };
+		493B2C67252D79B0003B551E /* CountryViewSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */; };
+		493B2C68252D79B0003B551E /* CountryViewSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */; };
+		493B2C70252D7BF9003B551E /* BasicMeasurementMetricPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493B2C6F252D7BF9003B551E /* BasicMeasurementMetricPickerView.swift */; };
+		493B2C71252D7BF9003B551E /* BasicMeasurementMetricPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493B2C6F252D7BF9003B551E /* BasicMeasurementMetricPickerView.swift */; };
 		493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E08252383A70060BA27 /* ModelDecodableTests.swift */; };
 		493C2E15252386D00060BA27 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E14252386D00060BA27 /* Extensions.swift */; };
 		493C2E16252386D00060BA27 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E14252386D00060BA27 /* Extensions.swift */; };
@@ -48,6 +52,8 @@
 
 /* Begin PBXFileReference section */
 		49325AE52529B29200A438C4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryViewSettingsView.swift; sourceTree = "<group>"; };
+		493B2C6F252D7BF9003B551E /* BasicMeasurementMetricPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicMeasurementMetricPickerView.swift; sourceTree = "<group>"; };
 		493C2DF8252383620060BA27 /* Covid19DashboardXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Covid19DashboardXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		493C2DFC252383620060BA27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		493C2E08252383A70060BA27 /* ModelDecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDecodableTests.swift; sourceTree = "<group>"; };
@@ -125,7 +131,9 @@
 				493C2E14252386D00060BA27 /* Extensions.swift */,
 				4954F5C824E7F4D200399145 /* ContentView.swift */,
 				4954F5EE24E7F9B100399145 /* SummaryView.swift */,
+				493B2C6F252D7BF9003B551E /* BasicMeasurementMetricPickerView.swift */,
 				49B7D1C12529DB2000AE2B9B /* CountryView.swift */,
+				493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */,
 				49325AE52529B29200A438C4 /* SearchBar.swift */,
 				4954F5E824E7F50200399145 /* DataManager.swift */,
 				4954F5F724E8051300399145 /* shared.swift */,
@@ -306,11 +314,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				493B2C67252D79B0003B551E /* CountryViewSettingsView.swift in Sources */,
 				4954F5DC24E7F4D300399145 /* ContentView.swift in Sources */,
 				4954F5E924E7F50200399145 /* DataManager.swift in Sources */,
 				4954F5EF24E7F9B100399145 /* SummaryView.swift in Sources */,
 				4942F2DA25299AB100EE2959 /* SettingsView.swift in Sources */,
 				4954F5DA24E7F4D300399145 /* Covid19DashboardXApp.swift in Sources */,
+				493B2C70252D7BF9003B551E /* BasicMeasurementMetricPickerView.swift in Sources */,
 				4954F5F824E8051300399145 /* shared.swift in Sources */,
 				4954F5EC24E7F51400399145 /* models.swift in Sources */,
 				49325AE62529B29200A438C4 /* SearchBar.swift in Sources */,
@@ -324,11 +334,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				493B2C68252D79B0003B551E /* CountryViewSettingsView.swift in Sources */,
 				4954F5DD24E7F4D300399145 /* ContentView.swift in Sources */,
 				4954F5EA24E7F50200399145 /* DataManager.swift in Sources */,
 				4954F5F024E7F9B100399145 /* SummaryView.swift in Sources */,
 				4942F2DB25299AB100EE2959 /* SettingsView.swift in Sources */,
 				4954F5DB24E7F4D300399145 /* Covid19DashboardXApp.swift in Sources */,
+				493B2C71252D7BF9003B551E /* BasicMeasurementMetricPickerView.swift in Sources */,
 				4954F5F924E8051300399145 /* shared.swift in Sources */,
 				4954F5ED24E7F51400399145 /* models.swift in Sources */,
 				49325AE72529B29200A438C4 /* SearchBar.swift in Sources */,

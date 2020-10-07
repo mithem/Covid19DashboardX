@@ -158,12 +158,6 @@ enum MeasurementMetric {
     case slug
 }
 
-enum SummaryViewMetric: String {
-    case confirmed = "confirmed"
-    case deaths = "deaths"
-    case recovered = "recovered"
-}
-
 // MARK: Models for decoding country history
 
 struct CountryHistoryMeasurementForDecodingOnly: Decodable {
@@ -181,6 +175,23 @@ struct CountryHistoryMeasurementForDecodingOnly: Decodable {
 }
 
 // MARK: Models for later use
+
+enum BasicMeasurementMetric: String {
+    case confirmed = "confirmed"
+    case deaths = "deaths"
+    case recovered = "recovered"
+    
+    var humanReadable: String {
+        switch self {
+        case .confirmed:
+            return "Confirmed cases"
+        case .deaths:
+            return "Deaths"
+        case .recovered:
+            return "Recovered"
+        }
+    }
+}
 
 struct CountrySummaryMeasurement {
     let date: Date
@@ -235,6 +246,17 @@ struct CountryHistoryMeasurement: Equatable {
     var active: Int?
     var date: Date
     var status: CountryHistoryMeasurementStatusMetric
+    
+    func metric(for basicMetric: BasicMeasurementMetric) -> Int {
+        switch basicMetric {
+        case .confirmed:
+            return confirmed
+        case .deaths:
+            return deaths ?? -1
+        case .recovered:
+            return recovered ?? -1
+        }
+    }
 }
 
 struct GlobalMeasurement: Decodable, Equatable, SummaryProvider {
@@ -259,7 +281,7 @@ protocol SummaryProvider {
     var recoveredSummary: Text { get }
     
     func summary(total: Int, new: Int) -> Text
-    func summaryFor(metric: SummaryViewMetric) -> Text
+    func summaryFor(metric: BasicMeasurementMetric) -> Text
 }
 
 extension SummaryProvider {
@@ -288,8 +310,9 @@ extension SummaryProvider {
         return summary(total: totalRecovered, new: newRecovered)
     }
     
-    func summaryFor(metric: SummaryViewMetric) -> Text {
-        switch metric {case .confirmed:
+    func summaryFor(metric: BasicMeasurementMetric) -> Text {
+        switch metric {
+        case .confirmed:
             return confirmedSummary
         case .deaths:
             return deathsSummary
@@ -297,4 +320,13 @@ extension SummaryProvider {
             return recoveredSummary
         }
     }
+}
+
+enum DataRepresentationType: String, CaseIterable, Identifiable {
+    var id: DataRepresentationType { self }
+    
+    case normal = "normal"
+    case quadratic = "quadratic"
+    case sqRoot = "square root"
+    case logarithmic = "logarithmic"
 }

@@ -11,7 +11,7 @@ struct SummaryView: View {
     @ObservedObject var manager = DataManager()
     @State private var showingSortActionSheet = false
     @State private var searchTerm = ""
-    @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = SummaryViewMetric.confirmed
+    @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = BasicMeasurementMetric.confirmed
     @State private var lowercasedSearchTerm = ""
     
     var actionSheetButtonsForSorting: [ActionSheet.Button] {
@@ -39,12 +39,7 @@ struct SummaryView: View {
             Group {
                 if manager.countries.count > 0 {
                     List {
-                        Picker("Measurement metric", selection: $activeMetric) {
-                            Text("Confirmed").tag(SummaryViewMetric.confirmed)
-                            Text("Deaths").tag(SummaryViewMetric.deaths)
-                            Text("Recovered").tag(SummaryViewMetric.recovered)
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
+                        BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
                         SearchBar(searchTerm: $searchTerm)
                         Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric) ?? Text("N/A"))
                         ForEach(manager.countries.filter { c in
@@ -59,7 +54,10 @@ struct SummaryView: View {
                     .listStyle(InsetGroupedListStyle())
                     .animation(.easeInOut)
                 } else {
-                    Text("No data.")
+                    VStack(spacing: 10) {
+                        ProgressView()
+                        Text("Loading…")
+                    }
                 }
             }
             .onChange(of: searchTerm, perform: { value in

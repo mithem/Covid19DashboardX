@@ -10,23 +10,50 @@ import SwiftUICharts
 
 struct CountryView: View {
     @EnvironmentObject var manager: DataManager
+    @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = BasicMeasurementMetric.confirmed
+    @AppStorage(UserDefaultsKeys.dataRepresentationType) var dataRepresentationType = DataRepresentationType.normal
     let country: Country
     var body: some View {
-        Group {
-            if country.measurements.count > 0 {
-                LineView(data: country.measurements.map {Double($0.confirmed)}, title: "Confirmed cases")
-                    .padding()
-            } else {
-                VStack(spacing: 10) {
-                    ProgressView()
-                    Text("Loading…")
-                }
-                .onAppear {
-                    manager.loadData(for: country)
+        VStack {
+            BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
+            Group {
+                if country.measurements.count > 0 {
+                    VStack {
+                        VStack {
+                            HStack {
+                                Text(activeMetric.humanReadable)
+                                    .font(.title)
+                                    .bold()
+                                Spacer()
+                            }
+                            HStack {
+                                Text(dataRepresentationType.rawValue)
+                                    .font(.subheadline)
+                                    .bold()
+                                    .foregroundColor(.secondary)
+                                Spacer()
+                            }
+                        }
+                        LineView(data: getData(country.measurements, metric: activeMetric, dataRepresentation: dataRepresentationType))
+                    }
+                } else {
+                    VStack(spacing: 10) {
+                        ProgressView()
+                        Text("Loading…")
+                    }
+                    .onAppear {
+                        manager.loadData(for: country)
+                    }
                 }
             }
         }
+        .padding()
         .navigationTitle(country.name.localizedCapitalized)
+        .navigationBarItems(
+            trailing:
+                NavigationLink(destination: CountryViewSettingsView(country: country)) {
+                    Image(systemName: "info.circle")
+                })
     }
 }
 
