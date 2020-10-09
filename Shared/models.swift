@@ -330,3 +330,13 @@ enum DataRepresentationType: String, CaseIterable, Identifiable {
     case sqRoot = "square root"
     case logarithmic = "logarithmic"
 }
+
+// MARK: Errors
+
+enum NetworkError: Error {
+    case invalidResponse(response: String)
+    case noResponse // don't actually know whether that can happen without a timeout error 🤔
+    case urlError(_ error: URLError)
+    case otherWith(error: Error)
+    case other
+}

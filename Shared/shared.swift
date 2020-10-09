@@ -7,16 +7,8 @@
 
 import Foundation
 
-/// Take measurements and settings and give back Doubles that SwiftUICharts can work with.
-/// - Note: dataRepresentation is applied to the Y-Axis.
-/// - Complexity: O(n)
-/// - Parameters:
-///   - measurements: CountryHistoryMeasurements to use
-///   - metric: BasicMeasurementMetric to use
-///   - dataRepresentation: DataRepresentationType to calculate values for
-/// - Returns: double data 🚀
-func getData(_ measurements: [CountryHistoryMeasurement], metric: BasicMeasurementMetric, dataRepresentation: DataRepresentationType) -> [Double] {
-    func appropriateFunction(_ y: Int) -> Int {
+func getData(_ data: [Double], dataRepresentation: DataRepresentationType) -> [Double] {
+    func appropriateFunction(_ y: Double) -> Double {
         switch dataRepresentation {
         case .normal:
             return y
@@ -28,15 +20,14 @@ func getData(_ measurements: [CountryHistoryMeasurement], metric: BasicMeasureme
             return _logarithmic(value: y)
         }
     }
-    let values = measurements.map {Double(appropriateFunction($0.metric(for: metric)))}
+    let values = data.map {appropriateFunction($0)}
     return values
 }
 
-func _quadratic(value: Int) -> Int {value ^ 2}
-func _sqRoot(value: Int) -> Int {Int(round(sqrt(Double(value))))}
-func _logarithmic(value: Int) -> Int {
-    let v2 = log(Double(value))
-    if v2 == -1 * .infinity { return 0 }
-    let v1 = round(v2)
-    return Int(v1)
+func _quadratic(value: Double) -> Double {value * value}
+func _sqRoot(value: Double) -> Double {sqrt(value)}
+func _logarithmic(value: Double) -> Double {
+    let v = log(value)
+    if v == -1 * .infinity { return 0 }
+    return v
 }

@@ -14,6 +14,7 @@ class DataManager: ObservableObject, Equatable {
     
     @Published var countries: [Country]
     @Published var latestGlobal: GlobalMeasurement?
+    @Published var error: NetworkError?
     
     private var _sortBy: CountrySortingCriteria
     var sortBy: CountrySortingCriteria {
@@ -47,7 +48,6 @@ class DataManager: ObservableObject, Equatable {
                 if let serverResponse = serverResponse {
                     var tempCountries = [Country]()
                     for country in serverResponse.countries {
-                        
                         let measurement = CountrySummaryMeasurement(date: country.date, totalConfirmed: country.totalConfirmed, newConfirmed: country.newConfirmed, totalDeaths: country.totalDeaths, newDeaths: country.newDeaths, totalRecovered: country.totalRecovered, newRecovered: country.newRecovered)
                         
                         let newCountry = Country(code: country.countryCode, name: country.country, latest: measurement)
@@ -57,12 +57,28 @@ class DataManager: ObservableObject, Equatable {
                         self.sortCountries()
                         self.countries = tempCountries
                         self.latestGlobal = serverResponse.global
+                        self.error = nil
                     }
                 } else {
                     print("Invalid response.")
+                    let resp = String(data: data, encoding: .utf8)
+                    print(resp)
+                    DispatchQueue.main.async {
+                        self.error = .invalidResponse(response: resp ?? "N/A")
+                    }
                 }
             } else {
                 print("No response.")
+                self.error = .noResponse
+            }
+            if let error = error {
+                DispatchQueue.main.async {
+                if let error = error as? URLError {
+                    self.error = .urlError(error)
+                } else {
+                    self.error = .otherWith(error: error)
+                }
+                }
             }
         }.resume()
     }
@@ -91,11 +107,29 @@ class DataManager: ObservableObject, Equatable {
                             self.countries[idx] = country
                         }
                     }
+                    DispatchQueue.main.async {
+                        self.error = nil
+                    }
                 } else {
                     print("Invalid response.")
+                    DispatchQueue.main.async {
+                        self.error = .invalidResponse(response: String(data: data, encoding: .utf8) ?? "N/A")
+                    }
                 }
             } else {
                 print("No response.")
+                DispatchQueue.main.async {
+                    self.error = .noResponse
+                }
+            }
+            if let error = error {
+                DispatchQueue.main.async {
+                    if let error = error as? URLError {
+                        self.error = .urlError(error)
+                    } else {
+                        self.error = .otherWith(error: error)
+                    }
+                }
             }
         }.resume()
     }
@@ -132,6 +166,7 @@ class DataManager: ObservableObject, Equatable {
     init() {
         latestGlobal = nil
         countries = [Country]()
+        error = nil
         _sortBy = .countryCode
         _reversed = false
     }

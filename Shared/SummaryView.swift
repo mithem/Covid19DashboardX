@@ -29,7 +29,7 @@ struct SummaryView: View {
         case .recovered:
             buttons.append(contentsOf: recovered)
         }
-            
+        
         buttons.append(contentsOf: [.default(Text(manager.reversed ? "Dereverse" : "Reverse"), action: {manager.reversed.toggle()}), .cancel()])
         return buttons
     }
@@ -38,25 +38,40 @@ struct SummaryView: View {
         NavigationView {
             Group {
                 if manager.countries.count > 0 {
-                    List {
-                        BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
-                        SearchBar(searchTerm: $searchTerm)
-                        Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric) ?? Text("N/A"))
-                        ForEach(manager.countries.filter { c in
-                            if searchTerm.isEmpty { return true }
-                            return c.name.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(c.code.lowercased())
-                        }, id: \.code) { country in
-                            NavigationLink(destination: CountryView(country: country).environmentObject(manager)) {
-                                Text(country.name.localizedCapitalized + " ") + country.summaryFor(metric: activeMetric)
+                    VStack {
+                            List {
+                                BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
+                                SearchBar(searchTerm: $searchTerm)
+                                Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric) ?? Text("N/A"))
+                                ForEach(manager.countries.filter { c in
+                                    if searchTerm.isEmpty { return true }
+                                    return c.name.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(c.code.lowercased())
+                                }, id: \.code) { country in
+                                    NavigationLink(destination: CountryView(country: country).environmentObject(manager)) {
+                                        Text(country.name.localizedCapitalized + " ") + country.summaryFor(metric: activeMetric)
+                                    }
+                                }
+                                HStack {
+                                    Spacer()
+                                    Text("Stay safe ❤️")
+                                        .foregroundColor(.secondary)
+                                        .grayscale(0.35)
+                                    Spacer()
+                                }
+                                .onTapGesture {
+                                    UIApplication.shared.open(UsefulURLs.whoCovid19AdviceForPublic)
+                                }
                             }
-                        }
+                            .listStyle(InsetGroupedListStyle())
+                            .animation(.easeInOut)
                     }
-                    .listStyle(InsetGroupedListStyle())
-                    .animation(.easeInOut)
                 } else {
                     VStack(spacing: 10) {
                         ProgressView()
                         Text("Loading…")
+                            .actionSheet(isPresented: Binding(get: {manager.error != nil}, set: {manager.error = $0 ? .other : nil})) {
+                                ActionSheet(title: Text("Error"), message: Text(manager.error?.localizedDescription ?? "Unkown error."), buttons: [.default(Text("OK"))])
+                            }
                     }
                 }
             }

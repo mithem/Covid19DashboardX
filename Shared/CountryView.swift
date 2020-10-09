@@ -8,14 +8,23 @@
 import SwiftUI
 import SwiftUICharts
 
-struct CountryView: View {
+struct CountryView: View, CountryViewSettingsViewDelegate {
     @EnvironmentObject var manager: DataManager
-    @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = BasicMeasurementMetric.confirmed
     @AppStorage(UserDefaultsKeys.dataRepresentationType) var dataRepresentationType = DataRepresentationType.normal
+    @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = BasicMeasurementMetric.confirmed
+    @State var dataStreamAnalyzer = DataStreamAnalyzer(originalData: [])
     let country: Country
+    
+    init(country: Country) {
+        self.country = country
+        let activeMetric = BasicMeasurementMetric(rawValue: UserDefaults().string(forKey: UserDefaultsKeys.ativeMetric) ?? "") ?? .confirmed
+        self.dataStreamAnalyzer = DataStreamAnalyzer(originalData: country.measurements.map {Double($0.metric(for: activeMetric))}, movingAvgs: Set())
+    }
+    
     var body: some View {
         VStack {
             BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
+            Spacer()
             Group {
                 if country.measurements.count > 0 {
                     VStack {
@@ -34,9 +43,10 @@ struct CountryView: View {
                                 Spacer()
                             }
                         }
-                        LineView(data: getData(country.measurements, metric: activeMetric, dataRepresentation: dataRepresentationType))
+                        LineView(data: dataStreamAnalyzer.movingAvgs.first?.data ?? data)
                     }
                 } else {
+                    Spacer()
                     VStack(spacing: 10) {
                         ProgressView()
                         Text("Loading…")
@@ -44,6 +54,7 @@ struct CountryView: View {
                     .onAppear {
                         manager.loadData(for: country)
                     }
+                    Spacer()
                 }
             }
         }
@@ -51,9 +62,18 @@ struct CountryView: View {
         .navigationTitle(country.name.localizedCapitalized)
         .navigationBarItems(
             trailing:
-                NavigationLink(destination: CountryViewSettingsView(country: country)) {
+                NavigationLink(destination: CountryViewSettingsView(country: country, delegate: self)) {
                     Image(systemName: "info.circle")
                 })
+    }
+    
+    // - MARK: CountryViewSettingsViewDelegate compliance
+    func didConfigureMovingAverages(_ avgs: Set<DataStreamAnalyzer.MovingAverage>) {
+        avgs.forEach {$0.data.forEach {print("\($0.isFinite): \($0)")}}
+        dataStreamAnalyzer.movingAvgs = avgs
+    }
+    var data: [Double] {
+        getData(country.measurements.map {Double($0.metric(for: activeMetric))}, dataRepresentation: dataRepresentationType)
     }
 }
 
