@@ -8,18 +8,15 @@
 import SwiftUI
 import SwiftUICharts
 
-struct CountryView: View, CountryViewSettingsViewDelegate {
+struct CountryView: View {
     @EnvironmentObject var manager: DataManager
     @AppStorage(UserDefaultsKeys.dataRepresentationType) var dataRepresentationType = DataRepresentationType.normal
     @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = BasicMeasurementMetric.confirmed
-    @State var dataStreamAnalyzer = DataStreamAnalyzer(originalData: [])
+    @AppStorage(UserDefaultsKeys.currentN) var n = 1
+    @State private var alteredData = [Double]()
     let country: Country
     
-    init(country: Country) {
-        self.country = country
-        let activeMetric = BasicMeasurementMetric(rawValue: UserDefaults().string(forKey: UserDefaultsKeys.ativeMetric) ?? "") ?? .confirmed
-        self.dataStreamAnalyzer = DataStreamAnalyzer(originalData: country.measurements.map {Double($0.metric(for: activeMetric))}, movingAvgs: Set())
-    }
+    @AppStorage(UserDefaultsKeys.maximumN) var maximumN = 90
     
     var body: some View {
         VStack {
@@ -42,11 +39,19 @@ struct CountryView: View, CountryViewSettingsViewDelegate {
                                     .foregroundColor(.secondary)
                                 Spacer()
                             }
+                            .onChange(of: dataRepresentationType, perform: { _ in
+                                calcMovingAvg()
+                            })
                         }
-                        LineView(data: dataStreamAnalyzer.movingAvgs.first?.data ?? data)
+                        LineView(data: alteredData)
+                            .onAppear {
+                                calcMovingAvg()
+                            }
+                            .onChange(of: activeMetric, perform: { _ in
+                                calcMovingAvg()
+                            })
                     }
                 } else {
-                    Spacer()
                     VStack(spacing: 10) {
                         ProgressView()
                         Text("Loading…")
@@ -57,23 +62,24 @@ struct CountryView: View, CountryViewSettingsViewDelegate {
                     Spacer()
                 }
             }
+            if maximumN > 1 {
+                Stepper("Moving average: \(n.nDaysHumanReadable)", value: $n, in: 1...(country.measurements.count == 0 ? 1 : (country.measurements.count < maximumN ? country.measurements.count : maximumN)))
+                    .onChange(of: n, perform: { _ in
+                        calcMovingAvg()
+                    })
+            }
         }
         .padding()
         .navigationTitle(country.name.localizedCapitalized)
         .navigationBarItems(
             trailing:
-                NavigationLink(destination: CountryViewSettingsView(country: country, delegate: self)) {
+                NavigationLink(destination: CountryViewSettingsView(country: country)) {
                     Image(systemName: "info.circle")
                 })
     }
     
-    // - MARK: CountryViewSettingsViewDelegate compliance
-    func didConfigureMovingAverages(_ avgs: Set<DataStreamAnalyzer.MovingAverage>) {
-        avgs.forEach {$0.data.forEach {print("\($0.isFinite): \($0)")}}
-        dataStreamAnalyzer.movingAvgs = avgs
-    }
-    var data: [Double] {
-        getData(country.measurements.map {Double($0.metric(for: activeMetric))}, dataRepresentation: dataRepresentationType)
+    func calcMovingAvg() {
+        alteredData = MovingAverage.calculateMovingAverage(from: getData(country.measurements.map {Double($0.metric(for: activeMetric))}, dataRepresentation: dataRepresentationType), with: n)
     }
 }
 

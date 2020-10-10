@@ -36,3 +36,14 @@ private extension String {
         prefix(1).lowercased() + dropFirst()
     }
 }
+
+extension Int {
+    var nDaysHumanReadable: String {
+        let formatter = DateComponentsFormatter()
+        let dateComponents = DateComponents(day: self)
+        formatter.allowedUnits = [.day, .month, .year]
+        formatter.unitsStyle = .full
+        
+        return formatter.string(from: dateComponents) ?? notAvailableString
+    }
+}

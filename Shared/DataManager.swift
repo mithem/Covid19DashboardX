@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Network
 
 class DataManager: ObservableObject, Equatable {
     static func == (lhs: DataManager, rhs: DataManager) -> Bool {
@@ -14,9 +15,17 @@ class DataManager: ObservableObject, Equatable {
     
     @Published var countries: [Country]
     @Published var latestGlobal: GlobalMeasurement?
-    @Published var error: NetworkError?
     
+    var error: NetworkError? { // this should be the definition of weird, just to not change the code below…
+        get { nil }
+        set {
+            delegate?.error(newValue ?? .other)
+        }
+    }
+    
+    private let monitor: NWPathMonitor
     private var _sortBy: CountrySortingCriteria
+    var delegate: DataManagerDelegate?
     var sortBy: CountrySortingCriteria {
         get {
             _sortBy
@@ -40,7 +49,15 @@ class DataManager: ObservableObject, Equatable {
     func loadSummary() {
         guard let url = URL(string: "https://api.covid19api.com/summary") else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data {
+            if let error = error {
+                DispatchQueue.main.async {
+                    if let error = error as? URLError {
+                        self.error = .urlError(error)
+                    } else {
+                        self.error = .otherWith(error: error)
+                    }
+                }
+            } else if let data = data {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromPascalCase
                 decoder.dateDecodingStrategy = .iso8601
@@ -62,22 +79,15 @@ class DataManager: ObservableObject, Equatable {
                 } else {
                     print("Invalid response.")
                     let resp = String(data: data, encoding: .utf8)
-                    print(resp)
+                    print(resp ?? notAvailableString)
                     DispatchQueue.main.async {
-                        self.error = .invalidResponse(response: resp ?? "N/A")
+                        self.error = .invalidResponse(response: resp ?? notAvailableString)
                     }
                 }
             } else {
                 print("No response.")
-                self.error = .noResponse
-            }
-            if let error = error {
                 DispatchQueue.main.async {
-                if let error = error as? URLError {
-                    self.error = .urlError(error)
-                } else {
-                    self.error = .otherWith(error: error)
-                }
+                    self.error = .noResponse
                 }
             }
         }.resume()
@@ -86,7 +96,15 @@ class DataManager: ObservableObject, Equatable {
     func loadData(for country: Country) {
         guard let url = URL(string: "https://api.covid19api.com/total/country/\(country.code)") else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data {
+            if let error = error {
+                DispatchQueue.main.async {
+                    if let error = error as? URLError {
+                        self.error = .urlError(error)
+                    } else {
+                        self.error = .otherWith(error: error)
+                    }
+                }
+            } else if let data = data {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromPascalCase
                 decoder.dateDecodingStrategy = .iso8601
@@ -100,7 +118,7 @@ class DataManager: ObservableObject, Equatable {
                     guard let country = self.countries.first(where: {$0 == country}) else { return }
                     
                     for measurement in serverResponse {
-                        country.measurements.append(CountryHistoryMeasurement(confirmed: measurement.cases ?? measurement.confirmed ?? 0, deaths: measurement.deaths, recovered: measurement.recovered, active: measurement.active, date: measurement.date, status: measurement.status ?? .confirmed))
+                        country.measurements.append(CountryHistoryMeasurement(confirmed: measurement.cases ?? measurement.confirmed ?? 0, deaths: measurement.deaths, recovered: measurement.recovered, active: measurement.active, date: measurement.date))
                     }
                     DispatchQueue.main.async {
                         if let idx = self.countries.firstIndex(of: country) {
@@ -113,22 +131,13 @@ class DataManager: ObservableObject, Equatable {
                 } else {
                     print("Invalid response.")
                     DispatchQueue.main.async {
-                        self.error = .invalidResponse(response: String(data: data, encoding: .utf8) ?? "N/A")
+                        self.error = .invalidResponse(response: String(data: data, encoding: .utf8) ?? notAvailableString)
                     }
                 }
             } else {
                 print("No response.")
                 DispatchQueue.main.async {
                     self.error = .noResponse
-                }
-            }
-            if let error = error {
-                DispatchQueue.main.async {
-                    if let error = error as? URLError {
-                        self.error = .urlError(error)
-                    } else {
-                        self.error = .otherWith(error: error)
-                    }
                 }
             }
         }.resume()
@@ -154,6 +163,8 @@ class DataManager: ObservableObject, Equatable {
                 lt =  lhs.latest.totalRecovered < rhs.latest.totalRecovered
             case .newRecovered:
                 lt =  lhs.latest.newRecovered < rhs.latest.newRecovered
+            case .activeCases:
+                lt = lhs.active < rhs.active
             }
             if reversed {
                 return !lt
@@ -163,15 +174,25 @@ class DataManager: ObservableObject, Equatable {
         })
     }
     
-    init() {
+    init(delegate: DataManagerDelegate? = nil) {
         latestGlobal = nil
         countries = [Country]()
-        error = nil
         _sortBy = .countryCode
         _reversed = false
+        self.delegate = delegate
+        monitor = NWPathMonitor()
+        monitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                self.loadSummary()
+            }
+        }
     }
     
     enum CountrySortingCriteria {
-        case countryCode, countryName, totalConfirmed, newConfirmed, totalDeaths, newDeaths, totalRecovered, newRecovered
+        case countryCode, countryName, totalConfirmed, newConfirmed, totalDeaths, newDeaths, totalRecovered, newRecovered, activeCases
     }
+}
+
+protocol DataManagerDelegate {
+    func error(_ error: NetworkError)
 }

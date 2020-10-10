@@ -11,9 +11,9 @@ struct BasicMeasurementMetricPickerView: View {
     @Binding var activeMetric: BasicMeasurementMetric
     var body: some View {
         Picker("Measurement metric", selection: $activeMetric) {
-            Text("Confirmed").tag(BasicMeasurementMetric.confirmed)
-            Text("Deaths").tag(BasicMeasurementMetric.deaths)
-            Text("Recovered").tag(BasicMeasurementMetric.recovered)
+            ForEach(BasicMeasurementMetric.allCases) { value in
+                Text(value.rawValue.localizedCapitalized).tag(value)
+            }
         }
         .pickerStyle(SegmentedPickerStyle())
     }

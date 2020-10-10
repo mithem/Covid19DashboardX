@@ -9,9 +9,11 @@ import SwiftUI
 
 struct SettingsView: View {
     @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = false
+    @AppStorage(UserDefaultsKeys.maximumN) var maximumN = 90
     var body: some View {
         Form {
             Toggle("Color numbers", isOn: $colorNumbers)
+            Stepper("Maximum moving average interval: \(maximumN.nDaysHumanReadable)", value: $maximumN, in: 1...1_000_000) // should be sufficient for now
         }
         .navigationTitle("Settings")
     }

@@ -167,7 +167,7 @@ struct CountryHistoryMeasurementForDecodingOnly: Decodable {
     var recovered: Int?
     var active: Int?
     var date: Date
-    var status: CountryHistoryMeasurementStatusMetric?
+    var status: BasicMeasurementMetric?
     var country: String
     var countryCode: String
     var lat: String
@@ -176,10 +176,13 @@ struct CountryHistoryMeasurementForDecodingOnly: Decodable {
 
 // MARK: Models for later use
 
-enum BasicMeasurementMetric: String {
+enum BasicMeasurementMetric: String, Decodable, CaseIterable, Identifiable {
+    var id: BasicMeasurementMetric { self }
+    
     case confirmed = "confirmed"
     case deaths = "deaths"
     case recovered = "recovered"
+    case active = "active"
     
     var humanReadable: String {
         switch self {
@@ -189,6 +192,8 @@ enum BasicMeasurementMetric: String {
             return "Deaths"
         case .recovered:
             return "Recovered"
+        case .active:
+            return "Active cases"
         }
     }
 }
@@ -204,6 +209,11 @@ struct CountrySummaryMeasurement {
 }
 
 class Country: Equatable, SummaryProvider {
+    
+    var active: Int {
+        totalConfirmed - totalRecovered - totalDeaths
+    }
+    
     var totalConfirmed: Int { latest.totalConfirmed }
     var newConfirmed: Int { latest.newConfirmed }
     var totalDeaths: Int { latest.totalDeaths }
@@ -218,6 +228,7 @@ class Country: Equatable, SummaryProvider {
         
         return c && n && m
     }
+    
     let id: UUID
     var code: String
     var name: String
@@ -233,19 +244,12 @@ class Country: Equatable, SummaryProvider {
     }
 }
 
-enum CountryHistoryMeasurementStatusMetric: String, Decodable {
-    case confirmed = "confirmed"
-    case deaths = "deaths"
-    case recovered = "recovered"
-}
-
 struct CountryHistoryMeasurement: Equatable {
     var confirmed: Int
     var deaths: Int?
     var recovered: Int?
     var active: Int?
     var date: Date
-    var status: CountryHistoryMeasurementStatusMetric
     
     func metric(for basicMetric: BasicMeasurementMetric) -> Int {
         switch basicMetric {
@@ -255,11 +259,17 @@ struct CountryHistoryMeasurement: Equatable {
             return deaths ?? -1
         case .recovered:
             return recovered ?? -1
+        case .active:
+            return active ?? -1
         }
     }
 }
 
 struct GlobalMeasurement: Decodable, Equatable, SummaryProvider {
+    var active: Int {
+        totalConfirmed - totalRecovered - totalDeaths
+    }
+    
     let totalConfirmed: Int
     let newConfirmed: Int
     let totalDeaths: Int
@@ -275,29 +285,35 @@ protocol SummaryProvider {
     var newDeaths: Int { get }
     var totalRecovered: Int { get }
     var newRecovered: Int { get }
+    var active: Int { get }
     
     var confirmedSummary: Text { get }
     var deathsSummary: Text { get }
     var recoveredSummary: Text { get }
+    var activeSummary: Text { get }
     
-    func summary(total: Int, new: Int) -> Text
+    func summary(total: Int, new: Int?) -> Text
     func summaryFor(metric: BasicMeasurementMetric) -> Text
 }
 
 extension SummaryProvider {
-    func summary(total: Int, new: Int) -> Text {
+    func summary(total: Int, new: Int?) -> Text {
         let colorNumbers = UserDefaults().bool(forKey: UserDefaultsKeys.colorNumbers)
         let numberFormatter = NumberFormatter()
         numberFormatter.usesGroupingSeparator = true
         numberFormatter.numberStyle = .decimal
-        let sign = new > 0 ? "+" : (new < 0 ? "-" : "=")
-        let t1 = Text("\(numberFormatter.string(from: NSNumber(value: total)) ?? notAvailableString) (")
-        let t2 = Text("\(sign)\(numberFormatter.string(from: NSNumber(value: new)) ?? notAvailableString)")
-        let t3 = Text(")")
-        if colorNumbers {
-            return t1 + t2.foregroundColor(new > 0 ? .red : (new < 0 ? .green : .gray)) + t3
+        if let new = new {
+            let sign = new > 0 ? "+" : (new < 0 ? "-" : "=")
+            let t1 = Text("\(numberFormatter.string(from: NSNumber(value: total)) ?? notAvailableString) (")
+            let t2 = Text("\(sign)\(numberFormatter.string(from: NSNumber(value: new)) ?? notAvailableString)")
+            let t3 = Text(")")
+            if colorNumbers {
+                return t1 + t2.foregroundColor(new > 0 ? .red : (new < 0 ? .green : .gray)) + t3
+            }
+            return t1 + t2 + t3
+        } else {
+            return Text(numberFormatter.string(from: NSNumber(value: total)) ?? notAvailableString)
         }
-        return t1 + t2 + t3
     }
     
     var confirmedSummary: Text {
@@ -310,6 +326,10 @@ extension SummaryProvider {
         return summary(total: totalRecovered, new: newRecovered)
     }
     
+    var activeSummary: Text {
+        return summary(total: active, new: nil)
+    }
+    
     func summaryFor(metric: BasicMeasurementMetric) -> Text {
         switch metric {
         case .confirmed:
@@ -318,6 +338,8 @@ extension SummaryProvider {
             return deathsSummary
         case .recovered:
             return recoveredSummary
+        case .active:
+            return activeSummary
         }
     }
 }
@@ -333,10 +355,13 @@ enum DataRepresentationType: String, CaseIterable, Identifiable {
 
 // MARK: Errors
 
-enum NetworkError: Error {
+enum NetworkError: Error, Equatable {
+    static func == (lhs: NetworkError, rhs: NetworkError) -> Bool {lhs.localizedDescription == rhs.localizedDescription} // no better way?
+    
     case invalidResponse(response: String)
     case noResponse // don't actually know whether that can happen without a timeout error 🤔
     case urlError(_ error: URLError)
+    case noNetworkConnection
     case otherWith(error: Error)
     case other
 }
