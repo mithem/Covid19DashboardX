@@ -9,12 +9,13 @@ import SwiftUI
 
 struct CountryInlineView: View {
     let country: Country
-    @EnvironmentObject var manager: DataManager // to pass along to CountryView
+    let colorNumbers: Bool
     @Binding var activeMetric: BasicMeasurementMetric
+    @EnvironmentObject var manager: DataManager // to pass along to CountryView
     var body: some View {
         HStack {
             NavigationLink(destination: CountryView(country: country).environmentObject(manager)) {
-                Text(country.name.localizedCapitalized + " ") + country.summaryFor(metric: activeMetric)
+                Text(country.name.localizedCapitalized + " ") + country.summaryFor(metric: activeMetric, colorNumbers: colorNumbers)
             }
         }
     }
@@ -22,6 +23,6 @@ struct CountryInlineView: View {
 
 struct CountryInlineView_Previews: PreviewProvider {
     static var previews: some View {
-        CountryInlineView(country: countriesForPreviews[0], activeMetric: .constant(.confirmed))
+        CountryInlineView(country: countriesForPreviews[0], colorNumbers: true, activeMetric: .constant(.confirmed))
     }
 }

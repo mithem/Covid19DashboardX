@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = false
+    @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = DefaultSettings.colorNumbers
     @AppStorage(UserDefaultsKeys.maximumN) var maximumN = 90
     var body: some View {
         Form {

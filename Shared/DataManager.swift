@@ -46,16 +46,14 @@ class DataManager: ObservableObject, Equatable {
         }
     }
     
-    func loadSummary() {
+    static func getSummary(completion: @escaping (Result<SummaryResponse, NetworkError>) -> Void) {
         guard let url = URL(string: "https://api.covid19api.com/summary") else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
-                DispatchQueue.main.async {
-                    if let error = error as? URLError {
-                        self.error = .urlError(error)
-                    } else {
-                        self.error = .otherWith(error: error)
-                    }
+                if let error = error as? URLError {
+                    completion(.failure(.urlError(error)))
+                } else {
+                    completion(.failure(.otherWith(error: error)))
                 }
             } else if let data = data {
                 let decoder = JSONDecoder()
@@ -63,84 +61,94 @@ class DataManager: ObservableObject, Equatable {
                 decoder.dateDecodingStrategy = .iso8601
                 let serverResponse = try? decoder.decode(SummaryResponse.self, from: data)
                 if let serverResponse = serverResponse {
-                    var tempCountries = [Country]()
-                    for country in serverResponse.countries {
-                        let measurement = CountrySummaryMeasurement(date: country.date, totalConfirmed: country.totalConfirmed, newConfirmed: country.newConfirmed, totalDeaths: country.totalDeaths, newDeaths: country.newDeaths, totalRecovered: country.totalRecovered, newRecovered: country.newRecovered)
-                        
-                        let newCountry = Country(code: country.countryCode, name: country.country, latest: measurement)
-                        tempCountries.append(newCountry)
-                    }
-                    DispatchQueue.main.async {
-                        self.sortCountries()
-                        self.countries = tempCountries
-                        self.latestGlobal = serverResponse.global
-                        self.error = nil
-                    }
+                    completion(.success(serverResponse))
                 } else {
-                    print("Invalid response.")
-                    let resp = String(data: data, encoding: .utf8)
-                    print(resp ?? notAvailableString)
-                    DispatchQueue.main.async {
-                        self.error = .invalidResponse(response: resp ?? notAvailableString)
-                    }
+                    completion(.failure(.noResponse))
                 }
             } else {
-                print("No response.")
-                DispatchQueue.main.async {
-                    self.error = .noResponse
-                }
+                completion(.failure(.noResponse))
             }
         }.resume()
     }
     
-    func loadData(for country: Country) {
-        guard let url = URL(string: "https://api.covid19api.com/total/country/\(country.code)") else { return }
+    func loadSummary() {
+        DataManager.getSummary { result in
+            switch result {
+            case .success(let response):
+                var tempCountries = [Country]()
+                for country in response.countries {
+                    let measurement = CountrySummaryMeasurement(date: country.date, totalConfirmed: country.totalConfirmed, newConfirmed: country.newConfirmed, totalDeaths: country.totalDeaths, newDeaths: country.newDeaths, totalRecovered: country.totalRecovered, newRecovered: country.newRecovered)
+                    
+                    let newCountry = Country(code: country.countryCode, name: country.country, latest: measurement)
+                    tempCountries.append(newCountry)
+                }
+                DispatchQueue.main.async {
+                    self.sortCountries()
+                    self.countries = tempCountries
+                    self.latestGlobal = response.global
+                    self.error = nil
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.error = error
+                }
+            }
+        }
+    }
+    
+    typealias GetDataCompletionHandler = (Result<Country, NetworkError>) -> Void
+    
+    static func getData(for country: Country, previousCountry: Country, completion: @escaping GetDataCompletionHandler) {
+        getData(for: country.code, previousCountry: previousCountry, completion: completion)
+    }
+    
+    static func getData(for countryCode: String, previousCountry: Country, completion: @escaping GetDataCompletionHandler) {
+        guard let url = URL(string: "https://api.covid19api.com/total/country/\(countryCode)") else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
-                DispatchQueue.main.async {
-                    if let error = error as? URLError {
-                        self.error = .urlError(error)
-                    } else {
-                        self.error = .otherWith(error: error)
-                    }
+                if let error = error as? URLError {
+                    completion(.failure(.urlError(error)))
+                } else {
+                    completion(.failure(.otherWith(error: error)))
                 }
             } else if let data = data {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromPascalCase
                 decoder.dateDecodingStrategy = .iso8601
-                var serverResponse: [CountryHistoryMeasurementForDecodingOnly]?
-                do {
-                    serverResponse = try decoder.decode([CountryHistoryMeasurementForDecodingOnly].self, from: data)
-                } catch {
-                    print(error)
-                }
+                let serverResponse = try? decoder.decode([CountryHistoryMeasurementForDecodingOnly].self, from: data)
                 if let serverResponse = serverResponse {
-                    guard let country = self.countries.first(where: {$0 == country}) else { return }
-                    
                     for measurement in serverResponse {
-                        country.measurements.append(CountryHistoryMeasurement(confirmed: measurement.cases ?? measurement.confirmed ?? 0, deaths: measurement.deaths, recovered: measurement.recovered, active: measurement.active, date: measurement.date))
+                        previousCountry.measurements.append(CountryHistoryMeasurement(confirmed: measurement.cases ?? measurement.confirmed ?? 0, deaths: measurement.deaths, recovered: measurement.recovered, active: measurement.active, date: measurement.date))
                     }
-                    DispatchQueue.main.async {
-                        if let idx = self.countries.firstIndex(of: country) {
-                            self.countries[idx] = country
-                        }
-                    }
-                    DispatchQueue.main.async {
-                        self.error = nil
-                    }
+                    completion(.success(previousCountry))
                 } else {
-                    print("Invalid response.")
-                    DispatchQueue.main.async {
-                        self.error = .invalidResponse(response: String(data: data, encoding: .utf8) ?? notAvailableString)
-                    }
+                    completion(.failure(.invalidResponse))
                 }
             } else {
-                print("No response.")
-                DispatchQueue.main.async {
-                    self.error = .noResponse
-                }
+                completion(.failure(.noResponse))
             }
         }.resume()
+    }
+    
+    func loadData(for country: Country) {
+        self.loadData(for: country.code)
+    }
+    
+    func loadData(for countryCode: String) {
+        guard let country = self.countries.first(where: {$0.code == countryCode}) else { return }
+        DataManager.getData(for: countryCode, previousCountry: country) { result in
+            switch result {
+            case .success(let country):
+                DispatchQueue.main.async {
+                    if let idx = self.countries.firstIndex(of: country) {
+                        self.countries[idx] = country
+                    }
+                    self.error = nil
+                }
+            case .failure(let error):
+                self.error = error
+            }
+        }
     }
     
     private func sortCountries() {

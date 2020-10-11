@@ -209,7 +209,6 @@ struct CountrySummaryMeasurement {
 }
 
 class Country: Equatable, SummaryProvider {
-    
     var active: Int {
         totalConfirmed - totalRecovered - totalDeaths
     }
@@ -265,7 +264,8 @@ struct CountryHistoryMeasurement: Equatable {
     }
 }
 
-struct GlobalMeasurement: Decodable, Equatable, SummaryProvider {
+struct GlobalMeasurement: Decodable, Equatable, SummaryProvider
+{
     var active: Int {
         totalConfirmed - totalRecovered - totalDeaths
     }
@@ -277,7 +277,6 @@ struct GlobalMeasurement: Decodable, Equatable, SummaryProvider {
     let totalRecovered: Int
     let newRecovered: Int
 }
-
 protocol SummaryProvider {
     var totalConfirmed: Int { get }
     var newConfirmed: Int { get }
@@ -287,17 +286,17 @@ protocol SummaryProvider {
     var newRecovered: Int { get }
     var active: Int { get }
     
-    var confirmedSummary: Text { get }
-    var deathsSummary: Text { get }
-    var recoveredSummary: Text { get }
-    var activeSummary: Text { get }
+    func confirmedSummary(colorNumbers: Bool) -> Text
+    func deathsSummary(colorNumbers: Bool) -> Text
+    func recoveredSummary(colorNumbers: Bool) -> Text
+    func activeSummary(colorNumbers: Bool) -> Text
     
-    func summary(total: Int, new: Int?) -> Text
-    func summaryFor(metric: BasicMeasurementMetric) -> Text
+    func summary(total: Int, new: Int?, colorNumbers: Bool) -> Text
+    func summaryFor(metric: BasicMeasurementMetric, colorNumbers: Bool) -> Text
 }
 
 extension SummaryProvider {
-    func summary(total: Int, new: Int?) -> Text {
+    func summary(total: Int, new: Int?, colorNumbers: Bool) -> Text {
         let colorNumbers = UserDefaults().bool(forKey: UserDefaultsKeys.colorNumbers)
         let numberFormatter = NumberFormatter()
         numberFormatter.usesGroupingSeparator = true
@@ -316,30 +315,29 @@ extension SummaryProvider {
         }
     }
     
-    var confirmedSummary: Text {
-        return summary(total: totalConfirmed, new: newConfirmed)
+    func confirmedSummary(colorNumbers: Bool) -> Text {
+        return summary(total: totalConfirmed, new: newConfirmed, colorNumbers: colorNumbers)
     }
-    var deathsSummary: Text {
-        return summary(total: totalDeaths, new: newDeaths)
+    func deathsSummary(colorNumbers: Bool) -> Text {
+        return summary(total: totalDeaths, new: newDeaths, colorNumbers:    colorNumbers)
     }
-    var recoveredSummary: Text {
-        return summary(total: totalRecovered, new: newRecovered)
+    func recoveredSummary(colorNumbers: Bool) -> Text {
+        return summary(total: totalRecovered, new: newRecovered, colorNumbers: colorNumbers)
+    }
+    func activeSummary(colorNumbers: Bool) -> Text {
+        return summary(total: active, new: nil, colorNumbers: colorNumbers)
     }
     
-    var activeSummary: Text {
-        return summary(total: active, new: nil)
-    }
-    
-    func summaryFor(metric: BasicMeasurementMetric) -> Text {
+    func summaryFor(metric: BasicMeasurementMetric, colorNumbers: Bool) -> Text {
         switch metric {
         case .confirmed:
-            return confirmedSummary
+            return confirmedSummary(colorNumbers: colorNumbers)
         case .deaths:
-            return deathsSummary
+            return deathsSummary(colorNumbers: colorNumbers)
         case .recovered:
-            return recoveredSummary
+            return recoveredSummary(colorNumbers: colorNumbers)
         case .active:
-            return activeSummary
+            return activeSummary(colorNumbers: colorNumbers)
         }
     }
 }
@@ -358,7 +356,7 @@ enum DataRepresentationType: String, CaseIterable, Identifiable {
 enum NetworkError: Error, Equatable {
     static func == (lhs: NetworkError, rhs: NetworkError) -> Bool {lhs.localizedDescription == rhs.localizedDescription} // no better way?
     
-    case invalidResponse(response: String)
+    case invalidResponse
     case noResponse // don't actually know whether that can happen without a timeout error 🤔
     case urlError(_ error: URLError)
     case noNetworkConnection

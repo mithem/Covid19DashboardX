@@ -11,10 +11,11 @@ struct SummaryView: View, DataManagerDelegate {
     @ObservedObject var manager: DataManager
     @State private var showingSortActionSheet = false
     @State private var searchTerm = ""
-    @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = BasicMeasurementMetric.confirmed
     @State private var favorites = [String]()
     @State private var lowercasedSearchTerm = ""
     @State private var showingErrorActionSheet = false
+    @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = BasicMeasurementMetric.confirmed
+    @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = DefaultSettings.colorNumbers
     
     init() {
         self.manager = DataManager()
@@ -52,12 +53,12 @@ struct SummaryView: View, DataManagerDelegate {
                         List {
                             BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
                             SearchBar(searchTerm: $searchTerm)
-                            Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric) ?? Text(notAvailableString))
+                            Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric, colorNumbers: colorNumbers) ?? Text(notAvailableString))
                             ForEach(manager.countries.filter { c in
                                 if searchTerm.isEmpty { return true }
                                 return c.name.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(c.code.lowercased())
                             }, id: \.code) { country in
-                                CountryInlineView(country: country, activeMetric: $activeMetric)
+                                CountryInlineView(country: country, colorNumbers: true, activeMetric: $activeMetric)
                                     .environmentObject(manager)
                             }
                             HStack {
