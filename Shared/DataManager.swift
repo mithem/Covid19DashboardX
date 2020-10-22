@@ -40,6 +40,9 @@ class DataManager: ObservableObject, Equatable {
         }
     }
     
+    let colorThreshold = UserDefaults().double(forKey: UserDefaultsKeys.colorThresholdForPercentages)
+    let colorGrayArea = UserDefaults().double(forKey: UserDefaultsKeys.colorGrayAreaForPercentages)
+    
     static func getSummary(completion: @escaping (Result<SummaryResponse, NetworkError>) -> Void) {
         guard let url = URL(string: "https://api.covid19api.com/summary") else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
@@ -75,7 +78,7 @@ class DataManager: ObservableObject, Equatable {
             case .success(let response):
                 var tempCountries = [Country]()
                 for country in response.countries {
-                    let measurement = CountrySummaryMeasurement(date: country.date, totalConfirmed: country.totalConfirmed, newConfirmed: country.newConfirmed, totalDeaths: country.totalDeaths, newDeaths: country.newDeaths, totalRecovered: country.totalRecovered, newRecovered: country.newRecovered)
+                    let measurement = CountrySummaryMeasurement(date: country.date, totalConfirmed: country.totalConfirmed, newConfirmed: country.newConfirmed, totalDeaths: country.totalDeaths, newDeaths: country.newDeaths, totalRecovered: country.totalRecovered, newRecovered: country.newRecovered, active: country.active, newActive: country.newActive, caseFatalityRate: country.caseFatalityRate)
                     
                     let newCountry = Country(code: country.countryCode, name: country.country, latest: measurement)
                     tempCountries.append(newCountry)

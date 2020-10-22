@@ -56,6 +56,8 @@ struct SummaryView: View, DataManagerDelegate {
             buttons.append(contentsOf: recovered)
         case .active:
             buttons.append(contentsOf: active)
+        default: //TODO: Add other metrics
+            break
         }
         
         buttons.append(contentsOf: [.default(Text(manager.reversed ? "Dereverse" : "Reverse"), action: {manager.reversed.toggle()}), .cancel()])
