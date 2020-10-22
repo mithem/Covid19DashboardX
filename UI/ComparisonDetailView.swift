@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ComparisonDetailView: View {
+    @Binding var isPresented: Bool
     let countries: (Country, Country)
     let columns: [GridItem] = Array(repeating: .init(.fixed(35)), count: 7)
-    
     var body: some View {
         ScrollView(.init([.vertical, .horizontal])) {
             LazyHGrid(rows: columns) {
@@ -41,11 +41,14 @@ struct ComparisonDetailView: View {
             .padding()
         }
         .navigationTitle("Compare countries")
+        .navigationBarItems(trailing: Button("Done"){
+            isPresented = false
+        })
     }
 }
 
 struct ComparisonDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ComparisonDetailView(countries: (countriesForPreviews[0], countriesForPreviews[1]))
+        ComparisonDetailView(isPresented: .constant(false), countries: (countriesForPreviews[0], countriesForPreviews[1]))
     }
 }

@@ -86,7 +86,7 @@ struct CountryView: View {
                     .foregroundColor(.blue)
                 )
                 .sheet(isPresented: $showingComparisonView) {
-                    ComparisonView(countries: manager.countries, country: country)
+                    ComparisonView(isPresented: $showingComparisonView, countries: manager.countries, country: country)
                 }
                 if maximumN > 1 {
                     Stepper("Moving average: \(n.nDaysHumanReadable)", value: $n, in: 1...(country.measurements.count == 0 ? 1 : (country.measurements.count < maximumN ? country.measurements.count : maximumN)))
