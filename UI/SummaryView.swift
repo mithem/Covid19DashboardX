@@ -86,13 +86,17 @@ struct SummaryView: View, DataManagerDelegate {
                 }
             }
             .actionSheet(isPresented: $showingErrorActionSheet) {
-                ActionSheet(title: Text("Error"), message: Text("Unkown error."), buttons: [.default(Text("OK"))])
+                ActionSheet(title: Text("Error"), message: Text(manager.error?.localizedDescription ?? "unkown error."), buttons: [.default(Text("OK"))])
             }
             .foregroundColor(showingErrorActionSheet ? .red : .primary)
             .onChange(of: searchTerm, perform: { value in
                 lowercasedSearchTerm = searchTerm.lowercased()
             })
-            .onAppear(perform: manager.loadSummary)
+            .onAppear {
+                if manager.error != nil {
+                    showingErrorActionSheet = true
+                }
+            }
             .navigationBarItems(leading:
                                     Button(action: {
                                         showingSortActionSheet = true

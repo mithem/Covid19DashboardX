@@ -360,6 +360,7 @@ enum NetworkError: Error, Equatable {
     case noResponse // don't actually know whether that can happen without a timeout error 🤔
     case urlError(_ error: URLError)
     case noNetworkConnection
+    case constrainedNetwork
     case otherWith(error: Error)
     case other
 }

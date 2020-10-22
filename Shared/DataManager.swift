@@ -15,13 +15,7 @@ class DataManager: ObservableObject, Equatable {
     
     @Published var countries: [Country]
     @Published var latestGlobal: GlobalMeasurement?
-    
-    var error: NetworkError? { // this should be the definition of weird, just to not change the code below…
-        get { nil }
-        set {
-            delegate?.error(newValue ?? .other)
-        }
-    }
+    @Published var error: NetworkError?
     
     private let monitor: NWPathMonitor
     private var _sortBy: CountrySortingCriteria
@@ -51,7 +45,11 @@ class DataManager: ObservableObject, Equatable {
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 if let error = error as? URLError {
-                    completion(.failure(.urlError(error)))
+                    if error.networkUnavailableReason == .constrained {
+                        completion(.failure(.constrainedNetwork))
+                    } else {
+                        completion(.failure(.urlError(error)))
+                    }
                 } else {
                     completion(.failure(.otherWith(error: error)))
                 }
@@ -104,10 +102,16 @@ class DataManager: ObservableObject, Equatable {
     
     static func getData(for countryCode: String, previousCountry: Country, completion: @escaping GetDataCompletionHandler) {
         guard let url = URL(string: "https://api.covid19api.com/total/country/\(countryCode)") else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        var request = URLRequest(url: url)
+        request.allowsConstrainedNetworkAccess = false
+        URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 if let error = error as? URLError {
-                    completion(.failure(.urlError(error)))
+                    if error.networkUnavailableReason == .constrained {
+                        completion(.failure(.constrainedNetwork))
+                    } else {
+                        completion(.failure(.urlError(error)))
+                    }
                 } else {
                     completion(.failure(.otherWith(error: error)))
                 }
@@ -146,7 +150,9 @@ class DataManager: ObservableObject, Equatable {
                     self.error = nil
                 }
             case .failure(let error):
-                self.error = error
+                DispatchQueue.main.async {
+                    self.error = error
+                }
             }
         }
     }
@@ -194,6 +200,7 @@ class DataManager: ObservableObject, Equatable {
                 self.loadSummary()
             }
         }
+        loadSummary()
     }
     
     enum CountrySortingCriteria {

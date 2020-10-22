@@ -87,7 +87,7 @@ struct Covid19Widget: Widget {
         }
         .configurationDisplayName("Covid19 Widget")
         .description("Shows Covid19 active cases in a configured country.")
-        .supportedFamilies([.systemSmall, .systemLarge])
+        .supportedFamilies([.systemSmall])
     }
 }
 
