@@ -38,6 +38,8 @@ private extension String {
 }
 
 extension Int {
+    
+    /// formatted String for self (n) days
     var nDaysHumanReadable: String {
         let formatter = DateComponentsFormatter()
         let dateComponents = DateComponents(day: self)
@@ -45,5 +47,25 @@ extension Int {
         formatter.unitsStyle = .full
         
         return formatter.string(from: dateComponents) ?? notAvailableString
+    }
+    
+    /// human-readable formatted String
+    var humanReadable: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.usesGroupingSeparator = true
+        
+        return formatter.string(from: NSNumber(value: self)) ?? notAvailableString
+    }
+}
+
+extension Optional where Wrapped == Int {
+    /// human-readable formatted String
+    var humanReadable: String {
+        if let n = self {
+            return n.humanReadable
+        } else {
+            return notAvailableString
+        }
     }
 }

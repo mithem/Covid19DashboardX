@@ -40,6 +40,8 @@
 		49EEFE9F2532DED0008ECBDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49B556342531F695000D2030 /* Assets.xcassets */; };
 		49EEFEA02532DED0008ECBDA /* Covid19Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B556312531F694000D2030 /* Covid19Widget.swift */; };
 		49EEFEA22532DED0008ECBDA /* Covid19Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 49B556332531F694000D2030 /* Covid19Widget.intentdefinition */; };
+		49F9DD712541AC9D003D457B /* ComparisonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F9DD702541AC9D003D457B /* ComparisonView.swift */; };
+		49F9DD792541B079003D457B /* ComparisonDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F9DD782541B079003D457B /* ComparisonDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +105,8 @@
 		49B7D1C12529DB2000AE2B9B /* CountryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryView.swift; sourceTree = "<group>"; };
 		49BCE214253199F20099138F /* CountryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryInlineView.swift; sourceTree = "<group>"; };
 		49EC190D25279D13006A82D6 /* ModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsTests.swift; sourceTree = "<group>"; };
+		49F9DD702541AC9D003D457B /* ComparisonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonView.swift; sourceTree = "<group>"; };
+		49F9DD782541B079003D457B /* ComparisonDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +224,8 @@
 				49B7D1C12529DB2000AE2B9B /* CountryView.swift */,
 				49BCE214253199F20099138F /* CountryInlineView.swift */,
 				493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */,
+				49F9DD702541AC9D003D457B /* ComparisonView.swift */,
+				49F9DD782541B079003D457B /* ComparisonDetailView.swift */,
 				49325AE52529B29200A438C4 /* SearchBar.swift */,
 				4942F2D925299AB100EE2959 /* SettingsView.swift */,
 			);
@@ -381,9 +387,11 @@
 				497E01382531FD52006CEF67 /* ContentView.swift in Sources */,
 				497E01332531FD52006CEF67 /* shared.swift in Sources */,
 				497E01322531FD52006CEF67 /* MovingAverage.swift in Sources */,
+				49F9DD712541AC9D003D457B /* ComparisonView.swift in Sources */,
 				497E012C2531FD52006CEF67 /* SearchBar.swift in Sources */,
 				497E012E2531FD52006CEF67 /* BasicMeasurementMetricPickerView.swift in Sources */,
 				497E01302531FD52006CEF67 /* SettingsView.swift in Sources */,
+				49F9DD792541B079003D457B /* ComparisonDetailView.swift in Sources */,
 				497E012F2531FD52006CEF67 /* CountryInlineView.swift in Sources */,
 				497E01392531FD52006CEF67 /* CountryViewSettingsView.swift in Sources */,
 				497E01372531FD52006CEF67 /* Extensions.swift in Sources */,

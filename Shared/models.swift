@@ -208,7 +208,7 @@ struct CountrySummaryMeasurement {
     let newRecovered: Int
 }
 
-class Country: Equatable, SummaryProvider {
+class Country: SummaryProvider {
     var active: Int {
         totalConfirmed - totalRecovered - totalDeaths
     }
@@ -220,22 +220,12 @@ class Country: Equatable, SummaryProvider {
     var totalRecovered: Int { latest.totalRecovered }
     var newRecovered: Int { latest.newRecovered }
     
-    static func == (lhs: Country, rhs: Country) -> Bool {
-        let c = lhs.code == rhs.code
-        let n = lhs.name == rhs.name
-        let m = lhs.measurements == rhs.measurements
-        
-        return c && n && m
-    }
-    
-    let id: UUID
     var code: String
     var name: String
     var latest: CountrySummaryMeasurement
     var measurements: [CountryHistoryMeasurement]
     
     init(code: String, name: String, latest: CountrySummaryMeasurement, measurements: [CountryHistoryMeasurement] = []) {
-        self.id = UUID()
         self.code = code
         self.name = name
         self.latest = latest
@@ -243,7 +233,7 @@ class Country: Equatable, SummaryProvider {
     }
 }
 
-struct CountryHistoryMeasurement: Equatable {
+struct CountryHistoryMeasurement {
     var confirmed: Int
     var deaths: Int?
     var recovered: Int?
@@ -382,4 +372,26 @@ enum NetworkError: Error, Equatable, LocalizedError {
             return "Unkown."
         }
     }
+}
+
+// MARK: Extensions
+
+extension Country: Equatable {
+    static func == (lhs: Country, rhs: Country) -> Bool {
+        let c = lhs.code == rhs.code
+        let n = lhs.name == rhs.name
+        let m = lhs.measurements == rhs.measurements
+        
+        return c && n && m
+    }
+}
+
+extension Country: Identifiable {
+    var id: String { code }
+}
+
+extension CountryHistoryMeasurement: Equatable {}
+
+extension CountryHistoryMeasurement: Identifiable {
+    var id: Date { date }
 }

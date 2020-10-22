@@ -13,8 +13,9 @@ struct CountryView: View {
     @AppStorage(UserDefaultsKeys.dataRepresentationType) var dataRepresentationType = DataRepresentationType.normal
     @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = BasicMeasurementMetric.confirmed
     @AppStorage(UserDefaultsKeys.currentN) var n = 1
-    @State private var alteredData = [Double]()
     @AppStorage(UserDefaultsKeys.maximumN) var maximumN = 90
+    @State private var alteredData = [Double]()
+    @State private var showingComparisonView = false
     
     let country: Country
     
@@ -71,6 +72,21 @@ struct CountryView: View {
                         }
                         Spacer()
                     }
+                }
+                Button(action: {
+                    showingComparisonView = true
+                }) {
+                    Text("Compare")
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 10)
+                }
+                .padding(10)
+                .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundColor(.blue)
+                )
+                .sheet(isPresented: $showingComparisonView) {
+                    ComparisonView(countries: manager.countries, country: country)
                 }
                 if maximumN > 1 {
                     Stepper("Moving average: \(n.nDaysHumanReadable)", value: $n, in: 1...(country.measurements.count == 0 ? 1 : (country.measurements.count < maximumN ? country.measurements.count : maximumN)))
