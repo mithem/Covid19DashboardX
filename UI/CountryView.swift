@@ -9,73 +9,84 @@ import SwiftUI
 import SwiftUICharts
 
 struct CountryView: View {
-    @EnvironmentObject var manager: DataManager
+    @ObservedObject var manager: DataManager
     @AppStorage(UserDefaultsKeys.dataRepresentationType) var dataRepresentationType = DataRepresentationType.normal
     @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = BasicMeasurementMetric.confirmed
     @AppStorage(UserDefaultsKeys.currentN) var n = 1
     @State private var alteredData = [Double]()
-    let country: Country
-    
     @AppStorage(UserDefaultsKeys.maximumN) var maximumN = 90
     
+    let country: Country
+    
     var body: some View {
-        VStack {
-            BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
-            Spacer()
-            Group {
-                if country.measurements.count > 0 {
-                    VStack {
+        if let error = manager.error {
+            if error == .constrainedNetwork {
+                Text("Low data mode on.")
+                    .padding()
+            } else {
+                Text(error.localizedDescription)
+                    .padding()
+            }
+        } else {
+            VStack {
+                BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
+                Spacer()
+                Group {
+                    
+                    if country.measurements.count > 0 {
                         VStack {
-                            HStack {
-                                Text(activeMetric.humanReadable)
-                                    .font(.title)
-                                    .bold()
-                                Spacer()
+                            VStack {
+                                HStack {
+                                    Text(activeMetric.humanReadable)
+                                        .font(.title)
+                                        .bold()
+                                    Spacer()
+                                }
+                                HStack {
+                                    Text(dataRepresentationType.rawValue)
+                                        .font(.subheadline)
+                                        .bold()
+                                        .foregroundColor(.secondary)
+                                    Spacer()
+                                }
+                                .onChange(of: dataRepresentationType, perform: { _ in
+                                    calcMovingAvg()
+                                })
                             }
-                            HStack {
-                                Text(dataRepresentationType.rawValue)
-                                    .font(.subheadline)
-                                    .bold()
-                                    .foregroundColor(.secondary)
-                                Spacer()
-                            }
-                            .onChange(of: dataRepresentationType, perform: { _ in
-                                calcMovingAvg()
-                            })
+                            LineView(data: alteredData)
+                                .onAppear {
+                                    calcMovingAvg()
+                                }
+                                .onChange(of: activeMetric, perform: { _ in
+                                    calcMovingAvg()
+                                })
                         }
-                        LineView(data: alteredData)
-                            .onAppear {
-                                calcMovingAvg()
-                            }
-                            .onChange(of: activeMetric, perform: { _ in
-                                calcMovingAvg()
-                            })
+                    } else {
+                        VStack(spacing: 10) {
+                            ProgressView()
+                            Text("Loading…")
+                        }
+                        .onAppear {
+                            manager.loadData(for: country)
+                        }
+                        Spacer()
                     }
-                } else {
-                    VStack(spacing: 10) {
-                        ProgressView()
-                        Text("Loading…")
-                    }
-                    .onAppear {
-                        manager.loadData(for: country)
-                    }
-                    Spacer()
+                }
+                if maximumN > 1 {
+                    Stepper("Moving average: \(n.nDaysHumanReadable)", value: $n, in: 1...(country.measurements.count == 0 ? 1 : (country.measurements.count < maximumN ? country.measurements.count : maximumN)))
+                        .onChange(of: n, perform: { _ in
+                            calcMovingAvg()
+                        })
                 }
             }
-            if maximumN > 1 {
-                Stepper("Moving average: \(n.nDaysHumanReadable)", value: $n, in: 1...(country.measurements.count == 0 ? 1 : (country.measurements.count < maximumN ? country.measurements.count : maximumN)))
-                    .onChange(of: n, perform: { _ in
-                        calcMovingAvg()
+            .padding()
+            .navigationTitle(country.name.localizedCapitalized)
+            .navigationBarItems(
+                trailing:
+                    NavigationLink(destination: CountryViewSettingsView(country: country)) {
+                        Image(systemName: "info.circle")
                     })
-            }
         }
-        .padding()
-        .navigationTitle(country.name.localizedCapitalized)
-        .navigationBarItems(
-            trailing:
-                NavigationLink(destination: CountryViewSettingsView(country: country)) {
-                    Image(systemName: "info.circle")
-                })
     }
     
     func calcMovingAvg() {
@@ -87,11 +98,11 @@ struct CountryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView {
-                CountryView(country: countriesForPreviews[0])
+                CountryView(manager: DataManager(), country: countriesForPreviews[0])
             }
             .previewDisplayName("Success")
             NavigationView {
-                CountryView(country: SpecialCountries.emptyCountry)
+                CountryView(manager: DataManager(), country: SpecialCountries.emptyCountry)
                     .environmentObject(DataManager())
             }
             .previewDisplayName("No internet")

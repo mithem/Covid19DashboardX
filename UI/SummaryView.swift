@@ -6,20 +6,37 @@
 //
 
 import SwiftUI
+import Reachability
 
 struct SummaryView: View, DataManagerDelegate {
+    
+    let reachability = try! Reachability()
+    
     @ObservedObject var manager: DataManager
-    @State private var showingSortActionSheet = false
+    @State private var showingActionSheet = false
+    @State private var actionSheetConfig = ActionSheetConfig.sort
     @State private var searchTerm = ""
     @State private var favorites = [String]()
     @State private var lowercasedSearchTerm = ""
-    @State private var showingErrorActionSheet = false
     @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = BasicMeasurementMetric.confirmed
     @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = DefaultSettings.colorNumbers
     
     init() {
         self.manager = DataManager()
         manager.delegate = self
+        reachability.whenReachable = {[self] reachability in
+            if reachability.connection != .unavailable {
+                DispatchQueue.main.async {
+                    manager.error = nil
+                }
+                manager.loadSummary() // also refreshes CountryView
+            }
+        }
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Couldn't start Reachability notifier: \(error.localizedDescription)")
+        }
     }
     
     var actionSheetButtonsForSorting: [ActionSheet.Button] {
@@ -45,10 +62,23 @@ struct SummaryView: View, DataManagerDelegate {
         return buttons
     }
     
+    var actionSheet: ActionSheet {
+        switch actionSheetConfig {
+        case .sort:
+            return ActionSheet(title: Text("Sort countries"), message: Text("By which criteria would you like to sort countries?"), buttons: actionSheetButtonsForSorting)
+        case .error:
+            return ActionSheet(title: Text("Error"), message: Text(manager.error?.localizedDescription ?? "unkown error."), buttons: [.default(Text("OK"))])
+        }
+    }
+    
     var body: some View {
         NavigationView {
             Group {
-                if manager.countries.count > 0 {
+                if let error = manager.error {
+                    Text(error.localizedDescription)
+                        .padding()
+                        .onAppear(perform: handleNetworkErrors)
+                } else if manager.countries.count > 0 {
                     VStack {
                         List {
                             BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
@@ -58,8 +88,7 @@ struct SummaryView: View, DataManagerDelegate {
                                 if searchTerm.isEmpty { return true }
                                 return c.name.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(c.code.lowercased())
                             }, id: \.code) { country in
-                                CountryInlineView(country: country, colorNumbers: true, activeMetric: $activeMetric)
-                                    .environmentObject(manager)
+                                CountryInlineView(country: country, colorNumbers: true, activeMetric: $activeMetric, manager: manager)
                             }
                             HStack {
                                 Spacer()
@@ -67,9 +96,6 @@ struct SummaryView: View, DataManagerDelegate {
                                     .foregroundColor(.secondary)
                                     .grayscale(0.35)
                                 Spacer()
-                                    .actionSheet(isPresented: $showingSortActionSheet) {
-                                        ActionSheet(title: Text("Sort countries"), message: Text("By which criteria would you like to sort countries?"), buttons: actionSheetButtonsForSorting)
-                                    }
                             }
                             .onTapGesture {
                                 UIApplication.shared.open(UsefulURLs.whoCovid19AdviceForPublic)
@@ -85,21 +111,22 @@ struct SummaryView: View, DataManagerDelegate {
                     }
                 }
             }
-            .actionSheet(isPresented: $showingErrorActionSheet) {
-                ActionSheet(title: Text("Error"), message: Text(manager.error?.localizedDescription ?? "unkown error."), buttons: [.default(Text("OK"))])
+            .actionSheet(isPresented: $showingActionSheet) {
+                actionSheet
             }
-            .foregroundColor(showingErrorActionSheet ? .red : .primary)
             .onChange(of: searchTerm, perform: { value in
                 lowercasedSearchTerm = searchTerm.lowercased()
             })
             .onAppear {
                 if manager.error != nil {
-                    showingErrorActionSheet = true
+                    actionSheetConfig = .error
+                    showingActionSheet = true
                 }
             }
             .navigationBarItems(leading:
                                     Button(action: {
-                                        showingSortActionSheet = true
+                                        actionSheetConfig = .sort
+                                        showingActionSheet = true
                                     }) {
                                         Image(systemName: "arrow.up.arrow.down")
                                     }.onLongPressGesture {
@@ -114,10 +141,26 @@ struct SummaryView: View, DataManagerDelegate {
         }
     }
     
+    func handleNetworkErrors() {
+        if manager.countries.count == 0 {
+            switch manager.error {
+            case .urlError(_):
+                manager.loadSummary()
+            default:
+                break
+            }
+        }
+    }
+    
     // MARK: DataManagerDelegate compliance
     func error(_ error: NetworkError) {
-        showingErrorActionSheet = true
+        actionSheetConfig = .error
+        showingActionSheet = true
     }
+}
+
+fileprivate enum ActionSheetConfig {
+    case sort, error
 }
 
 struct SummaryView_Previews: PreviewProvider {

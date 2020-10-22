@@ -10,6 +10,7 @@
 		493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E08252383A70060BA27 /* ModelDecodableTests.swift */; };
 		4954F5DE24E7F4D300399145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4954F5C924E7F4D300399145 /* Assets.xcassets */; };
 		4954F5DF24E7F4D300399145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4954F5C924E7F4D300399145 /* Assets.xcassets */; };
+		497844E42541939800364E18 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 497844E32541939800364E18 /* Reachability */; };
 		497E01182531FD51006CEF67 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5E824E7F50200399145 /* DataManager.swift */; };
 		497E01192531FD51006CEF67 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49325AE52529B29200A438C4 /* SearchBar.swift */; };
 		497E011A2531FD51006CEF67 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5EE24E7F9B100399145 /* SummaryView.swift */; };
@@ -136,6 +137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49B7D1BD2529DAD600AE2B9B /* SwiftUICharts in Frameworks */,
+				497844E42541939800364E18 /* Reachability in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +301,7 @@
 			name = "Covid19DashboardX (iOS)";
 			packageProductDependencies = (
 				49B7D1BC2529DAD600AE2B9B /* SwiftUICharts */,
+				497844E32541939800364E18 /* Reachability */,
 			);
 			productName = "Covid19DashboardX (iOS)";
 			productReference = 4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */;
@@ -377,6 +380,7 @@
 			mainGroup = 4954F5C124E7F4D200399145;
 			packageReferences = (
 				49B7D1BB2529DAD600AE2B9B /* XCRemoteSwiftPackageReference "ChartView" */,
+				497844E22541939800364E18 /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			productRefGroup = 4954F5CF24E7F4D300399145 /* Products */;
 			projectDirPath = "";
@@ -865,6 +869,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		497844E22541939800364E18 /* XCRemoteSwiftPackageReference "Reachability" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 		49B7D1BB2529DAD600AE2B9B /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppPear/ChartView";
@@ -876,6 +888,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		497844E32541939800364E18 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 497844E22541939800364E18 /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
+		};
 		49A39CBF2532FFFF00E15B02 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 49B7D1BB2529DAD600AE2B9B /* XCRemoteSwiftPackageReference "ChartView" */;

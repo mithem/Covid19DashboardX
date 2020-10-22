@@ -353,7 +353,7 @@ enum DataRepresentationType: String, CaseIterable, Identifiable {
 
 // MARK: Errors
 
-enum NetworkError: Error, Equatable {
+enum NetworkError: Error, Equatable, LocalizedError {
     static func == (lhs: NetworkError, rhs: NetworkError) -> Bool {lhs.localizedDescription == rhs.localizedDescription} // no better way?
     
     case invalidResponse
@@ -363,4 +363,23 @@ enum NetworkError: Error, Equatable {
     case constrainedNetwork
     case otherWith(error: Error)
     case other
+    
+    var localizedDescription: String {
+        switch self {
+        case .invalidResponse:
+            return "Invalid response from server."
+        case .noResponse:
+            return "No response from server."
+        case .urlError(let error):
+            return error.localizedDescription
+        case .noNetworkConnection:
+            return "No network connection."
+        case .constrainedNetwork:
+            return "Low data mode is on."
+        case .otherWith(error: let error):
+            return error.localizedDescription
+        case .other:
+            return "Unkown."
+        }
+    }
 }
