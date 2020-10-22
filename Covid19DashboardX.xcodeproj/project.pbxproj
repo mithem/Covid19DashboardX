@@ -9,23 +9,7 @@
 /* Begin PBXBuildFile section */
 		493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E08252383A70060BA27 /* ModelDecodableTests.swift */; };
 		4954F5DE24E7F4D300399145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4954F5C924E7F4D300399145 /* Assets.xcassets */; };
-		4954F5DF24E7F4D300399145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4954F5C924E7F4D300399145 /* Assets.xcassets */; };
 		497844E42541939800364E18 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 497844E32541939800364E18 /* Reachability */; };
-		497E01182531FD51006CEF67 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5E824E7F50200399145 /* DataManager.swift */; };
-		497E01192531FD51006CEF67 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49325AE52529B29200A438C4 /* SearchBar.swift */; };
-		497E011A2531FD51006CEF67 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5EE24E7F9B100399145 /* SummaryView.swift */; };
-		497E011B2531FD51006CEF67 /* BasicMeasurementMetricPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493B2C6F252D7BF9003B551E /* BasicMeasurementMetricPickerView.swift */; };
-		497E011C2531FD51006CEF67 /* CountryInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BCE214253199F20099138F /* CountryInlineView.swift */; };
-		497E011D2531FD51006CEF67 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4942F2D925299AB100EE2959 /* SettingsView.swift */; };
-		497E011E2531FD51006CEF67 /* CountryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B7D1C12529DB2000AE2B9B /* CountryView.swift */; };
-		497E011F2531FD51006CEF67 /* MovingAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49806BE6252F782400767A6E /* MovingAverage.swift */; };
-		497E01202531FD51006CEF67 /* shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5F724E8051300399145 /* shared.swift */; };
-		497E01212531FD51006CEF67 /* Covid19DashboardXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5C724E7F4D200399145 /* Covid19DashboardXApp.swift */; };
-		497E01222531FD51006CEF67 /* models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5EB24E7F51400399145 /* models.swift */; };
-		497E01232531FD51006CEF67 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4942F2BE2529955100EE2959 /* constants.swift */; };
-		497E01242531FD51006CEF67 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E14252386D00060BA27 /* Extensions.swift */; };
-		497E01252531FD51006CEF67 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5C824E7F4D200399145 /* ContentView.swift */; };
-		497E01262531FD51006CEF67 /* CountryViewSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */; };
 		497E012B2531FD52006CEF67 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5E824E7F50200399145 /* DataManager.swift */; };
 		497E012C2531FD52006CEF67 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49325AE52529B29200A438C4 /* SearchBar.swift */; };
 		497E012D2531FD52006CEF67 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5EE24E7F9B100399145 /* SummaryView.swift */; };
@@ -104,9 +88,6 @@
 		4954F5C924E7F4D300399145 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Covid19DashboardX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4954F5D124E7F4D300399145 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4954F5D624E7F4D300399145 /* Covid19DashboardX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Covid19DashboardX.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4954F5D824E7F4D300399145 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4954F5D924E7F4D300399145 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		4954F5E824E7F50200399145 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		4954F5EB24E7F51400399145 /* models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = models.swift; sourceTree = "<group>"; };
 		4954F5EE24E7F9B100399145 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
@@ -141,13 +122,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4954F5D324E7F4D300399145 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		49B556272531F694000D2030 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -177,7 +151,6 @@
 				49EEFE662532DE23008ECBDA /* UI */,
 				4954F5C624E7F4D200399145 /* Shared */,
 				4954F5D024E7F4D300399145 /* iOS */,
-				4954F5D724E7F4D300399145 /* macOS */,
 				493C2DF9252383620060BA27 /* Covid19DashboardXTests */,
 				49B556302531F694000D2030 /* Covid19Widget */,
 				49B5562B2531F694000D2030 /* Frameworks */,
@@ -202,7 +175,6 @@
 			isa = PBXGroup;
 			children = (
 				4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */,
-				4954F5D624E7F4D300399145 /* Covid19DashboardX.app */,
 				493C2DF8252383620060BA27 /* Covid19DashboardXTests.xctest */,
 				49B5562A2531F694000D2030 /* Covid19WidgetExtension.appex */,
 			);
@@ -215,15 +187,6 @@
 				4954F5D124E7F4D300399145 /* Info.plist */,
 			);
 			path = iOS;
-			sourceTree = "<group>";
-		};
-		4954F5D724E7F4D300399145 /* macOS */ = {
-			isa = PBXGroup;
-			children = (
-				4954F5D824E7F4D300399145 /* Info.plist */,
-				4954F5D924E7F4D300399145 /* macOS.entitlements */,
-			);
-			path = macOS;
 			sourceTree = "<group>";
 		};
 		49B5562B2531F694000D2030 /* Frameworks */ = {
@@ -307,23 +270,6 @@
 			productReference = 4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4954F5D524E7F4D300399145 /* Covid19DashboardX (macOS) */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4954F5E524E7F4D300399145 /* Build configuration list for PBXNativeTarget "Covid19DashboardX (macOS)" */;
-			buildPhases = (
-				4954F5D224E7F4D300399145 /* Sources */,
-				4954F5D324E7F4D300399145 /* Frameworks */,
-				4954F5D424E7F4D300399145 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Covid19DashboardX (macOS)";
-			productName = "Covid19DashboardX (macOS)";
-			productReference = 4954F5D624E7F4D300399145 /* Covid19DashboardX.app */;
-			productType = "com.apple.product-type.application";
-		};
 		49B556292531F694000D2030 /* Covid19WidgetExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 49B5563F2531F695000D2030 /* Build configuration list for PBXNativeTarget "Covid19WidgetExtension" */;
@@ -361,9 +307,6 @@
 					4954F5CD24E7F4D300399145 = {
 						CreatedOnToolsVersion = 12.0;
 					};
-					4954F5D524E7F4D300399145 = {
-						CreatedOnToolsVersion = 12.0;
-					};
 					49B556292531F694000D2030 = {
 						CreatedOnToolsVersion = 12.0.1;
 					};
@@ -387,7 +330,6 @@
 			projectRoot = "";
 			targets = (
 				4954F5CD24E7F4D300399145 /* Covid19DashboardX (iOS) */,
-				4954F5D524E7F4D300399145 /* Covid19DashboardX (macOS) */,
 				493C2DF7252383620060BA27 /* Covid19DashboardXTests */,
 				49B556292531F694000D2030 /* Covid19WidgetExtension */,
 			);
@@ -407,14 +349,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4954F5DE24E7F4D300399145 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4954F5D424E7F4D300399145 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4954F5DF24E7F4D300399145 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,28 +391,6 @@
 				497E012D2531FD52006CEF67 /* SummaryView.swift in Sources */,
 				497E01352531FD52006CEF67 /* models.swift in Sources */,
 				497E01362531FD52006CEF67 /* constants.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4954F5D224E7F4D300399145 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				497E01182531FD51006CEF67 /* DataManager.swift in Sources */,
-				497E01212531FD51006CEF67 /* Covid19DashboardXApp.swift in Sources */,
-				497E01252531FD51006CEF67 /* ContentView.swift in Sources */,
-				497E01202531FD51006CEF67 /* shared.swift in Sources */,
-				497E011F2531FD51006CEF67 /* MovingAverage.swift in Sources */,
-				497E01192531FD51006CEF67 /* SearchBar.swift in Sources */,
-				497E011B2531FD51006CEF67 /* BasicMeasurementMetricPickerView.swift in Sources */,
-				497E011D2531FD51006CEF67 /* SettingsView.swift in Sources */,
-				497E011C2531FD51006CEF67 /* CountryInlineView.swift in Sources */,
-				497E01262531FD51006CEF67 /* CountryViewSettingsView.swift in Sources */,
-				497E01242531FD51006CEF67 /* Extensions.swift in Sources */,
-				497E011E2531FD51006CEF67 /* CountryView.swift in Sources */,
-				497E011A2531FD51006CEF67 /* SummaryView.swift in Sources */,
-				497E01222531FD51006CEF67 /* models.swift in Sources */,
-				497E01232531FD51006CEF67 /* constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -721,56 +633,6 @@
 			};
 			name = Release;
 		};
-		4954F5E624E7F4D300399145 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = MHQFP8C3YS;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = macOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mithem.Covid19DashboardX;
-				PRODUCT_NAME = Covid19DashboardX;
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		4954F5E724E7F4D300399145 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = MHQFP8C3YS;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = macOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mithem.Covid19DashboardX;
-				PRODUCT_NAME = Covid19DashboardX;
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 		49B5563D2531F695000D2030 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -844,15 +706,6 @@
 			buildConfigurations = (
 				4954F5E324E7F4D300399145 /* Debug */,
 				4954F5E424E7F4D300399145 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4954F5E524E7F4D300399145 /* Build configuration list for PBXNativeTarget "Covid19DashboardX (macOS)" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4954F5E624E7F4D300399145 /* Debug */,
-				4954F5E724E7F4D300399145 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
