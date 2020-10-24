@@ -1,5 +1,5 @@
 //
-//  CountryProvincesView.swift
+//  CountryProvincesDetailView.swift
 //  Covid19DashboardX (iOS)
 //
 //  Created by Miguel Themann on 23.10.20.
@@ -36,14 +36,15 @@ struct CountryProvincesDetailView: View {
             .sheet(isPresented: $showingComparisonView) {
                 ComparisonView(isPresented: $showingComparisonView, manager: manager, country: country)
             }
-            .onAppear {
-                if country.provinces.isEmpty {
-                    manager.loadProvinceData(for: country)
-                }
-            }
         }
         .padding()
         .navigationTitle("Details: \(country.name.localizedCapitalized)")
+    }
+    
+    func loadData() {
+        if country.provinces.isEmpty {
+            manager.loadProvinceData(for: country)
+        }
     }
 }
 
@@ -52,3 +53,4 @@ struct CountryProvincesView_Previews: PreviewProvider {
         CountryProvincesDetailView(manager: DataManager(), country: countriesForPreviews[0])
     }
 }
+

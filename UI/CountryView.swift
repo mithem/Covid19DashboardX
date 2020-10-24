@@ -15,8 +15,16 @@ struct CountryView: View {
     @AppStorage(UserDefaultsKeys.currentN) var n = 1
     @AppStorage(UserDefaultsKeys.maximumN) var maximumN = 90
     @State private var alteredData = [Double]()
+    @State private var showingCountryProvincesDetailView = false
     
     let country: Country
+    let provincesDetailView: CountryProvincesDetailView
+    
+    init(manager: DataManager, country: Country) {
+        self.manager = manager
+        self.country = country
+        self.provincesDetailView = CountryProvincesDetailView(manager: manager, country: country)
+    }
     
     var body: some View {
         if let error = manager.error {
@@ -71,8 +79,13 @@ struct CountryView: View {
                         Spacer()
                     }
                 }
-                NavigationLink("Details", destination: CountryProvincesDetailView(manager: manager, country: country))
-                    .buttonStyle(CustomButtonStyle())
+                NavigationLink(destination: provincesDetailView, isActive: $showingCountryProvincesDetailView) {
+                    Button("Details") {
+                        provincesDetailView.loadData()
+                        showingCountryProvincesDetailView = true
+                    }
+                        .buttonStyle(CustomButtonStyle())
+                }
                 if maximumN > 1 {
                     Stepper("Moving average: \(n.nDaysHumanReadable)", value: $n, in: 1...(country.measurements.count == 0 ? 1 : (country.measurements.count < maximumN ? country.measurements.count : maximumN)))
                         .onChange(of: n, perform: { _ in

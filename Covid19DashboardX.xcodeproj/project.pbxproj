@@ -12,7 +12,7 @@
 		4914F3E92544032A00CBC521 /* SummaryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914F3E72544032A00CBC521 /* SummaryProvider.swift */; };
 		4914F3F4254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914F3F3254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift */; };
 		4914F3F5254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914F3F3254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift */; };
-		49370B1A25429832009BFE4C /* CountryProvincesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B1925429832009BFE4C /* CountryProvincesView.swift */; };
+		49370B1A25429832009BFE4C /* CountryProvincesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B1925429832009BFE4C /* CountryProvincesDetailView.swift */; };
 		49370B2225429E0B009BFE4C /* ProvinceInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */; };
 		49370B2A2542AA56009BFE4C /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
 		49370B352542AA5F009BFE4C /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4942F2BE2529955100EE2959 /* constants.swift */; };
@@ -92,7 +92,7 @@
 		4914F3E72544032A00CBC521 /* SummaryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryProvider.swift; sourceTree = "<group>"; };
 		4914F3F3254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvinceSummaryMetricPickerView.swift; sourceTree = "<group>"; };
 		49325AE52529B29200A438C4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
-		49370B1925429832009BFE4C /* CountryProvincesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryProvincesView.swift; sourceTree = "<group>"; };
+		49370B1925429832009BFE4C /* CountryProvincesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryProvincesDetailView.swift; sourceTree = "<group>"; };
 		49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvinceInlineView.swift; sourceTree = "<group>"; };
 		49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ISO_CountryCodes.plist; sourceTree = "<group>"; };
 		493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryViewSettingsView.swift; sourceTree = "<group>"; };
@@ -245,7 +245,7 @@
 				4954F5EE24E7F9B100399145 /* SummaryView.swift */,
 				49BCE214253199F20099138F /* CountryInlineView.swift */,
 				49B7D1C12529DB2000AE2B9B /* CountryView.swift */,
-				49370B1925429832009BFE4C /* CountryProvincesView.swift */,
+				49370B1925429832009BFE4C /* CountryProvincesDetailView.swift */,
 				49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */,
 				49B90EFB2543460100E89F5D /* ProvinceDetailView.swift */,
 				493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */,
@@ -412,7 +412,7 @@
 			files = (
 				4914F3F4254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift in Sources */,
 				497E012B2531FD52006CEF67 /* DataManager.swift in Sources */,
-				49370B1A25429832009BFE4C /* CountryProvincesView.swift in Sources */,
+				49370B1A25429832009BFE4C /* CountryProvincesDetailView.swift in Sources */,
 				497E01342531FD52006CEF67 /* Covid19DashboardXApp.swift in Sources */,
 				49370B2225429E0B009BFE4C /* ProvinceInlineView.swift in Sources */,
 				497E01382531FD52006CEF67 /* ContentView.swift in Sources */,
