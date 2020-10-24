@@ -9,12 +9,24 @@ import SwiftUI
 
 struct ComparisonView: View {
     @Binding var isPresented: Bool
-    let countries: [Country]
+    @ObservedObject var manager: DataManager
     let country: Country
+    @State private var searchTerm = ""
+    @State private var lowercasedSearchTerm = ""
     var body: some View {
         NavigationView {
-            List(countries.filter {$0.code != country.code}) { country in
-                NavigationLink(country.name.localizedCapitalized, destination: ComparisonDetailView(isPresented: $isPresented, countries: (self.country, country)))
+            VStack {
+                SearchBar(searchTerm: $searchTerm)
+                    .padding()
+                List(manager.countries.filter { c in
+                    if searchTerm.isEmpty { return true }
+                    return c.name.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(c.code.lowercased())
+                }) { country in
+                    NavigationLink(country.name.localizedCapitalized, destination: ComparisonDetailView(isPresented: $isPresented, countries: (self.country, country)))
+                }
+            }
+            .onChange(of: searchTerm) { value in
+                lowercasedSearchTerm = value.lowercased()
             }
             .navigationTitle("Compare countries")
             .navigationBarItems(leading: Button("Cancel") {
@@ -26,6 +38,6 @@ struct ComparisonView: View {
 
 struct ComparisonView_Previews: PreviewProvider {
     static var previews: some View {
-        ComparisonView(isPresented: .constant(true), countries: countriesForPreviews, country: countriesForPreviews[0])
+        ComparisonView(isPresented: .constant(true), manager: DataManager(), country: countriesForPreviews[0])
     }
 }

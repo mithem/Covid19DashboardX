@@ -97,6 +97,54 @@ struct CountryHistoryMeasurementForDecodingOnly: Decodable {
     var lon: String
 }
 
+// MARK: Models for decoding provinces
+
+/// A response when requesting (current) data for all provinces of a country
+struct CountryProvincesResponse: Decodable {
+    let data: [ProvinceMeasurementForDecodingOnly]
+}
+
+struct ProvinceMeasurementForDecodingOnly: Decodable {
+    let date: Date
+    let confirmed: Int
+    let confirmedDiff: Int
+    let deaths: Int
+    let deathsDiff: Int
+    let recovered: Int
+    let recoveredDiff: Int
+    let active: Int
+    let activeDiff: Int
+    let fatalityRate: Double
+    let region: ProvinceMeasurementRegionForDecodingOnly
+}
+
+struct ProvinceMeasurementRegionForDecodingOnly: Decodable {
+    let iso: String
+    let name: String
+    let province: String
+    let lat: String
+    let long: String
+}
+
+// MARK: Models for decoding detailed country measurements (snapshots)
+
+struct DetailedCountryMeasurementContainerForDecodingOnly: Decodable {
+    let data: DetailedCountryMeasurementForDecodingOnly
+}
+
+struct DetailedCountryMeasurementForDecodingOnly: Decodable {
+    let date: Date
+    let confirmed: Int
+    let confirmedDiff: Int
+    let recovered: Int
+    let recoveredDiff: Int
+    let deaths: Int
+    let deathsDiff: Int
+    let active: Int
+    let activeDiff: Int
+    let fatalityRate: Double
+}
+
 // MARK: Models for later use
 
 enum BasicMeasurementMetric: String, Decodable, CaseIterable, Identifiable {
@@ -106,7 +154,6 @@ enum BasicMeasurementMetric: String, Decodable, CaseIterable, Identifiable {
     case deaths = "deaths"
     case recovered = "recovered"
     case active = "active"
-    case caseFatalityRate = "case fatality rate"
     
     var humanReadable: String {
         switch self {
@@ -118,23 +165,34 @@ enum BasicMeasurementMetric: String, Decodable, CaseIterable, Identifiable {
             return "Recovered"
         case .active:
             return "Active cases"
-        case .caseFatalityRate:
-            return "Case fatality rate"
+        }
+    }
+    
+    var shortDescription: String {
+        switch self {
+        case .confirmed:
+            return "Confirmed"
+        case .deaths:
+            return "Deaths"
+        case .recovered:
+            return "Recovered"
+        case .active:
+            return "Active"
         }
     }
 }
 
 struct CountrySummaryMeasurement {
-    let date: Date
-    let totalConfirmed: Int
-    let newConfirmed: Int
-    let totalDeaths: Int
-    let newDeaths: Int
-    let totalRecovered: Int
-    let newRecovered: Int
-    let active: Int?
-    let newActive: Int?
-    let caseFatalityRate: Double?
+    var date: Date
+    var totalConfirmed: Int
+    var newConfirmed: Int
+    var totalDeaths: Int
+    var newDeaths: Int
+    var totalRecovered: Int
+    var newRecovered: Int
+    var active: Int?
+    var newActive: Int?
+    var caseFatalityRate: Double?
 }
 
 class Country: SummaryProvider {
@@ -144,21 +202,136 @@ class Country: SummaryProvider {
     var newDeaths: Int { latest.newDeaths }
     var totalRecovered: Int { latest.totalRecovered }
     var newRecovered: Int { latest.newRecovered }
-    var active: Int { latest.active ?? totalConfirmed - totalRecovered - totalDeaths }
+    var activeCases: Int? { latest.active ?? totalConfirmed - totalRecovered - totalDeaths}
     var newActive: Int? { latest.newActive }
     var caseFatalityRate: Double? { latest.caseFatalityRate }
+    var provinces: [Province]
     
     var code: String
     var name: String
     var latest: CountrySummaryMeasurement
     var measurements: [CountryHistoryMeasurement]
     
-    init(code: String, name: String, latest: CountrySummaryMeasurement, measurements: [CountryHistoryMeasurement] = []) {
+    init(code: String, name: String, latest: CountrySummaryMeasurement, measurements: [CountryHistoryMeasurement] = [], provinces: [Province] = []) {
         self.code = code
         self.name = name
         self.latest = latest
         self.measurements = measurements
+        self.provinces = provinces
     }
+}
+
+struct Province: SummaryProvider {
+    var name: String
+    var totalConfirmed: Int { measurements.last?.totalConfirmed ?? 0 }
+    var newConfirmed: Int { measurements.last?.newConfirmed ?? 0 }
+    var totalDeaths: Int { measurements.last?.totalDeaths ?? 0 }
+    var newDeaths: Int { measurements.last?.newDeaths ?? 0 }
+    var totalRecovered: Int { measurements.last?.totalRecovered ?? 0 }
+    var newRecovered: Int { measurements.last?.newRecovered ?? 0 }
+    var activeCases: Int? { measurements.last?.active }
+    var newActive: Int? { measurements.last?.newActive }
+    var caseFatalityRate: Double? { measurements.last?.caseFatalityRate }
+    
+    var measurements: [ProvinceMeasurement]
+    
+    enum Metric: CaseIterable, Identifiable {
+        var id: Metric { self }
+        case active, newActive, totalConfirmed, newConfirmed, totalRecovered, newRecovered, totalDeaths, newDeaths, caseFatalityRate
+        
+        var humanReadable: String {
+            switch self {
+            case .active:
+                return "Active"
+            case .newActive:
+                return "New active"
+            case .totalConfirmed:
+                return "Total confirmed"
+            case .newConfirmed:
+                return "New confirmed"
+            case .totalRecovered:
+                return "Total recovered"
+            case .newRecovered:
+                return "New recovered"
+            case .totalDeaths:
+                return "Total deaths"
+            case .newDeaths:
+                return "New deaths"
+            case .caseFatalityRate:
+                return "Case fatality rate"
+            }
+        }
+    }
+    
+    func value(for metric: Metric) -> String {
+        var v: Any
+        switch metric {
+        case .active:
+            v =  activeCases as Any
+        case .newActive:
+            v =  newActive as Any
+        case .totalConfirmed:
+            v =  totalConfirmed
+        case .newConfirmed:
+            v =  newConfirmed
+        case .totalRecovered:
+            v =  totalRecovered
+        case .newRecovered:
+            v =  newRecovered
+        case .totalDeaths:
+            v =  totalDeaths
+        case .newDeaths:
+            v =  newDeaths
+        case .caseFatalityRate:
+            v =  caseFatalityRate as Any
+        }
+        let formatter = NumberFormatter()
+        formatter.usesGroupingSeparator = true
+        if let v = v as? Int {
+            formatter.numberStyle = .decimal
+            return formatter.string(from: NSNumber(value: v)) ?? notAvailableString
+        } else if let v = v as? Double {
+            formatter.numberStyle = .percent
+            formatter.minimumFractionDigits = 2
+            formatter.maximumFractionDigits = 5
+            return formatter.string(from: NSNumber(value: v)) ?? notAvailableString
+        } else {
+            return notAvailableString
+        }
+    }
+    
+    enum SummaryMetric: String, CaseIterable, Identifiable {
+        var id: SummaryMetric { self }
+        case confirmed, recovered, deaths, active, caseFatalityRate
+        
+        var short: String {
+            switch self {
+            case .confirmed:
+                return "Confirmed"
+            case .recovered:
+                return "Recovered"
+            case .deaths:
+                return "Deaths"
+            case .active:
+                return "Active"
+            case .caseFatalityRate:
+                return "CFR"
+            }
+        }
+    }
+}
+
+struct ProvinceMeasurement {
+    var date: Date
+    var totalConfirmed: Int
+    var newConfirmed: Int
+    var totalRecovered: Int
+    var newRecovered: Int
+    var totalDeaths: Int
+    var newDeaths: Int
+    var active: Int
+    var newActive: Int
+    var caseFatalityRate: Double?
 }
 
 struct CountryHistoryMeasurement {
@@ -179,121 +352,21 @@ struct CountryHistoryMeasurement {
             return recovered ?? -1
         case .active:
             return active ?? -1
-        case .caseFatalityRate:
-            return caseFatalityRate ?? -1
         }
     }
 }
 
 struct GlobalMeasurement: Decodable, Equatable, SummaryProvider {
-    
     let totalConfirmed: Int
     let newConfirmed: Int
     let totalDeaths: Int
     let newDeaths: Int
     let totalRecovered: Int
     let newRecovered: Int
-    let active: Int
+    let active: Int?
     let caseFatalityRate: Double?
-}
-
-// MARK: SummaryProvider
-protocol SummaryProvider {
-    var totalConfirmed: Int { get }
-    var newConfirmed: Int { get }
-    var totalDeaths: Int { get }
-    var newDeaths: Int { get }
-    var totalRecovered: Int { get }
-    var newRecovered: Int { get }
-    var active: Int { get }
-    var caseFatalityRate: Double? { get }
     
-    func confirmedSummary(colorNumbers: Bool) -> Text
-    func deathsSummary(colorNumbers: Bool) -> Text
-    func recoveredSummary(colorNumbers: Bool) -> Text
-    func activeSummary(colorNumbers: Bool) -> Text
-    func cfrSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
-    
-    func summary(total: Int, new: Int?, colorNumbers: Bool) -> Text
-    func summaryFor(metric: BasicMeasurementMetric, colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
-}
-
-extension SummaryProvider {
-    func summary(total: Int, new: Int?, colorNumbers: Bool) -> Text {
-        let colorNumbers = UserDefaults().bool(forKey: UserDefaultsKeys.colorNumbers)
-        let numberFormatter = NumberFormatter()
-        numberFormatter.usesGroupingSeparator = true
-        numberFormatter.numberStyle = .decimal
-        if let new = new {
-            let sign = new > 0 ? "+" : (new < 0 ? "-" : "=")
-            let t1 = Text("\(numberFormatter.string(from: NSNumber(value: total)) ?? notAvailableString) (")
-            let t2 = Text("\(sign)\(numberFormatter.string(from: NSNumber(value: new)) ?? notAvailableString)")
-            let t3 = Text(")")
-            if colorNumbers {
-                return t1 + t2.foregroundColor(new > 0 ? .red : (new < 0 ? .green : .gray)) + t3
-            }
-            return t1 + t2 + t3
-        } else {
-            return Text(numberFormatter.string(from: NSNumber(value: total)) ?? notAvailableString)
-        }
-    }
-    
-    func summary(percentage: Double?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
-        guard let perCent = percentage else { return Text(notAvailableString) }
-        let perCentString = PercentageFormatter().string(from: NSNumber(value: perCent)) ?? notAvailableString
-        let text = Text(perCentString)
-        var color: Color
-        
-        if perCent < colorTreshold - colorGrayArea {
-            color = .green
-        } else if perCent > colorTreshold + colorGrayArea {
-            color = .red
-        } else {
-            color = .gray
-        }
-        
-        switch color {
-        case .green:
-            return reversed ? text.foregroundColor(.red) : text.foregroundColor(.green)
-        case .red:
-            return reversed ? text.foregroundColor(.green) : text.foregroundColor(.red)
-        case .gray:
-            return text.foregroundColor(.gray)
-        default:
-            return text
-        }
-    }
-    
-    func confirmedSummary(colorNumbers: Bool) -> Text {
-        return summary(total: totalConfirmed, new: newConfirmed, colorNumbers: colorNumbers)
-    }
-    func deathsSummary(colorNumbers: Bool) -> Text {
-        return summary(total: totalDeaths, new: newDeaths, colorNumbers:    colorNumbers)
-    }
-    func recoveredSummary(colorNumbers: Bool) -> Text {
-        return summary(total: totalRecovered, new: newRecovered, colorNumbers: colorNumbers)
-    }
-    func activeSummary(colorNumbers: Bool) -> Text {
-        return summary(total: active, new: nil, colorNumbers: colorNumbers)
-    }
-    func cfrSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
-        return summary(percentage: caseFatalityRate, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
-    }
-    
-    func summaryFor(metric: BasicMeasurementMetric, colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
-        switch metric {
-        case .confirmed:
-            return confirmedSummary(colorNumbers: colorNumbers)
-        case .deaths:
-            return deathsSummary(colorNumbers: colorNumbers)
-        case .recovered:
-            return recoveredSummary(colorNumbers: colorNumbers)
-        case .active:
-            return activeSummary(colorNumbers: colorNumbers)
-        case .caseFatalityRate:
-            return cfrSummary(colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
-        }
-    }
+    var activeCases: Int? { active ?? totalConfirmed - totalRecovered - totalDeaths }
 }
 
 enum DataRepresentationType: String, CaseIterable, Identifiable {
@@ -310,7 +383,7 @@ enum DataRepresentationType: String, CaseIterable, Identifiable {
 enum NetworkError: Error, Equatable, LocalizedError {
     static func == (lhs: NetworkError, rhs: NetworkError) -> Bool {lhs.localizedDescription == rhs.localizedDescription} // no better way?
     
-    case invalidResponse
+    case invalidResponse(response: String)
     case noResponse // don't actually know whether that can happen without a timeout error 🤔
     case urlError(_ error: URLError)
     case noNetworkConnection
@@ -359,3 +432,32 @@ extension CountryHistoryMeasurement: Equatable {}
 extension CountryHistoryMeasurement: Identifiable {
     var id: Date { date }
 }
+
+extension Province: Identifiable {
+    var id: String { name }
+    
+}
+
+extension CountryProvincesResponse: Equatable {
+    static func == (lhs: CountryProvincesResponse, rhs: CountryProvincesResponse) -> Bool {lhs.data == rhs.data}
+}
+
+extension ProvinceMeasurementForDecodingOnly: Equatable {
+    static func == (lhs: ProvinceMeasurementForDecodingOnly, rhs: ProvinceMeasurementForDecodingOnly) -> Bool {
+        let a = lhs.active == rhs.active
+        let ad = lhs.activeDiff == rhs.activeDiff
+        let c = lhs.confirmed == rhs.confirmed
+        let cd = lhs.confirmedDiff == rhs.confirmedDiff
+        let date = lhs.date == rhs.date
+        let d = lhs.deaths == rhs.deaths
+        let dd = lhs.deathsDiff == rhs.deathsDiff
+        let cfr = lhs.fatalityRate == rhs.fatalityRate
+        let r = lhs.recovered == rhs.recovered
+        let rd = lhs.recoveredDiff == rhs.recoveredDiff
+        let re = lhs.region == rhs.region
+        
+        return a && ad && c && cd && d && dd && cfr && r && rd && re // && date
+    }
+}
+
+extension ProvinceMeasurementRegionForDecodingOnly: Equatable {}

@@ -32,7 +32,7 @@ struct Provider: IntentTimelineProvider {
             let currentDate = Date()
             let latest = CountrySummaryMeasurement(date: currentDate, totalConfirmed: 0, newConfirmed: 0, totalDeaths: 0, newDeaths: 0, totalRecovered: 0, newRecovered: 0, active: 0, newActive: 0, caseFatalityRate: 0.005)
             let metric = BasicMeasurementMetric.active
-            DataManager.getData(for: code, previousCountry: Country(code: code, name: code, latest: latest)) { result in
+            DataManager.getHistoryData(for: Country(code: code, name: code, latest: latest)) { result in
                 switch result {
                 case .success(let country):
                     let data = country.measurements.map {Double($0.metric(for: metric))}

@@ -18,7 +18,7 @@ struct SummaryView: View, DataManagerDelegate {
     @State private var searchTerm = ""
     @State private var favorites = [String]()
     @State private var lowercasedSearchTerm = ""
-    @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = BasicMeasurementMetric.confirmed
+    @AppStorage(UserDefaultsKeys.activeMetric) var activeMetric = DefaultSettings.measurementMetric
     @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = DefaultSettings.colorNumbers
     
     init() {
@@ -46,6 +46,7 @@ struct SummaryView: View, DataManagerDelegate {
         let deaths: [ActionSheet.Button] = [.default(Text("Total deaths"), action: {manager.sortBy = .totalDeaths}), .default(Text("New deaths"), action: {manager.sortBy = .newDeaths})]
         let recovered: [ActionSheet.Button] = [.default(Text("Total recovered"), action: {manager.sortBy = .totalRecovered}), .default(Text("New recovered"), action: {manager.sortBy = .newRecovered})]
         let active: [ActionSheet.Button] = [.default(Text("Active cases"), action: {manager.sortBy = .activeCases})]
+        // let cfr: [ActionSheet.Button] = [.default(Text("Case fatality rate"), action: {manager.sortBy = .caseFatalityRate})] // For transition from covid19api.com to covid-api.com for summaries
         
         switch activeMetric {
         case .confirmed:
@@ -56,11 +57,14 @@ struct SummaryView: View, DataManagerDelegate {
             buttons.append(contentsOf: recovered)
         case .active:
             buttons.append(contentsOf: active)
-        default: //TODO: Add other metrics
-            break
         }
         
         buttons.append(contentsOf: [.default(Text(manager.reversed ? "Dereverse" : "Reverse"), action: {manager.reversed.toggle()}), .cancel()])
+        
+        if manager.error != nil {
+            buttons.insert(.default(Text("Refresh")) {manager.loadSummary()}, at: 0)
+        }
+        
         return buttons
     }
     
@@ -85,12 +89,12 @@ struct SummaryView: View, DataManagerDelegate {
                         List {
                             BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
                             SearchBar(searchTerm: $searchTerm)
-                            Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric, colorNumbers: colorNumbers) ?? Text(notAvailableString))
+                            Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorTreshold: manager.colorTreshold, colorGrayArea: manager.colorGrayArea, reversed: false) ?? Text(notAvailableString))
                             ForEach(manager.countries.filter { c in
                                 if searchTerm.isEmpty { return true }
                                 return c.name.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(c.code.lowercased())
                             }, id: \.code) { country in
-                                CountryInlineView(country: country, colorNumbers: true, activeMetric: $activeMetric, manager: manager)
+                                CountryInlineView(country: country, colorNumbers: colorNumbers, activeMetric: $activeMetric, manager: manager)
                             }
                             HStack {
                                 Spacer()

@@ -12,7 +12,7 @@ struct BasicMeasurementMetricPickerView: View {
     var body: some View {
         Picker("Measurement metric", selection: $activeMetric) {
             ForEach(BasicMeasurementMetric.allCases) { value in
-                Text(value.rawValue.localizedCapitalized).tag(value)
+                Text(value.shortDescription).tag(value)
             }
         }
         .pickerStyle(SegmentedPickerStyle())

@@ -1,0 +1,93 @@
+//
+//  ProvinceDetailView.swift
+//  Covid19DashboardX (iOS)
+//
+//  Created by Miguel Themann on 23.10.20.
+//
+
+import SwiftUI
+
+struct ProvinceDetailView: View {
+    let province: Province
+    let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
+    var body: some View {
+        LazyVGrid(columns: columns) {
+            ForEach(Province.Metric.allCases) { metric in
+                Card(metric: metric, value: province.value(for: metric))
+            }
+        }
+        .navigationTitle(province.name)
+    }
+}
+
+fileprivate struct Card: View {
+    @Environment(\.colorScheme) private var colorScheme
+    let metric: Province.Metric
+    let value: String
+    
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 15)
+                .foregroundColor(backgroundColor)
+                .opacity(colorScheme == .dark ? 0.7 : 1)
+            VStack {
+                HStack {
+                    Text(metric.humanReadable)
+                        .font(.subheadline)
+                        .foregroundColor(foregroundColor)
+                    Spacer()
+                }
+                .padding(5)
+                Spacer()
+            }
+            Text(value)
+                .foregroundColor(foregroundColor)
+                .font(.title)
+                .bold()
+        }
+        .frame(width: 150, height: 80)
+    }
+    
+    var foregroundColor: Color {
+        switch backgroundColor {
+        case .red, .yellow, .blue, .pink, .purple, .black:
+            return .white
+        default:
+            return .black
+        }
+    }
+    
+    var backgroundColor: Color {
+        switch metric {
+        case .active, .totalConfirmed:
+            return .yellow
+        case .caseFatalityRate, .totalDeaths:
+            return .purple
+        case .newActive, .totalRecovered:
+            return .pink
+        case .newConfirmed:
+            return .red
+        case .newRecovered:
+            return .blue
+        default:
+            return .gray
+        }
+    }
+}
+
+struct Card_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            Card(metric: .active, value: "100")
+        }
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}
+
+struct ProvinceDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProvinceDetailView(province: countriesForPreviews[0].provinces[0])
+            
+    }
+}

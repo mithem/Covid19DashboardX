@@ -7,16 +7,21 @@
 
 import Foundation
 import Network
+import SwiftUI
 
 class DataManager: ObservableObject, Equatable {
     static func == (lhs: DataManager, rhs: DataManager) -> Bool {
         return lhs.countries == rhs.countries
     }
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     @Published var countries: [Country]
     @Published var latestGlobal: GlobalMeasurement?
     @Published var error: NetworkError?
+    var loading: Bool { _loading }
     
+    private var _loading = false
     private let monitor: NWPathMonitor
     private var _sortBy: CountrySortingCriteria
     var delegate: DataManagerDelegate?
@@ -40,7 +45,7 @@ class DataManager: ObservableObject, Equatable {
         }
     }
     
-    let colorThreshold = UserDefaults().double(forKey: UserDefaultsKeys.colorThresholdForPercentages)
+    let colorTreshold = UserDefaults().double(forKey: UserDefaultsKeys.colorThresholdForPercentages)
     let colorGrayArea = UserDefaults().double(forKey: UserDefaultsKeys.colorGrayAreaForPercentages)
     
     static func getSummary(completion: @escaping (Result<SummaryResponse, NetworkError>) -> Void) {
@@ -72,7 +77,10 @@ class DataManager: ObservableObject, Equatable {
         }.resume()
     }
     
-    func loadSummary() {
+    func loadSummary() { // TODO: Only use covid-api.com for summary. covid-api.com/api/regions can be used to get possible regions.
+        DispatchQueue.main.async {
+            self._loading = true
+        }
         DataManager.getSummary { result in
             switch result {
             case .success(let response):
@@ -94,17 +102,14 @@ class DataManager: ObservableObject, Equatable {
                     self.error = error
                 }
             }
+            self._loading = false
         }
     }
     
-    typealias GetDataCompletionHandler = (Result<Country, NetworkError>) -> Void
+    typealias GetCountryDataCompletionHandler = (Result<Country, NetworkError>) -> Void
     
-    static func getData(for country: Country, previousCountry: Country, completion: @escaping GetDataCompletionHandler) {
-        getData(for: country.code, previousCountry: previousCountry, completion: completion)
-    }
-    
-    static func getData(for countryCode: String, previousCountry: Country, completion: @escaping GetDataCompletionHandler) {
-        guard let url = URL(string: "https://api.covid19api.com/total/country/\(countryCode)") else { return }
+    static func getHistoryData(for country: Country, completion: @escaping GetCountryDataCompletionHandler) {
+        guard let url = URL(string: "https://api.covid19api.com/total/country/\(country.code)") else { return }
         var request = URLRequest(url: url)
         request.allowsConstrainedNetworkAccess = false
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -125,11 +130,11 @@ class DataManager: ObservableObject, Equatable {
                 let serverResponse = try? decoder.decode([CountryHistoryMeasurementForDecodingOnly].self, from: data)
                 if let serverResponse = serverResponse {
                     for measurement in serverResponse {
-                        previousCountry.measurements.append(CountryHistoryMeasurement(confirmed: measurement.cases ?? measurement.confirmed ?? 0, deaths: measurement.deaths, recovered: measurement.recovered, active: measurement.active, date: measurement.date))
+                        country.measurements.append(CountryHistoryMeasurement(confirmed: measurement.cases ?? measurement.confirmed ?? 0, deaths: measurement.deaths, recovered: measurement.recovered, active: measurement.active, date: measurement.date))
                     }
-                    completion(.success(previousCountry))
+                    completion(.success(country))
                 } else {
-                    completion(.failure(.invalidResponse))
+                    completion(.failure(.invalidResponse(response: String(data: data, encoding: .utf8) ?? notAvailableString)))
                 }
             } else {
                 completion(.failure(.noResponse))
@@ -137,13 +142,17 @@ class DataManager: ObservableObject, Equatable {
         }.resume()
     }
     
-    func loadData(for country: Country) {
-        self.loadData(for: country.code)
+    func loadHistoryData(for country: Country) {
+        loadHistoryData(for: country.code)
     }
     
-    func loadData(for countryCode: String) {
+    func loadHistoryData(for countryCode: String) {
+        DispatchQueue.main.async {
+            self._loading = true
+        }
         guard let country = self.countries.first(where: {$0.code == countryCode}) else { return }
-        DataManager.getData(for: countryCode, previousCountry: country) { result in
+        country.code = countryCode // is this needed? Don't wanna search all this..
+        DataManager.getHistoryData(for: country) { result in
             switch result {
             case .success(let country):
                 DispatchQueue.main.async {
@@ -157,6 +166,172 @@ class DataManager: ObservableObject, Equatable {
                     self.error = error
                 }
             }
+            self._loading = false
+        }
+    }
+    
+    static func getProvinceData(for country: Country, at date: Date? = nil, completion: @escaping GetCountryDataCompletionHandler) {
+        let code = alpha2_to_alpha3_countryCodes[country.code] as? String ?? country.code
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "covid-api.com"
+        components.path = "/api/reports"
+        components.queryItems = [.init(name: "iso", value: code)]
+        if let date = date {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "Y-m-d" // why do they have different date formats as in/outputs?
+            components.queryItems?.append(.init(name: "date", value: formatter.string(from: date)))
+        }
+        guard let url = components.url else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                if let error = error as? URLError {
+                    if error.networkUnavailableReason == .constrained {
+                        completion(.failure(.constrainedNetwork))
+                    } else {
+                        completion(.failure(.urlError(error)))
+                    }
+                } else {
+                    completion(.failure(.otherWith(error: error)))
+                }
+            } else if let data = data {
+                let formatter = DateFormatter()
+                formatter.dateFormat = covidDashApiDotComDateFormat
+                formatter.timeZone = TimeZone(secondsFromGMT: 0)
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.dateDecodingStrategy = .formatted(formatter)
+                let serverResponse = try? decoder.decode(CountryProvincesResponse.self, from: data)
+                if let serverResponse = serverResponse {
+                    if serverResponse.data.isEmpty {
+                        completion(.failure(.noResponse))
+                    } else {
+                        for measurement in serverResponse.data {
+                            if measurement.region.province != country.name && !measurement.region.province.isEmpty {
+                                let newMeasurement = ProvinceMeasurement(date: measurement.date, totalConfirmed: measurement.confirmed, newConfirmed: measurement.confirmedDiff, totalRecovered: measurement.deaths, newRecovered: measurement.deathsDiff, totalDeaths: measurement.recovered, newDeaths: measurement.recoveredDiff, active: measurement.active, newActive: measurement.activeDiff, caseFatalityRate: measurement.fatalityRate)
+                                let province = Province(name: measurement.region.province, measurements: [newMeasurement])
+                                country.provinces.append(province)
+                            }
+                        }
+                        completion(.success(country))
+                    }
+                } else {
+                    completion(.failure(.invalidResponse(response: String(data: data, encoding: .utf8) ?? notAvailableString)))
+                }
+            } else {
+                completion(.failure(.noResponse))
+            }
+        }.resume()
+    }
+    
+    /// get country data like the CFR and active cases from covid-api.com
+    static func getDetailedCountryData(for country: Country, at date: Date? = nil, completion: @escaping GetCountryDataCompletionHandler) {
+        let code = alpha2_to_alpha3_countryCodes[country.code] as? String ?? country.code
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "covid-api.com"
+        components.path = "/api/reports/total"
+        components.queryItems = [.init(name: "iso", value: code)]
+        if let date = date {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "Y-m-d" // why do they have different date formats as in/outputs?
+            components.queryItems?.append(.init(name: "date", value: formatter.string(from: date)))
+        }
+        guard let url = components.url else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                if let error = error as? URLError {
+                    if error.networkUnavailableReason == .constrained {
+                        completion(.failure(.constrainedNetwork))
+                    } else {
+                        completion(.failure(.urlError(error)))
+                    }
+                } else {
+                    completion(.failure(.otherWith(error: error)))
+                }
+            } else if let data = data {
+                let formatter = DateFormatter()
+                formatter.dateFormat = covidDashApiDotComDateFormat
+                formatter.timeZone = TimeZone(secondsFromGMT: 0)
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.dateDecodingStrategy = .formatted(formatter)
+                let serverResponse = try? decoder.decode(DetailedCountryMeasurementContainerForDecodingOnly.self, from: data)
+                if let serverResponse = serverResponse {
+                    country.latest.active = serverResponse.data.active
+                    country.latest.caseFatalityRate = serverResponse.data.fatalityRate
+                    country.latest.date = serverResponse.data.date
+                    country.latest.newActive = serverResponse.data.activeDiff
+                    country.latest.newConfirmed = serverResponse.data.confirmedDiff
+                    country.latest.newDeaths = serverResponse.data.deathsDiff
+                    country.latest.newRecovered = serverResponse.data.recoveredDiff
+                    country.latest.totalConfirmed = serverResponse.data.confirmed
+                    country.latest.totalRecovered = serverResponse.data.recovered
+                    country.latest.totalDeaths = serverResponse.data.deaths
+                    
+                    completion(.success(country))
+                } else {
+                    completion(.failure(.invalidResponse(response: String(data: data, encoding: .utf8) ?? notAvailableString)))
+                }
+            } else {
+                completion(.failure(.noResponse))
+            }
+        }.resume()
+    }
+    
+    func loadDetailedCountryData(for country: Country, at date: Date? = nil) {
+        loadDetailedCountryData(for: country.code, at: date)
+    }
+    
+    func loadDetailedCountryData(for countryCode: String, at date: Date? = nil) {
+        DispatchQueue.main.async {
+            self._loading = true
+        }
+        guard let country = self.countries.first(where: {$0.code == countryCode}) else { return }
+        country.code = countryCode // is this needed? Don't wanna search all this..
+        DataManager.getDetailedCountryData(for: country, at: date) { result in
+            switch result {
+            case .success(let country):
+                DispatchQueue.main.async {
+                    if let idx = self.countries.firstIndex(of: country) {
+                        self.countries[idx] = country
+                    }
+                    self.error = nil
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.error = error
+                }
+            }
+            self._loading = false
+        }
+    }
+    
+    func loadProvinceData(for country: Country) {
+        loadProvinceData(for: country.code)
+    }
+    
+    func loadProvinceData(for countryCode: String) {
+        DispatchQueue.main.async {
+            self._loading = true
+        }
+        guard let country = self.countries.first(where: {$0.code == countryCode}) else { return }
+        country.code = countryCode // is this needed? Don't wanna search all this..
+        DataManager.getProvinceData(for: country) { result in
+            switch result {
+            case .success(let country):
+                DispatchQueue.main.async {
+                    if let idx = self.countries.firstIndex(of: country) {
+                        self.countries[idx] = country
+                    }
+                    self.error = nil
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.error = error
+                }
+            }
+            self._loading = false
         }
     }
     
@@ -181,7 +356,7 @@ class DataManager: ObservableObject, Equatable {
             case .newRecovered:
                 lt =  lhs.latest.newRecovered < rhs.latest.newRecovered
             case .activeCases:
-                lt = lhs.active < rhs.active
+                lt = lhs.activeCases ?? 0 < rhs.activeCases ?? 0
             }
             if reversed {
                 return !lt
@@ -197,6 +372,7 @@ class DataManager: ObservableObject, Equatable {
         _sortBy = .countryCode
         _reversed = false
         self.delegate = delegate
+        
         monitor = NWPathMonitor()
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {

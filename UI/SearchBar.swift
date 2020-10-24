@@ -16,30 +16,25 @@ struct SearchBar: View {
                 .padding(7)
                 .padding(.horizontal, 25)
                 .background(Color(.systemGray6))
-                .cornerRadius(6)
-                .overlay(
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.gray)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading, 8)
-                        if isEditing {
-                            Button(action: {
-                                self.searchTerm = ""
-                            }) {
-                                Image(systemName: "multiply.circle.fill")
-                                    .foregroundColor(.gray)
-                                    .padding(.trailing, 8)
-                            }
-                        }
-                    }
-                )
                 .onTapGesture {
                     isEditing = true
                 }
+                .cornerRadius(6)
+                .overlay(
+                    Image(systemName: isEditing ? "multiply.circle.fill" : "magnifyingglass")
+                        .foregroundColor(.gray)
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 8)
+                        .onTapGesture {
+                            if isEditing {
+                                searchTerm = ""
+                            } else {
+                                isEditing = true
+                            }
+                        }
+                )
                 .transition(.move(edge: .trailing)) // moves with Cancel btn
                 .animation(.default)
-            
             if isEditing {
                 Button(action: {
                     self.isEditing = false
@@ -62,6 +57,7 @@ struct SearchBar_Previews: PreviewProvider {
             SearchBar(searchTerm: .constant("hello, world!"))
             SearchBar(searchTerm: .constant(""))
         }
+        .padding()
         .previewLayout(.sizeThatFits)
     }
 }

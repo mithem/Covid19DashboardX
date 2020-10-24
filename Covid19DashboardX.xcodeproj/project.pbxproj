@@ -8,8 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		4910AAD2254214E300BDAC0C /* PercentageFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4910AAD1254214E300BDAC0C /* PercentageFormatter.swift */; };
-		4910AAD3254214E300BDAC0C /* PercentageFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4910AAD1254214E300BDAC0C /* PercentageFormatter.swift */; };
+		4914F3E82544032A00CBC521 /* SummaryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914F3E72544032A00CBC521 /* SummaryProvider.swift */; };
+		4914F3E92544032A00CBC521 /* SummaryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914F3E72544032A00CBC521 /* SummaryProvider.swift */; };
+		4914F3F4254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914F3F3254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift */; };
+		4914F3F5254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914F3F3254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift */; };
+		49370B1A25429832009BFE4C /* CountryProvincesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B1925429832009BFE4C /* CountryProvincesView.swift */; };
+		49370B2225429E0B009BFE4C /* ProvinceInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */; };
+		49370B2A2542AA56009BFE4C /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
+		49370B352542AA5F009BFE4C /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4942F2BE2529955100EE2959 /* constants.swift */; };
+		49370B362542AA5F009BFE4C /* models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5EB24E7F51400399145 /* models.swift */; };
+		49370B372542AA5F009BFE4C /* shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5F724E8051300399145 /* shared.swift */; };
+		49370B382542AA5F009BFE4C /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
+		49370B392542AA5F009BFE4C /* MovingAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49806BE6252F782400767A6E /* MovingAverage.swift */; };
+		49370B3A2542AA5F009BFE4C /* PercentageFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4910AAD1254214E300BDAC0C /* PercentageFormatter.swift */; };
+		49370B3B2542AA5F009BFE4C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5E824E7F50200399145 /* DataManager.swift */; };
+		49370B3C2542AA5F009BFE4C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E14252386D00060BA27 /* Extensions.swift */; };
 		493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E08252383A70060BA27 /* ModelDecodableTests.swift */; };
+		49434BCD2542E207001F9F1B /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4942F2BE2529955100EE2959 /* constants.swift */; };
 		4954F5DE24E7F4D300399145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4954F5C924E7F4D300399145 /* Assets.xcassets */; };
 		497844E42541939800364E18 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 497844E32541939800364E18 /* Reachability */; };
 		497E012B2531FD52006CEF67 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5E824E7F50200399145 /* DataManager.swift */; };
@@ -27,17 +42,13 @@
 		497E01372531FD52006CEF67 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E14252386D00060BA27 /* Extensions.swift */; };
 		497E01382531FD52006CEF67 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5C824E7F4D200399145 /* ContentView.swift */; };
 		497E01392531FD52006CEF67 /* CountryViewSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */; };
-		49A39CC02532FFFF00E15B02 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49A39CBF2532FFFF00E15B02 /* SwiftUICharts */; };
 		49B5562D2531F694000D2030 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B5562C2531F694000D2030 /* WidgetKit.framework */; };
 		49B5562F2531F694000D2030 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B5562E2531F694000D2030 /* SwiftUI.framework */; };
 		49B5563B2531F695000D2030 /* Covid19WidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 49B5562A2531F694000D2030 /* Covid19WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		49B7D1BD2529DAD600AE2B9B /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49B7D1BC2529DAD600AE2B9B /* SwiftUICharts */; };
-		49EEFE772532DE56008ECBDA /* models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5EB24E7F51400399145 /* models.swift */; };
-		49EEFE792532DE56008ECBDA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E14252386D00060BA27 /* Extensions.swift */; };
-		49EEFE7A2532DE56008ECBDA /* shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5F724E8051300399145 /* shared.swift */; };
-		49EEFE7B2532DE56008ECBDA /* MovingAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49806BE6252F782400767A6E /* MovingAverage.swift */; };
-		49EEFE7C2532DE56008ECBDA /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4942F2BE2529955100EE2959 /* constants.swift */; };
-		49EEFE7D2532DE56008ECBDA /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5E824E7F50200399145 /* DataManager.swift */; };
+		49B90EDC25432EB900E89F5D /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EDB25432EB900E89F5D /* CustomButtonStyle.swift */; };
+		49B90EEC2543371900E89F5D /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49B90EEB2543371900E89F5D /* SwiftUICharts */; };
+		49B90EEE2543372400E89F5D /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49B90EED2543372400E89F5D /* SwiftUICharts */; };
+		49B90EFC2543460100E89F5D /* ProvinceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EFB2543460100E89F5D /* ProvinceDetailView.swift */; };
 		49EEFE9F2532DED0008ECBDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49B556342531F695000D2030 /* Assets.xcassets */; };
 		49EEFEA02532DED0008ECBDA /* Covid19Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B556312531F694000D2030 /* Covid19Widget.swift */; };
 		49EEFEA22532DED0008ECBDA /* Covid19Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 49B556332531F694000D2030 /* Covid19Widget.intentdefinition */; };
@@ -78,7 +89,12 @@
 
 /* Begin PBXFileReference section */
 		4910AAD1254214E300BDAC0C /* PercentageFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageFormatter.swift; sourceTree = "<group>"; };
+		4914F3E72544032A00CBC521 /* SummaryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryProvider.swift; sourceTree = "<group>"; };
+		4914F3F3254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvinceSummaryMetricPickerView.swift; sourceTree = "<group>"; };
 		49325AE52529B29200A438C4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		49370B1925429832009BFE4C /* CountryProvincesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryProvincesView.swift; sourceTree = "<group>"; };
+		49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvinceInlineView.swift; sourceTree = "<group>"; };
+		49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ISO_CountryCodes.plist; sourceTree = "<group>"; };
 		493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryViewSettingsView.swift; sourceTree = "<group>"; };
 		493B2C6F252D7BF9003B551E /* BasicMeasurementMetricPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicMeasurementMetricPickerView.swift; sourceTree = "<group>"; };
 		493C2DF8252383620060BA27 /* Covid19DashboardXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Covid19DashboardXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +121,8 @@
 		49B556342531F695000D2030 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49B556362531F695000D2030 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49B7D1C12529DB2000AE2B9B /* CountryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryView.swift; sourceTree = "<group>"; };
+		49B90EDB25432EB900E89F5D /* CustomButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyle.swift; sourceTree = "<group>"; };
+		49B90EFB2543460100E89F5D /* ProvinceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvinceDetailView.swift; sourceTree = "<group>"; };
 		49BCE214253199F20099138F /* CountryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryInlineView.swift; sourceTree = "<group>"; };
 		49F9DD702541AC9D003D457B /* ComparisonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonView.swift; sourceTree = "<group>"; };
 		49F9DD782541B079003D457B /* ComparisonDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonDetailView.swift; sourceTree = "<group>"; };
@@ -122,8 +140,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49B7D1BD2529DAD600AE2B9B /* SwiftUICharts in Frameworks */,
 				497844E42541939800364E18 /* Reachability in Frameworks */,
+				49B90EEC2543371900E89F5D /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,7 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49A39CC02532FFFF00E15B02 /* SwiftUICharts in Frameworks */,
+				49B90EEE2543372400E89F5D /* SwiftUICharts in Frameworks */,
 				49B5562F2531F694000D2030 /* SwiftUI.framework in Frameworks */,
 				49B5562D2531F694000D2030 /* WidgetKit.framework in Frameworks */,
 			);
@@ -172,6 +190,8 @@
 				4954F5F724E8051300399145 /* shared.swift */,
 				4942F2BE2529955100EE2959 /* constants.swift */,
 				4954F5EB24E7F51400399145 /* models.swift */,
+				4914F3E72544032A00CBC521 /* SummaryProvider.swift */,
+				49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -221,14 +241,19 @@
 				4954F5C724E7F4D200399145 /* Covid19DashboardXApp.swift */,
 				4954F5C824E7F4D200399145 /* ContentView.swift */,
 				493B2C6F252D7BF9003B551E /* BasicMeasurementMetricPickerView.swift */,
+				4914F3F3254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift */,
 				4954F5EE24E7F9B100399145 /* SummaryView.swift */,
-				49B7D1C12529DB2000AE2B9B /* CountryView.swift */,
 				49BCE214253199F20099138F /* CountryInlineView.swift */,
+				49B7D1C12529DB2000AE2B9B /* CountryView.swift */,
+				49370B1925429832009BFE4C /* CountryProvincesView.swift */,
+				49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */,
+				49B90EFB2543460100E89F5D /* ProvinceDetailView.swift */,
 				493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */,
 				49F9DD702541AC9D003D457B /* ComparisonView.swift */,
 				49F9DD782541B079003D457B /* ComparisonDetailView.swift */,
 				49325AE52529B29200A438C4 /* SearchBar.swift */,
 				4942F2D925299AB100EE2959 /* SettingsView.swift */,
+				49B90EDB25432EB900E89F5D /* CustomButtonStyle.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -270,8 +295,8 @@
 			);
 			name = "Covid19DashboardX (iOS)";
 			packageProductDependencies = (
-				49B7D1BC2529DAD600AE2B9B /* SwiftUICharts */,
 				497844E32541939800364E18 /* Reachability */,
+				49B90EEB2543371900E89F5D /* SwiftUICharts */,
 			);
 			productName = "Covid19DashboardX (iOS)";
 			productReference = 4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */;
@@ -291,7 +316,7 @@
 			);
 			name = Covid19WidgetExtension;
 			packageProductDependencies = (
-				49A39CBF2532FFFF00E15B02 /* SwiftUICharts */,
+				49B90EED2543372400E89F5D /* SwiftUICharts */,
 			);
 			productName = Covid19WidgetExtension;
 			productReference = 49B5562A2531F694000D2030 /* Covid19WidgetExtension.appex */;
@@ -355,6 +380,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49370B2A2542AA56009BFE4C /* ISO_CountryCodes.plist in Resources */,
 				4954F5DE24E7F4D300399145 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -363,6 +389,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49370B382542AA5F009BFE4C /* ISO_CountryCodes.plist in Resources */,
 				49EEFE9F2532DED0008ECBDA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */,
+				49434BCD2542E207001F9F1B /* constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,8 +410,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4914F3F4254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift in Sources */,
 				497E012B2531FD52006CEF67 /* DataManager.swift in Sources */,
+				49370B1A25429832009BFE4C /* CountryProvincesView.swift in Sources */,
 				497E01342531FD52006CEF67 /* Covid19DashboardXApp.swift in Sources */,
+				49370B2225429E0B009BFE4C /* ProvinceInlineView.swift in Sources */,
 				497E01382531FD52006CEF67 /* ContentView.swift in Sources */,
 				497E01332531FD52006CEF67 /* shared.swift in Sources */,
 				497E01322531FD52006CEF67 /* MovingAverage.swift in Sources */,
@@ -392,14 +423,17 @@
 				497E012E2531FD52006CEF67 /* BasicMeasurementMetricPickerView.swift in Sources */,
 				4910AAD2254214E300BDAC0C /* PercentageFormatter.swift in Sources */,
 				497E01302531FD52006CEF67 /* SettingsView.swift in Sources */,
+				49B90EDC25432EB900E89F5D /* CustomButtonStyle.swift in Sources */,
 				49F9DD792541B079003D457B /* ComparisonDetailView.swift in Sources */,
 				497E012F2531FD52006CEF67 /* CountryInlineView.swift in Sources */,
 				497E01392531FD52006CEF67 /* CountryViewSettingsView.swift in Sources */,
 				497E01372531FD52006CEF67 /* Extensions.swift in Sources */,
+				49B90EFC2543460100E89F5D /* ProvinceDetailView.swift in Sources */,
 				497E01312531FD52006CEF67 /* CountryView.swift in Sources */,
 				497E012D2531FD52006CEF67 /* SummaryView.swift in Sources */,
 				497E01352531FD52006CEF67 /* models.swift in Sources */,
 				497E01362531FD52006CEF67 /* constants.swift in Sources */,
+				4914F3E82544032A00CBC521 /* SummaryProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,15 +441,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49EEFE7B2532DE56008ECBDA /* MovingAverage.swift in Sources */,
 				49EEFEA02532DED0008ECBDA /* Covid19Widget.swift in Sources */,
-				49EEFE792532DE56008ECBDA /* Extensions.swift in Sources */,
+				49370B3C2542AA5F009BFE4C /* Extensions.swift in Sources */,
+				4914F3F5254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift in Sources */,
+				49370B3B2542AA5F009BFE4C /* DataManager.swift in Sources */,
+				49370B392542AA5F009BFE4C /* MovingAverage.swift in Sources */,
+				49370B372542AA5F009BFE4C /* shared.swift in Sources */,
 				49EEFEA22532DED0008ECBDA /* Covid19Widget.intentdefinition in Sources */,
-				49EEFE772532DE56008ECBDA /* models.swift in Sources */,
-				49EEFE7A2532DE56008ECBDA /* shared.swift in Sources */,
-				49EEFE7D2532DE56008ECBDA /* DataManager.swift in Sources */,
-				49EEFE7C2532DE56008ECBDA /* constants.swift in Sources */,
-				4910AAD3254214E300BDAC0C /* PercentageFormatter.swift in Sources */,
+				49370B352542AA5F009BFE4C /* constants.swift in Sources */,
+				49370B362542AA5F009BFE4C /* models.swift in Sources */,
+				49370B3A2542AA5F009BFE4C /* PercentageFormatter.swift in Sources */,
+				4914F3E92544032A00CBC521 /* SummaryProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -756,12 +792,12 @@
 			package = 497844E22541939800364E18 /* XCRemoteSwiftPackageReference "Reachability" */;
 			productName = Reachability;
 		};
-		49A39CBF2532FFFF00E15B02 /* SwiftUICharts */ = {
+		49B90EEB2543371900E89F5D /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 49B7D1BB2529DAD600AE2B9B /* XCRemoteSwiftPackageReference "ChartView" */;
 			productName = SwiftUICharts;
 		};
-		49B7D1BC2529DAD600AE2B9B /* SwiftUICharts */ = {
+		49B90EED2543372400E89F5D /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 49B7D1BB2529DAD600AE2B9B /* XCRemoteSwiftPackageReference "ChartView" */;
 			productName = SwiftUICharts;

@@ -11,6 +11,8 @@ class PercentageFormatter: NumberFormatter {
     override init() {
         super.init()
         numberStyle = .percent
+        minimumFractionDigits = 1
+        maximumFractionDigits = 5
     }
     
     required init?(coder: NSCoder) {

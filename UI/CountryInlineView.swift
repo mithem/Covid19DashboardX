@@ -15,7 +15,7 @@ struct CountryInlineView: View {
     var body: some View {
         HStack {
             NavigationLink(destination: CountryView(manager: manager, country: country)) {
-                Text(country.name.localizedCapitalized + " ") + country.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorTreshold: manager.colorThreshold, colorGrayArea: manager.colorGrayArea, reversed: false)
+                Text(country.name.localizedCapitalized + ": ") + country.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorTreshold: manager.colorTreshold, colorGrayArea: manager.colorGrayArea, reversed: false)
             }
         }
     }

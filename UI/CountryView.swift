@@ -11,11 +11,10 @@ import SwiftUICharts
 struct CountryView: View {
     @ObservedObject var manager: DataManager
     @AppStorage(UserDefaultsKeys.dataRepresentationType) var dataRepresentationType = DataRepresentationType.normal
-    @AppStorage(UserDefaultsKeys.ativeMetric) var activeMetric = BasicMeasurementMetric.confirmed
+    @AppStorage(UserDefaultsKeys.activeMetric) var activeMetric = BasicMeasurementMetric.confirmed
     @AppStorage(UserDefaultsKeys.currentN) var n = 1
     @AppStorage(UserDefaultsKeys.maximumN) var maximumN = 90
     @State private var alteredData = [Double]()
-    @State private var showingComparisonView = false
     
     let country: Country
     
@@ -33,7 +32,6 @@ struct CountryView: View {
                 BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
                 Spacer()
                 Group {
-                    
                     if country.measurements.count > 0 {
                         VStack {
                             VStack {
@@ -68,26 +66,13 @@ struct CountryView: View {
                             Text("Loading…")
                         }
                         .onAppear {
-                            manager.loadData(for: country)
+                            manager.loadHistoryData(for: country)
                         }
                         Spacer()
                     }
                 }
-                Button(action: {
-                    showingComparisonView = true
-                }) {
-                    Text("Compare")
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 10)
-                }
-                .padding(10)
-                .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(.blue)
-                )
-                .sheet(isPresented: $showingComparisonView) {
-                    ComparisonView(isPresented: $showingComparisonView, countries: manager.countries, country: country)
-                }
+                NavigationLink("Details", destination: CountryProvincesDetailView(manager: manager, country: country))
+                    .buttonStyle(CustomButtonStyle())
                 if maximumN > 1 {
                     Stepper("Moving average: \(n.nDaysHumanReadable)", value: $n, in: 1...(country.measurements.count == 0 ? 1 : (country.measurements.count < maximumN ? country.measurements.count : maximumN)))
                         .onChange(of: n, perform: { _ in
