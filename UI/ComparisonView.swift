@@ -20,6 +20,7 @@ struct ComparisonView: View {
                     .padding()
                 List(manager.countries.filter { c in
                     if searchTerm.isEmpty { return true }
+                    if c.code == country.code { return true } // no self-comparison
                     return c.name.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(c.code.lowercased())
                 }) { country in
                     NavigationLink(country.name.localizedCapitalized, destination: ComparisonDetailView(isPresented: $isPresented, countries: (self.country, country)))

@@ -20,12 +20,17 @@ struct UserDefaultsKeys {
     static let colorGrayAreaForPercentages = "colorGrayAreaForPercentages"
     static let caseFatalityRateGreenTreshold = "caseFatalityRateGreenTreshold"
     static let caseFatalityRateRedTreshold = "caseFatalityRateRedTreshold"
+    static let ignoreLowDataMode = "ignoreLowDataMode"
 }
 
 struct DefaultSettings {
     static let colorNumbers = false
     static let measurementMetric = BasicMeasurementMetric.confirmed
     static let provinceMetric = Province.SummaryMetric.confirmed
+    static let maximumN = 90
+    static let ignoreLowDataMode = false
+    static let colorTresholdForPercentages = 0.0125
+    static let colorGrayAreaForPercentages = 0.0025
 }
 
 let covidDashApiDotComDateFormat = "YYYY-mm-DD"
@@ -40,6 +45,13 @@ struct SpecialCountries {
 
 struct UsefulURLs {
     static let whoCovid19AdviceForPublic = URL(string: "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public")!
+    static let repoURL = URL(string: "https://github.com/mithem/Covid19DashboardX")!
+    static let newFeatureSuggestion = URL(string: "https://github.com/mithem/Covid19DashboardX/issues/new?title=[FEAT]&labels=feature")!
+    static let newBugReport = URL(string: "https://github.com/mithem/Covid19DashboardX/issues/new?title=[BUG]&labels=bug")!
+    static let mailToMe = URL(string: "mailto:mithem@github.com.com")!
+    static let covid19apiDotCom = URL(string: "https://covid19api.com")!
+    static let covidDashApiDotCom = URL(string: "https://covid-api.com")!
+    static let cellularSettings = URL(string: "prefs:root=MOBILE_DATA_SETTINGS_ID&path=CELLULAR_DATA_OPTIONS")!
 }
 
 /// A dictionary mapping ISO Alpha2 country-codes to Alpha3 ones

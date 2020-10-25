@@ -17,7 +17,7 @@ struct CustomButtonStyle: ButtonStyle {
             .padding(10)
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.accentColor)
                     .opacity(colorScheme == .dark ? 0.7 : 1)
             )
     }

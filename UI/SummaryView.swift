@@ -10,37 +10,25 @@ import Reachability
 
 struct SummaryView: View, DataManagerDelegate {
     
-    let reachability = try! Reachability()
-    
     @ObservedObject var manager: DataManager
     @State private var showingActionSheet = false
     @State private var actionSheetConfig = ActionSheetConfig.sort
     @State private var searchTerm = ""
     @State private var favorites = [String]()
     @State private var lowercasedSearchTerm = ""
+    
     @AppStorage(UserDefaultsKeys.activeMetric) var activeMetric = DefaultSettings.measurementMetric
     @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = DefaultSettings.colorNumbers
+    @AppStorage(UserDefaultsKeys.colorThresholdForPercentages) var colorTreshold = DefaultSettings.colorTresholdForPercentages
+    @AppStorage(UserDefaultsKeys.colorGrayAreaForPercentages) var colorGrayArea = DefaultSettings.colorGrayAreaForPercentages
     
     init() {
         self.manager = DataManager()
         manager.delegate = self
-        reachability.whenReachable = {[self] reachability in
-            if reachability.connection != .unavailable {
-                DispatchQueue.main.async {
-                    manager.error = nil
-                }
-                manager.loadSummary() // also refreshes CountryView
-            }
-        }
-        do {
-            try reachability.startNotifier()
-        } catch {
-            print("Couldn't start Reachability notifier: \(error.localizedDescription)")
-        }
     }
     
     var actionSheetButtonsForSorting: [ActionSheet.Button] {
-        var buttons: [ActionSheet.Button] = [.default(Text("Country code"), action: {manager.sortBy = .countryCode}), .default(Text("Country name"), action: {manager.sortBy = .countryName})]
+        var buttons: [ActionSheet.Button] = [.default(Text("Refresh")) {manager.loadSummary()}, .default(Text("Country code"), action: {manager.sortBy = .countryCode}), .default(Text("Country name"), action: {manager.sortBy = .countryName})]
         
         let confirmed: [ActionSheet.Button] = [.default(Text("Total confirmed"), action: {manager.sortBy = .totalConfirmed}), .default(Text("New confirmed"), action: {manager.sortBy = .newConfirmed})]
         let deaths: [ActionSheet.Button] = [.default(Text("Total deaths"), action: {manager.sortBy = .totalDeaths}), .default(Text("New deaths"), action: {manager.sortBy = .newDeaths})]
@@ -61,10 +49,6 @@ struct SummaryView: View, DataManagerDelegate {
         
         buttons.append(contentsOf: [.default(Text(manager.reversed ? "Dereverse" : "Reverse"), action: {manager.reversed.toggle()}), .cancel()])
         
-        if manager.error != nil {
-            buttons.insert(.default(Text("Refresh")) {manager.loadSummary()}, at: 0)
-        }
-        
         return buttons
     }
     
@@ -73,47 +57,30 @@ struct SummaryView: View, DataManagerDelegate {
         case .sort:
             return ActionSheet(title: Text("Sort countries"), message: Text("By which criteria would you like to sort countries?"), buttons: actionSheetButtonsForSorting)
         case .error:
-            return ActionSheet(title: Text("Error"), message: Text(manager.error?.localizedDescription ?? "unkown error."), buttons: [.default(Text("OK"))])
+            return ActionSheet(title: Text("Unable to load data"), message: Text(manager.error?.localizedDescription ?? "unkown error."), buttons: [.default(Text("OK"))])
         }
     }
     
     var body: some View {
         NavigationView {
             Group {
-                if let error = manager.error {
-                    Text(error.localizedDescription)
-                        .padding()
-                        .onAppear(perform: handleNetworkErrors)
-                } else if manager.countries.count > 0 {
-                    VStack {
-                        List {
-                            BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
-                            SearchBar(searchTerm: $searchTerm)
-                            Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorTreshold: manager.colorTreshold, colorGrayArea: manager.colorGrayArea, reversed: false) ?? Text(notAvailableString))
-                            ForEach(manager.countries.filter { c in
-                                if searchTerm.isEmpty { return true }
-                                return c.name.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(c.code.lowercased())
-                            }, id: \.code) { country in
-                                CountryInlineView(country: country, colorNumbers: colorNumbers, activeMetric: $activeMetric, manager: manager)
-                            }
-                            HStack {
-                                Spacer()
-                                Text("Stay safe ❤️")
-                                    .foregroundColor(.secondary)
-                                    .grayscale(0.35)
-                                Spacer()
-                            }
-                            .onTapGesture {
-                                UIApplication.shared.open(UsefulURLs.whoCovid19AdviceForPublic)
-                            }
-                        }
-                        .listStyle(InsetGroupedListStyle())
-                        .animation(.easeInOut)
-                    }
-                } else {
+                if !manager.countries.isEmpty {
+                    CountriesView
+                } else if manager.loading {
                     VStack(spacing: 10) {
                         ProgressView()
-                        Text("Loading…")
+                        Text("Loading...")
+                    }
+                } else if let error = manager.error {
+                    VStack {
+                        Text(error.localizedDescription)
+                            .padding()
+                        //.onAppear(perform: handleNetworkErrors)
+                    }
+                } else {
+                    VStack {
+                        Text("🤷 No data")
+                        RefreshButton
                     }
                 }
             }
@@ -124,7 +91,7 @@ struct SummaryView: View, DataManagerDelegate {
                 lowercasedSearchTerm = searchTerm.lowercased()
             })
             .onAppear {
-                if manager.error != nil {
+                if manager.error != nil && manager.error != .constrainedNetwork {
                     actionSheetConfig = .error
                     showingActionSheet = true
                 }
@@ -145,6 +112,58 @@ struct SummaryView: View, DataManagerDelegate {
             )
             .navigationTitle("Covid19 Summary")
         }
+    }
+    
+    var RefreshButton: some View {
+        Button("Refresh") {
+            manager.loadSummary()
+        }
+        .buttonStyle(CustomButtonStyle())
+    }
+    
+    var CountriesView: some View {
+            VStack {
+                List {
+                    BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
+                    SearchBar(searchTerm: $searchTerm)
+                    Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: false) ?? Text(notAvailableString))
+                    ForEach(manager.countries.filter { c in
+                        if searchTerm.isEmpty { return true }
+                        return c.name.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(c.code.lowercased())
+                    }, id: \.code) { country in
+                        CountryInlineView(country: country, colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, activeMetric: $activeMetric, manager: manager)
+                            .contextMenu {
+                                Button(action: {
+                                    manager.loadSummary()
+                                }) {
+                                    Text("Refresh summaries")
+                                    Image(systemName: "arrow.clockwise")
+                                }
+                                Button(action: {
+                                    DispatchQueue.main.async {
+                                        manager.countries = []
+                                    }
+                                    manager.loadSummary()
+                                }) {
+                                    Text("Reset all data")
+                                    Image(systemName: "trash")
+                                }
+                            }
+                    }
+                    HStack {
+                        Spacer()
+                        Text("Stay safe ❤️")
+                            .foregroundColor(.secondary)
+                            .grayscale(0.35)
+                        Spacer()
+                    }
+                    .onTapGesture {
+                        UIApplication.shared.open(UsefulURLs.whoCovid19AdviceForPublic)
+                    }
+                }
+                .listStyle(InsetGroupedListStyle())
+                .animation(.easeInOut)
+            }
     }
     
     func handleNetworkErrors() {

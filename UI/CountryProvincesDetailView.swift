@@ -10,35 +10,58 @@ import SwiftUI
 struct CountryProvincesDetailView: View {
     @ObservedObject var manager: DataManager
     let country: Country
-    @State private var showingComparisonView = false
+    
     @AppStorage(UserDefaultsKeys.provinceMetric) var activeMetric = DefaultSettings.provinceMetric
     @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = DefaultSettings.colorNumbers
+    @AppStorage(UserDefaultsKeys.colorThresholdForPercentages) var colorTreshold = DefaultSettings.colorTresholdForPercentages
+    @AppStorage(UserDefaultsKeys.colorGrayAreaForPercentages) var colorGrayArea = DefaultSettings.colorGrayAreaForPercentages
     var body: some View {
         VStack {
             ProvinceSummaryMetricPickerView(activeMetric: $activeMetric)
             List {
-                Text("Total: \(country.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorTreshold: manager.colorTreshold, colorGrayArea: manager.colorGrayArea, reversed: false))")
-                ForEach(country.provinces) { province in
-                    ProvinceInlineView(province: province, colorNumbers: colorNumbers, activeMetric: activeMetric, manager: manager)
-                }
-                if manager.loading {
-                    HStack(spacing: 10) {
-                        ProgressView()
-                        Text("Loading…")
+                Text("Total: \(country.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: false))")
+                if let error = manager.error {
+                    if error == .constrainedNetwork {
+                        Text("Low data mode")
+                            .foregroundColor(.yellow)
+                        ProvincesList
+                    } else {
+                        Text("Error getting provinces data: \(error.localizedDescription)")
+                        Button("Refresh") {
+                            manager.loadProvinceData(for: country)
+                        }
+                        .foregroundColor(.accentColor)
+                    }
+                } else {
+                    ProvincesList
+                    if manager.loading {
+                        HStack(spacing: 10) {
+                            ProgressView()
+                            Text("Loading…")
+                        }
+                    } else if country.provinces.isEmpty {
+                        Text("For this country, there isn't province data available.")
                     }
                 }
             }
             .animation(.easeInOut)
-            Button("Compare") {
-                showingComparisonView = true
-            }
-            .buttonStyle(CustomButtonStyle())
-            .sheet(isPresented: $showingComparisonView) {
-                ComparisonView(isPresented: $showingComparisonView, manager: manager, country: country)
-            }
         }
         .padding()
         .navigationTitle("Details: \(country.name.localizedCapitalized)")
+    }
+    
+    var ProvincesList: some View {
+        ForEach(country.provinces) { province in
+            ProvinceInlineView(province: province, colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, activeMetric: activeMetric, manager: manager)
+                .contextMenu {
+                    Button(action: {
+                        manager.loadProvinceData(for: country)
+                    }) {
+                        Text("Refresh provinces")
+                        Image(systemName: "arrow.clockwise")
+                    }
+                }
+        }
     }
     
     func loadData() {
