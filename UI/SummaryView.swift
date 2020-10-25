@@ -102,13 +102,17 @@ struct SummaryView: View, DataManagerDelegate {
                                         showingActionSheet = true
                                     }) {
                                         Image(systemName: "arrow.up.arrow.down")
+                                            .padding(UIConstants.navigationBarItemsPadding)
                                     }.onLongPressGesture {
                                         manager.reversed.toggle()
-                                    },
+                                    }
+                                    .hoverEffect(),
                                 trailing:
                                     NavigationLink(destination: SettingsView()) {
                                         Image(systemName: "gear")
+                                            .padding(UIConstants.navigationBarItemsPadding)
                                     }
+                                    .hoverEffect()
             )
             .navigationTitle("Covid19 Summary")
         }

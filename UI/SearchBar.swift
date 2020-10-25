@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchBar: View {
     @Binding var searchTerm: String
     @State private var isEditing = false
+    @State private var hoverOnCancelBtn = false
     var body: some View {
         HStack {
             TextField("Search", text: $searchTerm)
@@ -25,6 +26,7 @@ struct SearchBar: View {
                         .foregroundColor(.gray)
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 8)
+                        .hoverEffect()
                         .onTapGesture {
                             if isEditing {
                                 searchTerm = ""
@@ -41,9 +43,20 @@ struct SearchBar: View {
                     self.searchTerm = ""
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 }) {
-                    Text("Cancel")
+                    ZStack {
+                        if hoverOnCancelBtn {
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundColor(.secondary)
+                                .opacity(0.2)
+                                .frame(width: 70, height: 30)
+                        }
+                        Text("Cancel")
+                    }
                 }
                 .padding(.trailing, 10)
+                .onHover {
+                    hoverOnCancelBtn = $0
+                }
                 .transition(.move(edge: .trailing))
                 .animation(.default)
             }

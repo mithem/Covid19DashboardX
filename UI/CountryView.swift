@@ -82,7 +82,10 @@ struct CountryView: View {
             trailing:
                 NavigationLink(destination: CountryViewSettingsView(country: country)) {
                     Image(systemName: "info.circle")
-                })
+                }
+                .padding(UIConstants.navigationBarItemsPadding)
+                .hoverEffect()
+        )
     }
     
     var DataView: some View {
