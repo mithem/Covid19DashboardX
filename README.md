@@ -2,4 +2,6 @@
 
 A simple iOS app featuring a dashboard (summary) of the worldwide cases broken down by country as well as a history graph for each country. Both for cumulative and recovered cases as well as deaths.
 
-Powered by covid19api.com
+Powered by covid19api.com & covid-api.com
+
+Plan to develop own CSSEGISandData (John Hopkins) parser and integrate it with this app (https://github.com/mithem/covid19dashboardxserver)
