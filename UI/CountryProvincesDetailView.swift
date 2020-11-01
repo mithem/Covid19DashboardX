@@ -73,7 +73,7 @@ struct CountryProvincesDetailView: View {
 
 struct CountryProvincesView_Previews: PreviewProvider {
     static var previews: some View {
-        CountryProvincesDetailView(manager: DataManager(), country: countriesForPreviews[0])
+        CountryProvincesDetailView(manager: DataManager(), country: Constants.countriesForPreviews[0])
     }
 }
 

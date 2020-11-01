@@ -10,13 +10,14 @@ import SwiftUI
 struct SettingsView: View {
     var body: some View {
         Form {
-            //Section {
-            NavigationLink("General", destination: GeneralSettingsView())
-            //}
-            //Section {
-            NavigationLink("Other", destination: OtherSettingsView())
-            NavigationLink("Attributions", destination: AttributionsSettingsView())
-            //}
+            Section {
+                NavigationLink("General", destination: GeneralSettingsView())
+                NavigationLink("Notifications", destination: NotificationSettingsView())
+            }
+            Section {
+                NavigationLink("Other", destination: OtherSettingsView())
+                NavigationLink("Attributions", destination: AttributionsSettingsView())
+            }
         }
         .navigationTitle("Settings")
     }

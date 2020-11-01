@@ -21,7 +21,7 @@ class DataManager: ObservableObject {
     private let reachability: Reachability
     private var _loading = false
     private var _sortBy: CountrySortingCriteria
-    var delegate: DataManagerDelegate?
+    //var delegate: DataManagerDelegate?
     var sortBy: CountrySortingCriteria {
         get {
             _sortBy
@@ -178,7 +178,7 @@ class DataManager: ObservableObject {
     
     /// get country data like the CFR and active cases from covid-api.com
     static func getDetailedCountryData(for country: Country, at date: Date? = nil, completion: @escaping GetCountryDataCompletionHandler) {
-        let code = alpha2_to_alpha3_countryCodes[country.code] as? String ?? country.code
+        let code = Constants.alpha2_to_alpha3_countryCodes[country.code] as? String ?? country.code
         var components = URLComponents()
         components.scheme = "https"
         components.host = "covid-api.com"
@@ -199,7 +199,7 @@ class DataManager: ObservableObject {
                 }
             } else if let data = data {
                 let formatter = DateFormatter()
-                formatter.dateFormat = covidDashApiDotComDateFormat
+                formatter.dateFormat = Constants.covidDashApiDotComDateFormat
                 formatter.timeZone = TimeZone(secondsFromGMT: 0)
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -262,7 +262,7 @@ class DataManager: ObservableObject {
     
     
     static func getProvinceData(for country: Country, at date: Date? = nil, completion: @escaping GetCountryDataCompletionHandler) {
-        let code = alpha2_to_alpha3_countryCodes[country.code] as? String ?? country.code
+        let code = Constants.alpha2_to_alpha3_countryCodes[country.code] as? String ?? country.code
         var components = URLComponents()
         components.scheme = "https"
         components.host = "covid-api.com"
@@ -289,7 +289,7 @@ class DataManager: ObservableObject {
                 }
             } else if let data = data {
                 let formatter = DateFormatter()
-                formatter.dateFormat = covidDashApiDotComDateFormat
+                formatter.dateFormat = Constants.covidDashApiDotComDateFormat
                 formatter.timeZone = TimeZone(secondsFromGMT: 0)
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -386,8 +386,7 @@ class DataManager: ObservableObject {
     // MARK: Life cycle
     
     
-    init(delegate: DataManagerDelegate? = nil) {
-        self.delegate = delegate
+    init() {
         latestGlobal = nil
         countries = [Country]()
         _sortBy = .countryCode
@@ -430,11 +429,6 @@ class DataManager: ObservableObject {
 
 
 // MARK: Protocols & extensions
-
-
-protocol DataManagerDelegate {
-    func error(_ error: NetworkError)
-}
 
 extension DataManager: Equatable {
     static func == (lhs: DataManager, rhs: DataManager) -> Bool {

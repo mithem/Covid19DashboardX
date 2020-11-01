@@ -7,8 +7,9 @@
 
 import SwiftUI
 import Reachability
+import UserNotifications
 
-struct SummaryView: View, DataManagerDelegate {
+struct SummaryView: View {
     
     @ObservedObject var manager: DataManager
     @State private var showingActionSheet = false
@@ -24,7 +25,6 @@ struct SummaryView: View, DataManagerDelegate {
     
     init() {
         self.manager = DataManager()
-        manager.delegate = self
     }
     
     var actionSheetButtonsForSorting: [ActionSheet.Button] {
@@ -34,7 +34,7 @@ struct SummaryView: View, DataManagerDelegate {
         let deaths: [ActionSheet.Button] = [.default(Text("Total deaths"), action: {manager.sortBy = .totalDeaths}), .default(Text("New deaths"), action: {manager.sortBy = .newDeaths})]
         let recovered: [ActionSheet.Button] = [.default(Text("Total recovered"), action: {manager.sortBy = .totalRecovered}), .default(Text("New recovered"), action: {manager.sortBy = .newRecovered})]
         let active: [ActionSheet.Button] = [.default(Text("Active cases"), action: {manager.sortBy = .activeCases})]
-        // let cfr: [ActionSheet.Button] = [.default(Text("Case fatality rate"), action: {manager.sortBy = .caseFatalityRate})] // For transition from covid19api.com to covid-api.com for summaries
+        // let cfr: [ActionSheet.Button] = [.default(Text("Case fatality rate"), action: {manager.sortBy = .caseFatalityRate})] // For transition to other sources 😅
         
         switch activeMetric {
         case .confirmed:
@@ -95,6 +95,7 @@ struct SummaryView: View, DataManagerDelegate {
                     actionSheetConfig = .error
                     showingActionSheet = true
                 }
+                removeNotifications()
             }
             .navigationBarItems(leading:
                                     Button(action: {
@@ -112,7 +113,6 @@ struct SummaryView: View, DataManagerDelegate {
                                         Image(systemName: "gear")
                                             .padding(UIConstants.navigationBarItemsPadding)
                                     }
-                                    .hoverEffect()
             )
             .navigationTitle("Covid19 Summary")
         }
@@ -181,10 +181,12 @@ struct SummaryView: View, DataManagerDelegate {
         }
     }
     
-    // MARK: DataManagerDelegate compliance
-    func error(_ error: NetworkError) {
-        actionSheetConfig = .error
-        showingActionSheet = true
+    func removeNotifications() {
+        let ud = UserDefaults()
+        guard let identifiers = ud.stringArray(forKey: UserDefaultsKeys.notificationIdentifiers) else { return }
+        let center = UNUserNotificationCenter.current()
+        center.removeDeliveredNotifications(withIdentifiers: identifiers) // Do not remove all for future-proofing
+        ud.set([String](), forKey: UserDefaultsKeys.notificationIdentifiers)
     }
 }
 

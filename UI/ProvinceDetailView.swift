@@ -87,7 +87,7 @@ struct Card_Previews: PreviewProvider {
 
 struct ProvinceDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ProvinceDetailView(province: countriesForPreviews[0].provinces[0])
+        ProvinceDetailView(province: Constants.countriesForPreviews[0].provinces[0])
             
     }
 }

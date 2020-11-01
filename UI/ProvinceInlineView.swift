@@ -23,6 +23,6 @@ struct ProvinceInlineView: View {
 
 struct ProvinceInlineView_Previews: PreviewProvider {
     static var previews: some View {
-        ProvinceInlineView(province: countriesForPreviews[0].provinces.first!, colorNumbers: true, colorTreshold: 0.01, colorGrayArea: 0.005, activeMetric: .confirmed, manager: DataManager())
+        ProvinceInlineView(province: Constants.countriesForPreviews[0].provinces.first!, colorNumbers: true, colorTreshold: 0.01, colorGrayArea: 0.005, activeMetric: .confirmed, manager: DataManager())
     }
 }

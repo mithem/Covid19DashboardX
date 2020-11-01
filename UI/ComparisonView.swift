@@ -39,6 +39,6 @@ struct ComparisonView: View {
 
 struct ComparisonView_Previews: PreviewProvider {
     static var previews: some View {
-        ComparisonView(isPresented: .constant(true), manager: DataManager(), country: countriesForPreviews[0])
+        ComparisonView(isPresented: .constant(true), manager: DataManager(), country: Constants.countriesForPreviews[0])
     }
 }

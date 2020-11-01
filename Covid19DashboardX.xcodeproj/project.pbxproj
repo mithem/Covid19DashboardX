@@ -48,6 +48,7 @@
 		49B90EEC2543371900E89F5D /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49B90EEB2543371900E89F5D /* SwiftUICharts */; };
 		49B90EEE2543372400E89F5D /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49B90EED2543372400E89F5D /* SwiftUICharts */; };
 		49B90EFC2543460100E89F5D /* ProvinceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EFB2543460100E89F5D /* ProvinceDetailView.swift */; };
+		49DD25C6254EBCE200452A92 /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DD25C5254EBCE200452A92 /* NotificationSettingsView.swift */; };
 		49DD9EFE2545C69B006B1866 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DD9EFD2545C69B006B1866 /* UIConstants.swift */; };
 		49EEFE9F2532DED0008ECBDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49B556342531F695000D2030 /* Assets.xcassets */; };
 		49EEFEA02532DED0008ECBDA /* Covid19Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B556312531F694000D2030 /* Covid19Widget.swift */; };
@@ -128,6 +129,7 @@
 		49B90EDB25432EB900E89F5D /* CustomButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyle.swift; sourceTree = "<group>"; };
 		49B90EFB2543460100E89F5D /* ProvinceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvinceDetailView.swift; sourceTree = "<group>"; };
 		49BCE214253199F20099138F /* CountryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryInlineView.swift; sourceTree = "<group>"; };
+		49DD25C5254EBCE200452A92 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
 		49DD9EFD2545C69B006B1866 /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		49F3525C25442D87009ED5AE /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		49F3529025442E64009ED5AE /* OtherSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSettingsView.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				4942F2D925299AB100EE2959 /* SettingsView.swift */,
+				49DD25C5254EBCE200452A92 /* NotificationSettingsView.swift */,
 				49F35295254432E2009ED5AE /* AttributionsSettingsView.swift */,
 				49F3529025442E64009ED5AE /* OtherSettingsView.swift */,
 				49F3525C25442D87009ED5AE /* GeneralSettingsView.swift */,
@@ -450,6 +453,7 @@
 				4910AAD2254214E300BDAC0C /* PercentageFormatter.swift in Sources */,
 				497E01302531FD52006CEF67 /* SettingsView.swift in Sources */,
 				49B90EDC25432EB900E89F5D /* CustomButtonStyle.swift in Sources */,
+				49DD25C6254EBCE200452A92 /* NotificationSettingsView.swift in Sources */,
 				49F9DD792541B079003D457B /* ComparisonDetailView.swift in Sources */,
 				497E012F2531FD52006CEF67 /* CountryInlineView.swift in Sources */,
 				497E01392531FD52006CEF67 /* CountryViewSettingsView.swift in Sources */,

@@ -46,13 +46,12 @@ struct CountryView: View {
                             Button("Settings") {
                                 UIApplication.shared.open(UsefulURLs.cellularSettings)
                             }
-                            .buttonStyle(CustomButtonStyle())
                             Button("Ignore") {
                                 UserDefaults().set(true, forKey: UserDefaultsKeys.ignoreLowDataMode)
                                 manager.loadHistoryData(for: country)
                             }
-                            .buttonStyle(CustomButtonStyle())
                         }
+                        .buttonStyle(CustomButtonStyle())
                     }
                     .onAppear {
                         manager.loadHistoryData(for: country) // try
@@ -172,7 +171,7 @@ struct CountryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView {
-                CountryView(manager: DataManager(), country: countriesForPreviews[0])
+                CountryView(manager: DataManager(), country: Constants.countriesForPreviews[0])
             }
             .previewDisplayName("Success")
             NavigationView {

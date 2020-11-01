@@ -19,11 +19,11 @@ struct Provider: IntentTimelineProvider {
         let config =  CountrySelectionIntent()
         config.countryCode = "USA"
         config.measurementMetric = .confirmed
-        return SimpleEntry(date: Date(), configuration: config, data: dataForPreviews[0])
+        return SimpleEntry(date: Date(), configuration: config, data: Constants.dataForPreviews[0])
     }
     
     func getSnapshot(for configuration: CountrySelectionIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, data: dataForPreviews[0])
+        let entry = SimpleEntry(date: Date(), configuration: configuration, data: Constants.dataForPreviews[0])
         completion(entry)
     }
     
@@ -94,11 +94,11 @@ struct Covid19Widget: Widget {
 struct Covid19Widget_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            Covid19WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: CountrySelectionIntent(), data: dataForPreviews[0]))
+            Covid19WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: CountrySelectionIntent(), data: Constants.dataForPreviews[0]))
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
-            Covid19WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: CountrySelectionIntent(), data: dataForPreviews[1]))
+            Covid19WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: CountrySelectionIntent(), data: Constants.dataForPreviews[1]))
                 .previewContext(WidgetPreviewContext(family: .systemMedium))
-            Covid19WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: CountrySelectionIntent(), data: dataForPreviews[0]))
+            Covid19WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: CountrySelectionIntent(), data: Constants.dataForPreviews[0]))
                 .previewContext(WidgetPreviewContext(family: .systemLarge))
         }
     }
