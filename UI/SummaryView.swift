@@ -34,7 +34,6 @@ struct SummaryView: View {
         let deaths: [ActionSheet.Button] = [.default(Text("Total deaths"), action: {manager.sortBy = .totalDeaths}), .default(Text("New deaths"), action: {manager.sortBy = .newDeaths})]
         let recovered: [ActionSheet.Button] = [.default(Text("Total recovered"), action: {manager.sortBy = .totalRecovered}), .default(Text("New recovered"), action: {manager.sortBy = .newRecovered})]
         let active: [ActionSheet.Button] = [.default(Text("Active cases"), action: {manager.sortBy = .activeCases})]
-        // let cfr: [ActionSheet.Button] = [.default(Text("Case fatality rate"), action: {manager.sortBy = .caseFatalityRate})] // For transition to other sources 😅
         
         switch activeMetric {
         case .confirmed:
@@ -87,9 +86,6 @@ struct SummaryView: View {
             .actionSheet(isPresented: $showingActionSheet) {
                 actionSheet
             }
-            .onChange(of: searchTerm, perform: { value in
-                lowercasedSearchTerm = searchTerm.lowercased()
-            })
             .onAppear {
                 if manager.error != nil && manager.error != .constrainedNetwork {
                     actionSheetConfig = .error
@@ -132,8 +128,7 @@ struct SummaryView: View {
                     SearchBar(searchTerm: $searchTerm)
                     Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: false) ?? Text(notAvailableString))
                     ForEach(manager.countries.filter { c in
-                        if searchTerm.isEmpty { return true }
-                        return c.name.lowercased().contains(lowercasedSearchTerm) || lowercasedSearchTerm.contains(c.code.lowercased())
+                        c.isIncluded(lowercasedSearchTerm)
                     }, id: \.code) { country in
                         CountryInlineView(country: country, colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, activeMetric: $activeMetric, manager: manager)
                             .contextMenu {

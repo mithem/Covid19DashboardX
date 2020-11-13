@@ -41,6 +41,8 @@
 		497E01372531FD52006CEF67 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E14252386D00060BA27 /* Extensions.swift */; };
 		497E01382531FD52006CEF67 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5C824E7F4D200399145 /* ContentView.swift */; };
 		497E01392531FD52006CEF67 /* CountryViewSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */; };
+		499A5420255ED68200D1D3D8 /* SearchableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499A541F255ED68200D1D3D8 /* SearchableProtocol.swift */; };
+		499A5421255ED68200D1D3D8 /* SearchableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499A541F255ED68200D1D3D8 /* SearchableProtocol.swift */; };
 		49B5562D2531F694000D2030 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B5562C2531F694000D2030 /* WidgetKit.framework */; };
 		49B5562F2531F694000D2030 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B5562E2531F694000D2030 /* SwiftUI.framework */; };
 		49B5563B2531F695000D2030 /* Covid19WidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 49B5562A2531F694000D2030 /* Covid19WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -118,6 +120,7 @@
 		4954F5EE24E7F9B100399145 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		4954F5F724E8051300399145 /* shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shared.swift; sourceTree = "<group>"; };
 		49806BE6252F782400767A6E /* MovingAverage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingAverage.swift; sourceTree = "<group>"; };
+		499A541F255ED68200D1D3D8 /* SearchableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableProtocol.swift; sourceTree = "<group>"; };
 		49B5562A2531F694000D2030 /* Covid19WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Covid19WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B5562C2531F694000D2030 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = Library/Frameworks/WidgetKit.framework; sourceTree = DEVELOPER_DIR; };
 		49B5562E2531F694000D2030 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -201,6 +204,7 @@
 				4954F5F724E8051300399145 /* shared.swift */,
 				4942F2BE2529955100EE2959 /* constants.swift */,
 				4954F5EB24E7F51400399145 /* models.swift */,
+				499A541F255ED68200D1D3D8 /* SearchableProtocol.swift */,
 				4914F3E72544032A00CBC521 /* SummaryProvider.swift */,
 				49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */,
 			);
@@ -436,6 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4914F3F4254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift in Sources */,
+				499A5420255ED68200D1D3D8 /* SearchableProtocol.swift in Sources */,
 				49F3525D25442D87009ED5AE /* GeneralSettingsView.swift in Sources */,
 				49F3529125442E64009ED5AE /* OtherSettingsView.swift in Sources */,
 				49DD9EFE2545C69B006B1866 /* UIConstants.swift in Sources */,
@@ -473,6 +478,7 @@
 			files = (
 				49EEFEA02532DED0008ECBDA /* Covid19Widget.swift in Sources */,
 				49370B3C2542AA5F009BFE4C /* Extensions.swift in Sources */,
+				499A5421255ED68200D1D3D8 /* SearchableProtocol.swift in Sources */,
 				49370B3B2542AA5F009BFE4C /* DataManager.swift in Sources */,
 				49370B392542AA5F009BFE4C /* MovingAverage.swift in Sources */,
 				49370B372542AA5F009BFE4C /* shared.swift in Sources */,

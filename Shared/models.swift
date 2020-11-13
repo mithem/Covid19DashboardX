@@ -460,3 +460,19 @@ extension ProvinceMeasurementForDecodingOnly: Equatable {
 }
 
 extension ProvinceMeasurementRegionForDecodingOnly: Equatable {}
+
+// MARK: Searchable Extensions
+
+extension Country: Searchable {
+    func isIncluded(searchTerm: String) -> Bool {
+        if searchTerm.isEmpty { return true }
+        return name.lowercased().contains(searchTerm) || searchTerm.contains(code.lowercased())
+    }
+}
+
+extension Province: Searchable {
+    func isIncluded(searchTerm: String) -> Bool {
+        if searchTerm.isEmpty { return true }
+        return name.lowercased().contains(searchTerm)
+    }
+}
