@@ -86,6 +86,9 @@ struct SummaryView: View {
             .actionSheet(isPresented: $showingActionSheet) {
                 actionSheet
             }
+            .onChange(of: searchTerm) { value in
+                lowercasedSearchTerm = value.lowercased()
+            }
             .onAppear {
                 if manager.error != nil && manager.error != .constrainedNetwork {
                     actionSheetConfig = .error
