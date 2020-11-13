@@ -122,8 +122,8 @@ struct ProvinceMeasurementRegionForDecodingOnly: Decodable {
     let iso: String
     let name: String
     let province: String
-    let lat: String
-    let long: String
+    let lat: String?
+    let long: String?
 }
 
 // MARK: Models for decoding detailed country measurements (snapshots)

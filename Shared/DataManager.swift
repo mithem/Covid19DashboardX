@@ -309,7 +309,8 @@ class DataManager: ObservableObject {
                         completion(.success(country))
                     }
                 } else {
-                    completion(.failure(.invalidResponse(response: String(data: data, encoding: .utf8) ?? notAvailableString)))
+                    let string = String(data: data, encoding: .utf8) ?? notAvailableString
+                    completion(.failure(.invalidResponse(response: string)))
                 }
             } else {
                 completion(.failure(.noResponse))
