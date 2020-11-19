@@ -23,7 +23,6 @@
 		49370B3B2542AA5F009BFE4C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5E824E7F50200399145 /* DataManager.swift */; };
 		49370B3C2542AA5F009BFE4C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E14252386D00060BA27 /* Extensions.swift */; };
 		493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E08252383A70060BA27 /* ModelDecodableTests.swift */; };
-		49434BCD2542E207001F9F1B /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4942F2BE2529955100EE2959 /* constants.swift */; };
 		4954F5DE24E7F4D300399145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4954F5C924E7F4D300399145 /* Assets.xcassets */; };
 		497844E42541939800364E18 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 497844E32541939800364E18 /* Reachability */; };
 		497E012B2531FD52006CEF67 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5E824E7F50200399145 /* DataManager.swift */; };
@@ -431,7 +430,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */,
-				49434BCD2542E207001F9F1B /* constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

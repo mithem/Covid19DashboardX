@@ -5,7 +5,6 @@
 //  Created by Miguel Themann on 23.10.20.
 //
 
-import Foundation
 import SwiftUI
 
 struct CustomButtonStyle: ButtonStyle {
@@ -29,7 +28,7 @@ struct CustomButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             Button("Hello world", action: {})
-                .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+                .preferredColorScheme(.dark)
             Button("Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum", action: {})
         }
         .buttonStyle(CustomButtonStyle())

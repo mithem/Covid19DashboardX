@@ -57,7 +57,7 @@ class ModelDecodableTests: XCTestCase {
     
     func setup() {
         formatter = DateFormatter()
-        formatter.dateFormat = covidDashApiDotComDateFormat
+        formatter.dateFormat = Covid19DashboardX.Constants.covidDashApiDotComDateFormat
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
