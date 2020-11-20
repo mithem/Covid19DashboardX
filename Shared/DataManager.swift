@@ -288,12 +288,7 @@ class DataManager: ObservableObject {
                     completion(.failure(.otherWith(error: error)))
                 }
             } else if let data = data {
-                let formatter = DateFormatter()
-                formatter.dateFormat = Constants.covidDashApiDotComDateFormat
-                formatter.timeZone = TimeZone(secondsFromGMT: 0)
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .formatted(formatter)
+                let decoder = CovidDashApiDotComJSONDecoder()
                 let serverResponse = try? decoder.decode(CountryProvincesResponse.self, from: data)
                 if let serverResponse = serverResponse {
                     if serverResponse.data.isEmpty {

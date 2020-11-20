@@ -10,22 +10,28 @@ import XCTest
 
 class ModelDecodableTests: XCTestCase {
     var formatter = DateFormatter()
-    var decoder = JSONDecoder()
+    let decoder = CovidDashApiDotComJSONDecoder()
     let notDecodableMsg = "Unable to decode"
+    
     func testProvinceDecoding1() {
         let input = #"{"data": [{"date": "2020-10-22","confirmed": 16810,"deaths": 238,"recovered": 16215,"confirmed_diff": 0,"deaths_diff": 0,"recovered_diff": 0,"last_update": "2020-10-23 04:24:46","active": 357,"active_diff": 0,"fatality_rate": 0.0142,"region": {"iso": "MDG","name": "Madagascar","province": "","lat": "-18.7669","long": "46.8691","cities": []}}]}"#.data(using: .utf8)!
         
         let date = Calendar.current.date(from: DateComponents(timeZone: TimeZone(secondsFromGMT: 0), year: 2020, month: 10, day: 22))!
         
         let expected = CountryProvincesResponse(data: [ProvinceMeasurementForDecodingOnly(date: date, confirmed: 16810, confirmedDiff: 0, deaths: 238, deathsDiff: 0, recovered: 16215, recoveredDiff: 0, active: 357, activeDiff: 0, fatalityRate: 0.0142, region: ProvinceMeasurementRegionForDecodingOnly(iso: "MDG", name: "Madagascar", province: "", lat: "-18.7669", long: "46.8691"))])
+        let encoder = JSONEncoder()
+        let data = try! encoder.encode(expected)
+        print(String(data: data, encoding: .utf8))
         
-        let result = try? decoder.decode(CountryProvincesResponse.self, from: input)
-        
-        XCTAssertNotNil(result, notDecodableMsg)
-        
-        guard let res = result else { return }
-        
-        XCTAssertEqual(res, expected)
+        do {
+            let result = try decoder.decode(CountryProvincesResponse.self, from: input)
+            
+            XCTAssertNotNil(result, notDecodableMsg)
+            
+            XCTAssertEqual(result, expected)
+        } catch {
+            XCTAssertTrue(false, error.localizedDescription)
+        }
     }
     
     func testProvinceDecoding2() {
@@ -53,15 +59,6 @@ class ModelDecodableTests: XCTestCase {
         let result = try? decoder.decode(CountryProvincesResponse.self, from: input)
         
         XCTAssertTrue(result?.data.count ?? 0 > 0)
-    }
-    
-    func setup() {
-        formatter = DateFormatter()
-        formatter.dateFormat = Covid19DashboardX.Constants.covidDashApiDotComDateFormat
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        decoder.dateDecodingStrategy = .formatted(formatter)
     }
 }
 

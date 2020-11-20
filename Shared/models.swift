@@ -100,11 +100,11 @@ struct CountryHistoryMeasurementForDecodingOnly: Decodable {
 // MARK: Models for decoding provinces
 
 /// A response when requesting (current) data for all provinces of a country
-struct CountryProvincesResponse: Decodable {
+struct CountryProvincesResponse: Codable {
     let data: [ProvinceMeasurementForDecodingOnly]
 }
 
-struct ProvinceMeasurementForDecodingOnly: Decodable {
+struct ProvinceMeasurementForDecodingOnly: Codable {
     let date: Date
     let confirmed: Int
     let confirmedDiff: Int
@@ -118,7 +118,7 @@ struct ProvinceMeasurementForDecodingOnly: Decodable {
     let region: ProvinceMeasurementRegionForDecodingOnly
 }
 
-struct ProvinceMeasurementRegionForDecodingOnly: Decodable {
+struct ProvinceMeasurementRegionForDecodingOnly: Codable {
     let iso: String
     let name: String
     let province: String
@@ -450,7 +450,7 @@ extension ProvinceMeasurementForDecodingOnly: Equatable {
         let cd = lhs.confirmedDiff == rhs.confirmedDiff
         let d = lhs.deaths == rhs.deaths
         let dd = lhs.deathsDiff == rhs.deathsDiff
-        let cfr = lhs.fatalityRate == rhs.fatalityRate
+        let cfr = round(lhs.fatalityRate) == round(rhs.fatalityRate)
         let r = lhs.recovered == rhs.recovered
         let rd = lhs.recoveredDiff == rhs.recoveredDiff
         let re = lhs.region == rhs.region
