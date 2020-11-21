@@ -39,26 +39,26 @@ extension SummaryProvider {
         numberFormatter.numberStyle = .decimal
         if let new = new {
             let sign = new > 0 ? "+" : (new < 0 ? "-" : "=")
-            let t1 = Text("\(numberFormatter.string(from: NSNumber(value: total)) ?? notAvailableString) (")
-            let t2 = Text("\(sign)\(numberFormatter.string(from: NSNumber(value: new)) ?? notAvailableString)")
+            let t1 = Text("\(numberFormatter.string(from: NSNumber(value: total)) ?? Constants.notAvailableString) (")
+            let t2 = Text("\(sign)\(numberFormatter.string(from: NSNumber(value: new)) ?? Constants.notAvailableString)")
             let t3 = Text(")")
             if colorNumbers {
                 return t1 + t2.foregroundColor(new > 0 ? .red : (new < 0 ? .green : .gray)) + t3
             }
             return t1 + t2 + t3
         } else {
-            return Text(numberFormatter.string(from: NSNumber(value: total)) ?? notAvailableString)
+            return Text(numberFormatter.string(from: NSNumber(value: total)) ?? Constants.notAvailableString)
         }
     }
     
     func summary(total: Int?, new: Int?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
-        guard let toTal = total else { return Text(notAvailableString) }
+        guard let toTal = total else { return Text(Constants.notAvailableString) }
         return summary(total: toTal, new: new, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
     }
     
     func summary(percentage: Double?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
-        guard let perCent = percentage else { return Text(notAvailableString) }
-        let perCentString = PercentageFormatter().string(from: NSNumber(value: perCent)) ?? notAvailableString
+        guard let perCent = percentage else { return Text(Constants.notAvailableString) }
+        let perCentString = PercentageFormatter().string(from: NSNumber(value: perCent)) ?? Constants.notAvailableString
         let text = Text(perCentString)
         var color: Color
         

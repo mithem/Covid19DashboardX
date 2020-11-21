@@ -34,12 +34,15 @@ func _logarithmic(value: Double) -> Double {
 
 func resetSettingsToDefaults() {
     let ud = UserDefaults()
+    
     typealias uk = UserDefaultsKeys
-    ud.set(DefaultSettings.colorNumbers, forKey: uk.colorNumbers)
-    ud.set(DefaultSettings.measurementMetric.rawValue, forKey: uk.activeMetric)
-    ud.set(DefaultSettings.provinceMetric.rawValue, forKey: uk.provinceMetric)
-    ud.set(DefaultSettings.maximumN, forKey: uk.maximumN)
-    ud.set(DefaultSettings.ignoreLowDataMode, forKey: uk.ignoreLowDataMode)
-    ud.set(DefaultSettings.colorTresholdForPercentages, forKey: uk.colorThresholdForPercentages)
-    ud.set(DefaultSettings.colorGrayAreaForPercentages, forKey: uk.colorGrayAreaForPercentages)
+    typealias ds = DefaultSettings
+    
+    ud.set(ds.colorNumbers, forKey: uk.colorNumbers)
+    ud.set(ds.measurementMetric.rawValue, forKey: uk.activeMetric)
+    ud.set(ds.provinceMetric.rawValue, forKey: uk.provinceMetric)
+    ud.set(ds.maximumN, forKey: uk.maximumN)
+    ud.set(ds.ignoreLowDataMode, forKey: uk.ignoreLowDataMode)
+    ud.set(ds.colorTresholdForPercentages, forKey: uk.colorThresholdForPercentages)
+    ud.set(ds.colorGrayAreaForPercentages, forKey: uk.colorGrayAreaForPercentages)
 }

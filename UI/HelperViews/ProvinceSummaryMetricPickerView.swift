@@ -12,7 +12,7 @@ struct ProvinceSummaryMetricPickerView: View {
     var body: some View {
         Picker("Summary metric", selection: $activeMetric) {
             ForEach(Province.SummaryMetric.allCases) { value in
-                Text(value.short).tag(value)
+                Text(value.shortDescription).tag(value)
             }
         }
         .pickerStyle(SegmentedPickerStyle())

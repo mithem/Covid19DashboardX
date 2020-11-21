@@ -129,7 +129,7 @@ struct SummaryView: View {
                 List {
                     BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
                     SearchBar(searchTerm: $searchTerm)
-                    Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: false) ?? Text(notAvailableString))
+                    Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: false) ?? Text(Constants.notAvailableString))
                     ForEach(manager.countries.filter { c in
                         c.isIncluded(lowercasedSearchTerm)
                     }, id: \.code) { country in

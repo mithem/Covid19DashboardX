@@ -24,9 +24,9 @@ struct GeneralSettingsView: View {
                 Toggle("Ignore low data mode", isOn: $ignoreLowDataMode)
             }
             Section {
-                Stepper("Percentages color treshold: \(percentageFormatter.string(from: NSNumber(value: colorTreshold)) ?? notAvailableString)", value: $colorTreshold, in: 0...0.5, step: 0.0025)
-                Stepper("Percentages color gray area: \(percentageFormatter.string(from: NSNumber(value: colorGrayArea)) ?? notAvailableString)", value: $colorGrayArea, in: 0...0.25, step: 0.00125)
-                Text("CFRs of \(percentageFormatter.string(from: NSNumber(value: colorTreshold)) ?? notAvailableString) with an deviation of ±\(percentageFormatter.string(from: NSNumber(value: colorGrayArea)) ?? notAvailableString) will be displayed gray, above red, below green.")
+                Stepper("Percentages color treshold: \(percentageFormatter.string(from: NSNumber(value: colorTreshold)) ?? Constants.notAvailableString)", value: $colorTreshold, in: 0...0.5, step: 0.0025)
+                Stepper("Percentages color gray area: \(percentageFormatter.string(from: NSNumber(value: colorGrayArea)) ?? Constants.notAvailableString)", value: $colorGrayArea, in: 0...0.25, step: 0.00125)
+                Text("CFRs of \(percentageFormatter.string(from: NSNumber(value: colorTreshold)) ?? Constants.notAvailableString) with an deviation of ±\(percentageFormatter.string(from: NSNumber(value: colorGrayArea)) ?? Constants.notAvailableString) will be displayed gray, above red, below green.")
                     .foregroundColor(.secondary)
             }
         }

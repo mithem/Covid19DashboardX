@@ -11,6 +11,7 @@ import SwiftUI
 import Reachability
 
 class DataManager: ObservableObject {
+    
     @Environment(\.colorScheme) private var colorScheme
     
     @Published var countries: [Country]
@@ -21,7 +22,6 @@ class DataManager: ObservableObject {
     private let reachability: Reachability
     private var _loading = false
     private var _sortBy: CountrySortingCriteria
-    //var delegate: DataManagerDelegate?
     var sortBy: CountrySortingCriteria {
         get {
             _sortBy
@@ -73,7 +73,7 @@ class DataManager: ObservableObject {
         }.resume()
     }
     
-    func loadSummary() { // TODO: Only use covid-api.com for summary. covid-api.com/api/regions can be used to get possible regions.
+    func loadSummary() {
         DispatchQueue.main.async {
             self._loading = true
         }
@@ -134,7 +134,7 @@ class DataManager: ObservableObject {
                     }
                     completion(.success(country))
                 } else {
-                    completion(.failure(.invalidResponse(response: String(data: data, encoding: .utf8) ?? notAvailableString)))
+                    completion(.failure(.invalidResponse(response: String(data: data, encoding: .utf8) ?? Constants.notAvailableString)))
                 }
             } else {
                 completion(.failure(.noResponse))
@@ -204,7 +204,7 @@ class DataManager: ObservableObject {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 decoder.dateDecodingStrategy = .formatted(formatter)
-                let serverResponse = try? decoder.decode(DetailedCountryMeasurementContainerForDecodingOnly.self, from: data)
+                let serverResponse = try? decoder.decode(DetailedCountryMeasurementResponse.self, from: data)
                 if let serverResponse = serverResponse {
                     country.latest.active = serverResponse.data.active
                     country.latest.caseFatalityRate = serverResponse.data.fatalityRate
@@ -219,7 +219,7 @@ class DataManager: ObservableObject {
                     
                     completion(.success(country))
                 } else {
-                    completion(.failure(.invalidResponse(response: String(data: data, encoding: .utf8) ?? notAvailableString)))
+                    completion(.failure(.invalidResponse(response: String(data: data, encoding: .utf8) ?? Constants.notAvailableString)))
                 }
             } else {
                 completion(.failure(.noResponse))
@@ -304,7 +304,7 @@ class DataManager: ObservableObject {
                         completion(.success(country))
                     }
                 } else {
-                    let string = String(data: data, encoding: .utf8) ?? notAvailableString
+                    let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
                     completion(.failure(.invalidResponse(response: string)))
                 }
             } else {

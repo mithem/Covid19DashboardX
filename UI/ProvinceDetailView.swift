@@ -12,7 +12,7 @@ struct ProvinceDetailView: View {
     let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     var body: some View {
         LazyVGrid(columns: columns) {
-            ForEach(Province.Metric.allCases) { metric in
+            ForEach(MeasurementMetric.allCases) { metric in
                 Card(metric: metric, value: province.value(for: metric))
             }
         }
@@ -22,7 +22,7 @@ struct ProvinceDetailView: View {
 
 fileprivate struct Card: View {
     @Environment(\.colorScheme) private var colorScheme
-    let metric: Province.Metric
+    let metric: MeasurementMetric
     let value: String
     
     var body: some View {

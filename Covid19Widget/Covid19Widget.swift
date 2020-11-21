@@ -72,7 +72,7 @@ struct Covid19WidgetEntryView : View {
     }
     
     var body: some View {
-        LineChartView(data: entry.data, title: entry.configuration.countryCode?.uppercased() ?? notAvailableString, form: form, rateValue: nil)
+        LineChartView(data: entry.data, title: entry.configuration.countryCode?.uppercased() ?? Constants.notAvailableString, form: form, rateValue: nil)
     }
 }
 

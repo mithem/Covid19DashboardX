@@ -1,5 +1,5 @@
 //
-//  SearchableProtocol.swift
+//  Searchable.swift
 //  Covid19DashboardX
 //
 //  Created by Miguel Themann on 13.11.20.
