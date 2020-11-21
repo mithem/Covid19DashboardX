@@ -60,5 +60,9 @@ class ModelDecodableTests: XCTestCase {
         
         XCTAssertTrue(result?.data.count ?? 0 > 0)
     }
+    
+    func testExample() {
+        XCTAssertTrue("Hello, world!".lowercased().starts(with: "hello"))
+    }
 }
 
