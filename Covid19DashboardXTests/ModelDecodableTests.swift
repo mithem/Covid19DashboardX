@@ -19,9 +19,6 @@ class ModelDecodableTests: XCTestCase {
         let date = Calendar.current.date(from: DateComponents(timeZone: TimeZone(secondsFromGMT: 0), year: 2020, month: 10, day: 22))!
         
         let expected = CountryProvincesResponse(data: [ProvinceMeasurementForDecodingOnly(date: date, confirmed: 16810, confirmedDiff: 0, deaths: 238, deathsDiff: 0, recovered: 16215, recoveredDiff: 0, active: 357, activeDiff: 0, fatalityRate: 0.0142, region: ProvinceMeasurementRegionForDecodingOnly(iso: "MDG", name: "Madagascar", province: "", lat: "-18.7669", long: "46.8691"))])
-        let encoder = JSONEncoder()
-        let data = try! encoder.encode(expected)
-        print(String(data: data, encoding: .utf8))
         
         do {
             let result = try decoder.decode(CountryProvincesResponse.self, from: input)
@@ -59,10 +56,6 @@ class ModelDecodableTests: XCTestCase {
         let result = try? decoder.decode(CountryProvincesResponse.self, from: input)
         
         XCTAssertTrue(result?.data.count ?? 0 > 0)
-    }
-    
-    func testExample() {
-        XCTAssertTrue("Hello, world!".lowercased().starts(with: "hello"))
     }
 }
 
