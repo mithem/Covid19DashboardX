@@ -8,5 +8,5 @@
 import Foundation
 
 struct SpecialCountries {
-    static let emptyCountry = Constants.countriesForPreviews[1]
+    static let emptyCountry = MockData.countries[1]
 }

@@ -42,13 +42,14 @@ class DataManager: ObservableObject {
         }
     }
     
-    typealias GetCountryDataCompletionHandler = (Result<Country, NetworkError>) -> Void
+    typealias CountryDataResult = Result<Country, NetworkError>
+    typealias GetCountryDataCompletionHandler = (CountryDataResult) -> Void
     
     
     // MARK: Summary data
     
     
-    static func getSummary(completion: @escaping (Result<SummaryResponse, NetworkError>) -> Void) {
+    class func getSummary(completion: @escaping (Result<SummaryResponse, NetworkError>) -> Void) {
         guard let url = URL(string: "https://api.covid19api.com/summary") else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
@@ -73,33 +74,46 @@ class DataManager: ObservableObject {
         }.resume()
     }
     
-    func loadSummary() {
+    class func parseSummary(_ data: Result<SummaryResponse, NetworkError>) -> Result<(countries: [Country], latestGlobal: GlobalMeasurement), NetworkError> {
+        switch data {
+        case .success(let response):
+            var tempCountries = [Country]()
+            for country in response.countries {
+                let measurement = CountrySummaryMeasurement(date: country.date, totalConfirmed: country.totalConfirmed, newConfirmed: country.newConfirmed, totalDeaths: country.totalDeaths, newDeaths: country.newDeaths, totalRecovered: country.totalRecovered, newRecovered: country.newRecovered, active: country.active, newActive: country.newActive, caseFatalityRate: country.caseFatalityRate)
+                
+                let newCountry = Country(code: country.countryCode, name: country.country, latest: measurement)
+                tempCountries.append(newCountry)
+            }
+            return .success((countries: tempCountries, latestGlobal: response.global))
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    /// load Summary from Self.getSummary and call `callback` when done.
+    /// - Parameter callback: function to call back
+    func loadSummary(callback: (() -> Void)? = nil) {
         DispatchQueue.main.async {
             self._loading = true
         }
-        DataManager.getSummary { result in
-            switch result {
-            case .success(let response):
-                var tempCountries = [Country]()
-                for country in response.countries {
-                    let measurement = CountrySummaryMeasurement(date: country.date, totalConfirmed: country.totalConfirmed, newConfirmed: country.newConfirmed, totalDeaths: country.totalDeaths, newDeaths: country.newDeaths, totalRecovered: country.totalRecovered, newRecovered: country.newRecovered, active: country.active, newActive: country.newActive, caseFatalityRate: country.caseFatalityRate)
-                    
-                    let newCountry = Country(code: country.countryCode, name: country.country, latest: measurement)
-                    tempCountries.append(newCountry)
-                }
+        Self.getSummary { result in
+            switch Self.parseSummary(result) {
+            case .success((let countries, let latestGlobal)):
                 DispatchQueue.main.async {
                     self.sortCountries()
-                    self.countries = tempCountries
-                    self.latestGlobal = response.global
+                    self.countries = countries
+                    self.latestGlobal = latestGlobal
                     self.error = nil
+                    self._loading = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.error = error
+                    self._loading = false
                 }
             }
-            DispatchQueue.main.async {
-                self._loading = false
+            if let callback = callback {
+                callback()
             }
         }
     }
@@ -108,7 +122,7 @@ class DataManager: ObservableObject {
     // MARK: Country history data
     
     
-    static func getHistoryData(for country: Country, completion: @escaping GetCountryDataCompletionHandler) {
+    class func getHistoryData(for country: Country, completion: @escaping (Result<(Country, [CountryHistoryMeasurementForDecodingOnly]), NetworkError>) -> Void) {
         guard let url = URL(string: "https://api.covid19api.com/total/country/\(country.code)") else { return }
         var request = URLRequest(url: url)
         request.allowsConstrainedNetworkAccess = UserDefaults().bool(forKey: UserDefaultsKeys.ignoreLowDataMode)
@@ -129,10 +143,7 @@ class DataManager: ObservableObject {
                 decoder.dateDecodingStrategy = .iso8601
                 let serverResponse = try? decoder.decode([CountryHistoryMeasurementForDecodingOnly].self, from: data)
                 if let serverResponse = serverResponse {
-                    for measurement in serverResponse {
-                        country.measurements.append(CountryHistoryMeasurement(confirmed: measurement.cases ?? measurement.confirmed ?? 0, deaths: measurement.deaths, recovered: measurement.recovered, active: measurement.active, date: measurement.date))
-                    }
-                    completion(.success(country))
+                    completion(.success((country, serverResponse)))
                 } else {
                     completion(.failure(.invalidResponse(response: String(data: data, encoding: .utf8) ?? Constants.notAvailableString)))
                 }
@@ -140,6 +151,18 @@ class DataManager: ObservableObject {
                 completion(.failure(.noResponse))
             }
         }.resume()
+    }
+    
+    class func parseHistoryData(_ data: Result<(Country, [CountryHistoryMeasurementForDecodingOnly]), NetworkError>) -> CountryDataResult {
+        switch data {
+        case .success(let (country, measurements)):
+            for measurement in measurements {
+                country.measurements.append(CountryHistoryMeasurement(confirmed: measurement.cases ?? measurement.confirmed ?? 0, deaths: measurement.deaths, recovered: measurement.recovered, active: measurement.active, date: measurement.date))
+            }
+            return .success(country)
+        case .failure(let error):
+            return .failure(error)
+        }
     }
     
     func loadHistoryData(for country: Country) {
@@ -152,22 +175,22 @@ class DataManager: ObservableObject {
         }
         guard let country = self.countries.first(where: {$0.code == countryCode}) else { return }
         country.code = countryCode // is this needed? Don't wanna search all this..
-        DataManager.getHistoryData(for: country) { result in
-            switch result {
+        
+        Self.getHistoryData(for: country) { result in
+            switch Self.parseHistoryData(result) {
             case .success(let country):
                 DispatchQueue.main.async {
                     if let idx = self.countries.firstIndex(of: country) {
                         self.countries[idx] = country
                     }
                     self.error = nil
+                    self._loading = false
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.error = error
+                    self._loading = false
                 }
-            }
-            DispatchQueue.main.async {
-                self._loading = false
             }
         }
     }
@@ -177,7 +200,7 @@ class DataManager: ObservableObject {
     
     
     /// get country data like the CFR and active cases from covid-api.com
-    static func getDetailedCountryData(for country: Country, at date: Date? = nil, completion: @escaping GetCountryDataCompletionHandler) {
+    class func getDetailedCountryData(for country: Country, at date: Date? = nil, completion: @escaping GetCountryDataCompletionHandler) {
         let code = Constants.alpha2_to_alpha3_countryCodes[country.code] as? String ?? country.code
         var components = URLComponents()
         components.scheme = "https"
@@ -237,7 +260,7 @@ class DataManager: ObservableObject {
         }
         guard let country = self.countries.first(where: {$0.code == countryCode}) else { return }
         country.code = countryCode // is this needed? Don't wanna search all this..
-        DataManager.getDetailedCountryData(for: country, at: date) { result in
+        Self.getDetailedCountryData(for: country, at: date) { result in
             switch result {
             case .success(let country):
                 DispatchQueue.main.async {
@@ -261,7 +284,7 @@ class DataManager: ObservableObject {
     // MARK: Province data
     
     
-    static func getProvinceData(for country: Country, at date: Date? = nil, completion: @escaping GetCountryDataCompletionHandler) {
+    class func getProvinceData(for country: Country, at date: Date? = nil, completion: @escaping GetCountryDataCompletionHandler) {
         let code = Constants.alpha2_to_alpha3_countryCodes[country.code] as? String ?? country.code
         var components = URLComponents()
         components.scheme = "https"
@@ -412,6 +435,13 @@ class DataManager: ObservableObject {
         } else {
             loadSummary()
         }
+    }
+    
+    func reset() {
+        latestGlobal = nil
+        countries = [Country]()
+        sortBy = .countryCode
+        reversed = false
     }
     
     

@@ -49,6 +49,6 @@ struct ComparisonDetailView: View {
 
 struct ComparisonDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ComparisonDetailView(isPresented: .constant(false), countries: (Constants.countriesForPreviews[0], Constants.countriesForPreviews[1]))
+        ComparisonDetailView(isPresented: .constant(false), countries: (MockData.countries[0], MockData.countries[1]))
     }
 }

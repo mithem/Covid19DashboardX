@@ -13,7 +13,7 @@ struct CountryHistoryMeasurementForDecodingOnly: Decodable {
     var deaths: Int?
     var recovered: Int?
     var active: Int
-    var caseFatalityRate: Int?
+    var caseFatalityRate: Double?
     var date: Date
     var status: BasicMeasurementMetric?
     var country: String

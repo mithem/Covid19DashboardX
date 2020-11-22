@@ -171,7 +171,7 @@ struct CountryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView {
-                CountryView(manager: DataManager(), country: Constants.countriesForPreviews[0])
+                CountryView(manager: DataManager(), country: MockData.countries[0])
             }
             .previewDisplayName("Success")
             NavigationView {

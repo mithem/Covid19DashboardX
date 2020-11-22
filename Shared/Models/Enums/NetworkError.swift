@@ -7,9 +7,7 @@
 
 import Foundation
 
-enum NetworkError: Error, Equatable, LocalizedError {
-    static func == (lhs: NetworkError, rhs: NetworkError) -> Bool {lhs.localizedDescription == rhs.localizedDescription} // no better way?
-    
+enum NetworkError: Error {
     case invalidResponse(response: String)
     case noResponse // don't actually know whether that can happen without a timeout error 🤔
     case urlError(_ error: URLError)
@@ -18,22 +16,15 @@ enum NetworkError: Error, Equatable, LocalizedError {
     case otherWith(error: Error)
     case other
     
-    var localizedDescription: String {
-        switch self {
-        case .invalidResponse:
-            return "Invalid response from server."
-        case .noResponse:
-            return "No response from server."
-        case .urlError(let error):
-            return error.localizedDescription
-        case .noNetworkConnection:
-            return "No network connection."
-        case .constrainedNetwork:
-            return "Low data mode is on."
-        case .otherWith(error: let error):
-            return error.localizedDescription
-        case .other:
-            return "Unkown."
+    init(error: Error?) {
+        if let urlError = error as? URLError {
+            self = .urlError(urlError)
+        } else if let networkError = error as? NetworkError {
+            self = networkError
+        } else if let error = error {
+            self = .otherWith(error: error)
+        } else {
+            self = .other
         }
     }
 }

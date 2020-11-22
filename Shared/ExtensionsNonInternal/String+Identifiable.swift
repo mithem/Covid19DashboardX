@@ -7,6 +7,6 @@
 
 import Foundation
 
-extension String: Identifiable {
+extension String {
     public var id: String { self }
 }

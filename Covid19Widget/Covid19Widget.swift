@@ -19,11 +19,11 @@ struct Provider: IntentTimelineProvider {
         let config =  CountrySelectionIntent()
         config.countryCode = "USA"
         config.measurementMetric = .confirmed
-        return SimpleEntry(date: Date(), configuration: config, data: Constants.dataForPreviews[0])
+        return SimpleEntry(date: Date(), configuration: config, data: MockData.dataForPreviews[0])
     }
     
     func getSnapshot(for configuration: CountrySelectionIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, data: Constants.dataForPreviews[0])
+        let entry = SimpleEntry(date: Date(), configuration: configuration, data: MockData.dataForPreviews[0])
         completion(entry)
     }
     
@@ -33,7 +33,7 @@ struct Provider: IntentTimelineProvider {
             let latest = CountrySummaryMeasurement(date: currentDate, totalConfirmed: 0, newConfirmed: 0, totalDeaths: 0, newDeaths: 0, totalRecovered: 0, newRecovered: 0, active: 0, newActive: 0, caseFatalityRate: 0.005)
             let metric = BasicMeasurementMetric.active
             DataManager.getHistoryData(for: Country(code: code, name: code, latest: latest)) { result in
-                switch result {
+                switch DataManager.parseHistoryData(result) {
                 case .success(let country):
                     let data = country.measurements.map {Double($0.metric(for: metric))}
                     let avg = MovingAverage.calculateMovingAverage(from: data, with: 5)
@@ -94,11 +94,11 @@ struct Covid19Widget: Widget {
 struct Covid19Widget_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            Covid19WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: CountrySelectionIntent(), data: Constants.dataForPreviews[0]))
+            Covid19WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: CountrySelectionIntent(), data: MockData.dataForPreviews[0]))
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
-            Covid19WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: CountrySelectionIntent(), data: Constants.dataForPreviews[1]))
+            Covid19WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: CountrySelectionIntent(), data: MockData.dataForPreviews[1]))
                 .previewContext(WidgetPreviewContext(family: .systemMedium))
-            Covid19WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: CountrySelectionIntent(), data: Constants.dataForPreviews[0]))
+            Covid19WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: CountrySelectionIntent(), data: MockData.dataForPreviews[0]))
                 .previewContext(WidgetPreviewContext(family: .systemLarge))
         }
     }

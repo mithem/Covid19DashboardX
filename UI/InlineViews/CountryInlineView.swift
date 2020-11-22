@@ -25,6 +25,6 @@ struct CountryInlineView: View {
 
 struct CountryInlineView_Previews: PreviewProvider {
     static var previews: some View {
-        CountryInlineView(country: Constants.countriesForPreviews[0], colorNumbers: true, colorTreshold: 0.01, colorGrayArea: 0.005, activeMetric: .constant(.confirmed), manager: DataManager())
+        CountryInlineView(country: MockData.countries[0], colorNumbers: true, colorTreshold: 0.01, colorGrayArea: 0.005, activeMetric: .constant(.confirmed), manager: DataManager())
     }
 }
