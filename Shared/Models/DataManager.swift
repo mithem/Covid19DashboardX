@@ -415,7 +415,7 @@ class DataManager: ObservableObject {
     }
     
     
-    // MARK: CountrySortingCriteria & DataManagerDelegate
+    // MARK: CountrySortingCriteria
     
     
     enum CountrySortingCriteria {
@@ -424,10 +424,3 @@ class DataManager: ObservableObject {
 }
 
 
-// MARK: Protocols & extensions
-
-extension DataManager: Equatable {
-    static func == (lhs: DataManager, rhs: DataManager) -> Bool {
-        return lhs.countries == rhs.countries
-    }
-}

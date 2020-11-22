@@ -112,6 +112,8 @@
 		498687912569982100C833AA /* SpecialCountries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986878F2569982100C833AA /* SpecialCountries.swift */; };
 		498687962569984D00C833AA /* UsefulURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687952569984D00C833AA /* UsefulURLs.swift */; };
 		498687972569984D00C833AA /* UsefulURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687952569984D00C833AA /* UsefulURLs.swift */; };
+		498687A8256A2B3400C833AA /* DataManager+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687A7256A2B3400C833AA /* DataManager+Equatable.swift */; };
+		498687A9256A2B3400C833AA /* DataManager+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687A7256A2B3400C833AA /* DataManager+Equatable.swift */; };
 		499A5420255ED68200D1D3D8 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499A541F255ED68200D1D3D8 /* Searchable.swift */; };
 		499A5421255ED68200D1D3D8 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499A541F255ED68200D1D3D8 /* Searchable.swift */; };
 		49B5562D2531F694000D2030 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B5562C2531F694000D2030 /* WidgetKit.framework */; };
@@ -227,6 +229,7 @@
 		498687892569980600C833AA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4986878F2569982100C833AA /* SpecialCountries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialCountries.swift; sourceTree = "<group>"; };
 		498687952569984D00C833AA /* UsefulURLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsefulURLs.swift; sourceTree = "<group>"; };
+		498687A7256A2B3400C833AA /* DataManager+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+Equatable.swift"; sourceTree = "<group>"; };
 		499A541F255ED68200D1D3D8 /* Searchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Searchable.swift; sourceTree = "<group>"; };
 		49B5562A2531F694000D2030 /* Covid19WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Covid19WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B5562C2531F694000D2030 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = Library/Frameworks/WidgetKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -304,14 +307,10 @@
 		4954F5C624E7F4D200399145 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				4986874B2569968100C833AA /* ExtensionsNonInternal */,
-				49806BE6252F782400767A6E /* MovingAverage.swift */,
-				4910AAD1254214E300BDAC0C /* PercentageFormatter.swift */,
-				4954F5E824E7F50200399145 /* DataManager.swift */,
-				4984D9322568140000CDCEA5 /* CovidDashApiDotComJSONDecoder.swift */,
-				4954F5F724E8051300399145 /* shared.swift */,
-				49868779256997DC00C833AA /* Constants */,
 				49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */,
+				4954F5F724E8051300399145 /* shared.swift */,
+				4986874B2569968100C833AA /* ExtensionsNonInternal */,
+				49868779256997DC00C833AA /* Constants */,
 				4986866A2569730200C833AA /* Models */,
 			);
 			path = Shared;
@@ -348,6 +347,10 @@
 				498686FB256994C500C833AA /* GlobalMeasurement.swift */,
 				498686E92569944E00C833AA /* Province.swift */,
 				498686D625698E4A00C833AA /* Country.swift */,
+				49806BE6252F782400767A6E /* MovingAverage.swift */,
+				4910AAD1254214E300BDAC0C /* PercentageFormatter.swift */,
+				4954F5E824E7F50200399145 /* DataManager.swift */,
+				4984D9322568140000CDCEA5 /* CovidDashApiDotComJSONDecoder.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 			children = (
 				498686752569739000C833AA /* CountrySummaryMeasurementForDecodingOnly+Equatable.swift */,
 				498687112569954B00C833AA /* Country+Equatable.swift */,
+				498687A7256A2B3400C833AA /* DataManager+Equatable.swift */,
 				498687172569955E00C833AA /* Country+Identifiable.swift */,
 				49868735256995FB00C833AA /* Country+Searchable.swift */,
 				4986871D2569957100C833AA /* CountryHistoryMeasurement+Identifiable.swift */,
@@ -679,6 +683,7 @@
 				49868730256995D000C833AA /* ProvinceMeasurementForDecodingOnly+Equatable.swift in Sources */,
 				497E01342531FD52006CEF67 /* Covid19DashboardXApp.swift in Sources */,
 				4986874D256996B800C833AA /* JSONDecoder.KeyDecodingStrategy+convertFromPascalCase.swift in Sources */,
+				498687A8256A2B3400C833AA /* DataManager+Equatable.swift in Sources */,
 				49370B2225429E0B009BFE4C /* ProvinceInlineView.swift in Sources */,
 				497E01382531FD52006CEF67 /* ContentView.swift in Sources */,
 				4986878A2569980600C833AA /* Constants.swift in Sources */,
@@ -760,6 +765,7 @@
 				49370B392542AA5F009BFE4C /* MovingAverage.swift in Sources */,
 				498686C12569759300C833AA /* DetailedCountryMeasurementResponse.swift in Sources */,
 				498686DB25698EE700C833AA /* CountrySummaryMeasurement.swift in Sources */,
+				498687A9256A2B3400C833AA /* DataManager+Equatable.swift in Sources */,
 				498686CD2569759700C833AA /* BasicMeasurementMetric.swift in Sources */,
 				49370B372542AA5F009BFE4C /* shared.swift in Sources */,
 				498687572569970200C833AA /* String+Identifiable.swift in Sources */,
