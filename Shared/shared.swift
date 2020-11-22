@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreSpotlight
 
 func getData(_ data: [Double], dataRepresentation: DataRepresentationType) -> [Double] {
     func appropriateFunction(_ y: Double) -> Double {
@@ -45,4 +46,69 @@ func resetSettingsToDefaults() {
     ud.set(ds.ignoreLowDataMode, forKey: uk.ignoreLowDataMode)
     ud.set(ds.colorTresholdForPercentages, forKey: uk.colorThresholdForPercentages)
     ud.set(ds.colorGrayAreaForPercentages, forKey: uk.colorGrayAreaForPercentages)
+}
+
+func indexForSpotlight(countries: [Country], global: GlobalMeasurement?) {
+    var items = [CSSearchableItem]()
+    let formatter = DateFormatter()
+    formatter.dateStyle = .short
+    let dateString = " (\(formatter.string(from: Date())))"
+    let index = CSSearchableIndex.default()
+    
+    let globalIdentifierAndName = "Global"
+    
+    var identifiers = [globalIdentifierAndName]
+    for country in countries {
+        identifiers.append(country.code)
+        for province in country.provinces {
+            identifiers.append("\(country.id)-\(province.id)")
+        }
+    }
+    
+    index.deleteSearchableItems(withIdentifiers: identifiers) { error in
+        
+        if let error = error {
+            print(error.localizedDescription)
+        }
+        
+        if let global = global {
+            let set = CSSearchableItemAttributeSet(contentType: .content)
+            set.title = globalIdentifierAndName
+            set.contentDescription = global.summaryFor(metric: .confirmed) + dateString
+            let item = CSSearchableItem(uniqueIdentifier: globalIdentifierAndName, domainIdentifier: nil, attributeSet: set)
+            items.append(item)
+        }
+        
+        for country in countries {
+            
+            let set = CSSearchableItemAttributeSet(contentType: .content)
+            set.title = country.name.localizedCapitalized
+            set.contentDescription = country.summaryFor(metric: .confirmed) + dateString
+            
+            let item = CSSearchableItem(uniqueIdentifier: country.id, domainIdentifier: country.id, attributeSet: set)
+            items.append(item)
+            
+            for province in country.provinces {
+                
+                let set = CSSearchableItemAttributeSet(contentType: .content)
+                set.title = province.name.localizedCapitalized
+                set.contentDescription = province.summaryFor(metric: .confirmed) + dateString
+                
+                let item = CSSearchableItem(uniqueIdentifier: "\(country.id)-\(province.id)", domainIdentifier: country.code, attributeSet: set)
+                items.append(item)
+                
+            }
+        }
+        
+        index.indexSearchableItems(items) { error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
+func deleteIndexForSpotlight(completion: @escaping (Error?) -> Void) {
+    let index = CSSearchableIndex.default()
+    index.deleteAllSearchableItems(completionHandler: completion)
 }

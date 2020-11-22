@@ -24,11 +24,21 @@ protocol SummaryProvider {
     func activeSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
     func cfrSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
     
+    func confirmedSummary() -> String
+    func deathsSummary() -> String
+    func recoveredSummary() -> String
+    func activeSummary() -> String
+    
     func summary(total: Int?, new: Int?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
     func summary(total: Int, new: Int?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
     func summary(percentage: Double?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
+    
+    func summary(total: Int, new: Int?) -> String
+    func summary(total: Int?, new: Int?) -> String
+    
     func summaryFor(metric: BasicMeasurementMetric, colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
     func summaryFor(metric: Province.SummaryMetric, colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
+    func summaryFor(metric: BasicMeasurementMetric) -> String
 }
 
 extension SummaryProvider {
@@ -82,6 +92,26 @@ extension SummaryProvider {
         }
     }
     
+    func summary(total: Int, new: Int?) -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.usesGroupingSeparator = true
+        numberFormatter.numberStyle = .decimal
+        if let new = new {
+            let sign = new > 0 ? "+" : (new < 0 ? "-" : "=")
+            let s1 = numberFormatter.string(from: NSNumber(value: total)) ?? Constants.notAvailableString
+            let s2 = " (\(sign)\(numberFormatter.string(from: NSNumber(value: new)) ?? Constants.notAvailableString)"
+            let s3 = ")"
+            return "\(s1)\(s2)\(s3)"
+        } else {
+            return numberFormatter.string(from: NSNumber(value: total)) ?? Constants.notAvailableString
+        }
+    }
+    
+    func summary(total: Int?, new: Int?) -> String {
+        guard let total = total else { return Constants.notAvailableString }
+        return summary(total: total, new: new)
+    }
+    
     func confirmedSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
         return summary(total: totalConfirmed, new: newConfirmed, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
     }
@@ -96,6 +126,22 @@ extension SummaryProvider {
     }
     func cfrSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
         return summary(percentage: caseFatalityRate, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+    }
+    
+    func confirmedSummary() -> String {
+        return summary(total: totalConfirmed, new: newConfirmed)
+    }
+    
+    func deathsSummary() -> String {
+        return summary(total: totalDeaths, new: newDeaths)
+    }
+    
+    func recoveredSummary() -> String {
+        return summary(total: totalRecovered, new: newRecovered)
+    }
+    
+    func activeSummary() -> String {
+        return summary(total: activeCases, new: nil)
     }
     
     func summaryFor(metric: BasicMeasurementMetric, colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
@@ -124,5 +170,21 @@ extension SummaryProvider {
         case .caseFatalityRate:
             return cfrSummary(colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
         }
+    }
+    
+    func summaryFor(metric: BasicMeasurementMetric) -> String {
+        var s: String
+        switch metric {
+        case .confirmed:
+            s = confirmedSummary()
+        case .deaths:
+            s = deathsSummary()
+        case .recovered:
+            s = recoveredSummary()
+        case .active:
+            s = activeSummary()
+        }
+        s += " \(metric.humanReadable)"
+        return s
     }
 }

@@ -99,6 +99,9 @@ class DataManager: ObservableObject {
         Self.getSummary { result in
             switch Self.parseSummary(result) {
             case .success((let countries, let latestGlobal)):
+                DispatchQueue.global().async {
+                    indexForSpotlight(countries: countries, global: latestGlobal)
+                }
                 DispatchQueue.main.async {
                     self.sortCountries()
                     self.countries = countries
@@ -354,6 +357,9 @@ class DataManager: ObservableObject {
                         self.countries[idx] = country
                     }
                     self.error = nil
+                }
+                DispatchQueue.global().async {
+                    indexForSpotlight(countries: self.countries, global: self.latestGlobal)
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
