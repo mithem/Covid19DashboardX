@@ -18,6 +18,7 @@ struct SpotlightIndexSettingsView: View {
                     showingActionSheet = true
                 }
             }
+            Text("You can clear the index if something is sub-optimal.")
         }
         .actionSheet(isPresented: $showingActionSheet) {
             ActionSheet(title: Text(error == nil ? "Cleared index" : "Error clearing index"), message: Text(error?.localizedDescription ?? "You can close this."), buttons: [.default(Text("OK"))])

@@ -46,6 +46,9 @@ func resetSettingsToDefaults() {
     ud.set(ds.ignoreLowDataMode, forKey: uk.ignoreLowDataMode)
     ud.set(ds.colorTresholdForPercentages, forKey: uk.colorThresholdForPercentages)
     ud.set(ds.colorGrayAreaForPercentages, forKey: uk.colorGrayAreaForPercentages)
+    ud.set(ds.widgetCountry, forKey: uk.widgetCountry)
+    ud.set(ds.absoluteNumbersDeltaTresholdProportion, forKey: uk.absoluteNumbersDeltaTresholdProportion)
+    ud.set(ds.absoluteNumbersDeltaGrayAreaProportion, forKey: uk.absoluteNumbersDeltaGrayAreaProportion)
 }
 
 func indexForSpotlight(countries: [Country], global: GlobalMeasurement?) {

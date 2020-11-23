@@ -108,7 +108,7 @@ struct SummaryView: View {
                                     }
                                     .hoverEffect(),
                                 trailing:
-                                    NavigationLink(destination: SettingsView()) {
+                                    NavigationLink(destination: SettingsView(manager: manager)) {
                                         Image(systemName: "gear")
                                             .padding(UIConstants.navigationBarItemsPadding)
                                     }

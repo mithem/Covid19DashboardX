@@ -42,19 +42,52 @@ protocol SummaryProvider {
 }
 
 extension SummaryProvider {
+    private func reversedColor(_ color: Color, reversed: Bool) -> Color {
+        switch color {
+        case .green:
+            return reversed ? .red : .green
+        case .red:
+            return reversed ? .green : .red
+        case .gray:
+            return .gray
+        default:
+            return color
+        }
+    }
+    
+    private func getColor(ratio: Double, treshold: Double, grayArea: Double) -> Color {
+        if ratio < treshold - grayArea {
+            return .green
+        } else if ratio > treshold + grayArea {
+            return .red
+        } else {
+            return .gray
+        }
+    }
+    
     func summary(total: Int, new: Int?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
         let colorNumbers = UserDefaults().bool(forKey: UserDefaultsKeys.colorNumbers)
         let numberFormatter = NumberFormatter()
         numberFormatter.usesGroupingSeparator = true
         numberFormatter.numberStyle = .decimal
+        let percentageFormatter = PercentageFormatter(precision: 2)
+        
         if let new = new {
+            let ratio = Double(new) / Double(total)
             let sign = new > 0 ? "+" : (new < 0 ? "-" : "=")
-            let t1 = Text("\(numberFormatter.string(from: NSNumber(value: total)) ?? Constants.notAvailableString) (")
-            let t2 = Text("\(sign)\(numberFormatter.string(from: NSNumber(value: new)) ?? Constants.notAvailableString)")
-            let t3 = Text(")")
-            if colorNumbers {
-                return t1 + t2.foregroundColor(new > 0 ? .red : (new < 0 ? .green : .gray)) + t3
+            var s2 = "\(sign)\(numberFormatter.string(from: NSNumber(value: new)) ?? Constants.notAvailableString)"
+            if new != 0 {
+                s2 += ", \(percentageFormatter.string(from: NSNumber(value: ratio)) ?? Constants.notAvailableString)"
             }
+            let t1 = Text("\(numberFormatter.string(from: NSNumber(value: total)) ?? Constants.notAvailableString) (")
+            let t2 = Text(s2)
+            let t3 = Text(")")
+            
+            if colorNumbers {
+                let color = getColor(ratio: ratio, treshold: colorTreshold, grayArea: colorGrayArea)
+                return t1 + t2.foregroundColor(reversedColor(color, reversed: reversed)) + t3
+            }
+            
             return t1 + t2 + t3
         } else {
             return Text(numberFormatter.string(from: NSNumber(value: total)) ?? Constants.notAvailableString)
@@ -70,26 +103,9 @@ extension SummaryProvider {
         guard let perCent = percentage else { return Text(Constants.notAvailableString) }
         let perCentString = PercentageFormatter().string(from: NSNumber(value: perCent)) ?? Constants.notAvailableString
         let text = Text(perCentString)
-        var color: Color
+        let color = getColor(ratio: perCent, treshold: colorTreshold, grayArea: colorGrayArea)
         
-        if perCent < colorTreshold - colorGrayArea {
-            color = .green
-        } else if perCent > colorTreshold + colorGrayArea {
-            color = .red
-        } else {
-            color = .gray
-        }
-        
-        switch color {
-        case .green:
-            return reversed ? text.foregroundColor(.red) : text.foregroundColor(.green)
-        case .red:
-            return reversed ? text.foregroundColor(.green) : text.foregroundColor(.red)
-        case .gray:
-            return text.foregroundColor(.gray)
-        default:
-            return text
-        }
+        return text.foregroundColor(reversedColor(color, reversed: reversed))
     }
     
     func summary(total: Int, new: Int?) -> String {
