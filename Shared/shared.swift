@@ -49,6 +49,10 @@ func resetSettingsToDefaults() {
     ud.set(ds.widgetCountry, forKey: uk.widgetCountry)
     ud.set(ds.absoluteNumbersDeltaTresholdProportion, forKey: uk.absoluteNumbersDeltaTresholdProportion)
     ud.set(ds.absoluteNumbersDeltaGrayAreaProportion, forKey: uk.absoluteNumbersDeltaGrayAreaProportion)
+    ud.set(ds.disableSpotlightIndexing, forKey: uk.disableSpotlightIndexing)
+    ud.set(ds.notificationsEnabled, forKey: uk.notificationsEnabled)
+    ud.set(ds.notificationDate, forKey: uk.notificationDate)
+    ud.set(ds.dataRepresentationType, forKey: uk.dataRepresentationType)
 }
 
 func indexForSpotlight(countries: [Country], global: GlobalMeasurement?) {

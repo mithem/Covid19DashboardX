@@ -21,4 +21,5 @@ struct DefaultSettings {
     static let absoluteNumbersDeltaTresholdProportion = 0.1
     static let absoluteNumbersDeltaGrayAreaProportion = 0.05
     static let disableSpotlightIndexing = false
+    static let dataRepresentationType = DataRepresentationType.normal
 }
