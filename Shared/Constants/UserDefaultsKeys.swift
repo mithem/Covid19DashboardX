@@ -34,4 +34,6 @@ struct UserDefaultsKeys {
     static let absoluteNumbersDeltaTresholdProportion = "absoluteRedProportion"
     /// Range of proportions of new cases/... to total cases/... to configure gray instead of green (below) or red (above)
     static let absoluteNumbersDeltaGrayAreaProportion = "absoulteGreenProportion"
+    
+    static let disableSpotlightIndexing = "disableSpotlightIndexing"
 }

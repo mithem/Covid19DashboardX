@@ -30,7 +30,7 @@ struct CountryView: View {
     
     var body: some View {
         Group {
-            if manager.error == nil {
+            if manager.error == nil || !country.measurements.isEmpty {
                 if country.measurements.isEmpty {
                     LoadingView
                 } else {

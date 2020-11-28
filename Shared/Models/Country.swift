@@ -18,6 +18,7 @@ class Country: SummaryProvider {
     var newActive: Int? { latest.newActive }
     var caseFatalityRate: Double? { latest.caseFatalityRate }
     var provinces: [Province]
+    var active: Int? { activeCases }
     
     var code: String
     var name: String

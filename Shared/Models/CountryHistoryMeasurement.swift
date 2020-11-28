@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CountryHistoryMeasurement: Equatable {
+struct CountryHistoryMeasurement: Equatable, Hashable {
     var confirmed: Int
     var deaths: Int?
     var recovered: Int?
@@ -15,16 +15,16 @@ struct CountryHistoryMeasurement: Equatable {
     var date: Date
     var caseFatalityRate: Int?
     
-    func metric(for basicMetric: BasicMeasurementMetric) -> Int {
+    func metric(for basicMetric: BasicMeasurementMetric) -> Double {
         switch basicMetric {
         case .confirmed:
-            return confirmed
+            return Double(confirmed)
         case .deaths:
-            return deaths ?? -1
+            return Double(deaths ?? -1)
         case .recovered:
-            return recovered ?? -1
+            return Double(recovered ?? -1)
         case .active:
-            return active ?? -1
+            return Double(active ?? -1)
         }
     }
 }

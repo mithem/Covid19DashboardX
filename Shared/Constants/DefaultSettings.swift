@@ -20,4 +20,5 @@ struct DefaultSettings {
     static let widgetCountry = "USA"
     static let absoluteNumbersDeltaTresholdProportion = 0.1
     static let absoluteNumbersDeltaGrayAreaProportion = 0.05
+    static let disableSpotlightIndexing = false
 }

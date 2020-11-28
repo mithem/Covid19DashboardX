@@ -74,38 +74,40 @@ func indexForSpotlight(countries: [Country], global: GlobalMeasurement?) {
             print(error.localizedDescription)
         }
         
-        if let global = global {
-            let set = CSSearchableItemAttributeSet(contentType: .content)
-            set.title = globalIdentifierAndName
-            set.contentDescription = global.summaryFor(metric: .confirmed) + dateString
-            let item = CSSearchableItem(uniqueIdentifier: globalIdentifierAndName, domainIdentifier: nil, attributeSet: set)
-            items.append(item)
-        }
-        
-        for country in countries {
+        if !UserDefaults().bool(forKey: UserDefaultsKeys.disableSpotlightIndexing) {
+            if let global = global {
+                let set = CSSearchableItemAttributeSet(contentType: .content)
+                set.title = globalIdentifierAndName
+                set.contentDescription = global.summaryFor(metric: .confirmed) + dateString
+                let item = CSSearchableItem(uniqueIdentifier: globalIdentifierAndName, domainIdentifier: nil, attributeSet: set)
+                items.append(item)
+            }
             
-            let set = CSSearchableItemAttributeSet(contentType: .content)
-            set.title = country.name.localizedCapitalized
-            set.contentDescription = country.summaryFor(metric: .confirmed) + dateString
-            
-            let item = CSSearchableItem(uniqueIdentifier: country.id, domainIdentifier: country.id, attributeSet: set)
-            items.append(item)
-            
-            for province in country.provinces {
+            for country in countries {
                 
                 let set = CSSearchableItemAttributeSet(contentType: .content)
-                set.title = province.name.localizedCapitalized
-                set.contentDescription = province.summaryFor(metric: .confirmed) + dateString
+                set.title = country.name.localizedCapitalized
+                set.contentDescription = country.summaryFor(metric: .confirmed) + dateString
                 
-                let item = CSSearchableItem(uniqueIdentifier: "\(country.id)-\(province.id)", domainIdentifier: country.code, attributeSet: set)
+                let item = CSSearchableItem(uniqueIdentifier: country.id, domainIdentifier: country.id, attributeSet: set)
                 items.append(item)
                 
+                for province in country.provinces {
+                    
+                    let set = CSSearchableItemAttributeSet(contentType: .content)
+                    set.title = province.name.localizedCapitalized
+                    set.contentDescription = province.summaryFor(metric: .confirmed) + dateString
+                    
+                    let item = CSSearchableItem(uniqueIdentifier: "\(country.id)-\(province.id)", domainIdentifier: country.code, attributeSet: set)
+                    items.append(item)
+                    
+                }
             }
-        }
-        
-        index.indexSearchableItems(items) { error in
-            if let error = error {
-                print(error.localizedDescription)
+            
+            index.indexSearchableItems(items) { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
             }
         }
     }

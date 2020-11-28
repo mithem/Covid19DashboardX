@@ -27,7 +27,7 @@ class MockDataManagerTests: XCTestCase {
         MDM.forceError = nil
         MDM.getHistoryData(for: MockData.countries[0]) { result in
             switch result {
-            case .success(let (country, measurements)):
+            case .success(let (country, _)):
                 XCTAssertEqual(country, MockData.countries[0])
             case .failure(let error):
                 XCTAssertNil(error)
@@ -37,7 +37,7 @@ class MockDataManagerTests: XCTestCase {
         MDM.forceError = NetworkError.noResponse
         MDM.getHistoryData(for: MockData.countries[0]) { result in
             switch result {
-            case .success(let (country, measurements)):
+            case .success(_):
                 XCTAssertTrue(false)
             case .failure(let error):
                 XCTAssertEqual(error, .noResponse)

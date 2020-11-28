@@ -18,6 +18,8 @@ protocol SummaryProvider {
     var activeCases: Int? { get }
     var caseFatalityRate: Double? { get }
     
+    func newSummaryElement(total: Int, new: Int, colorTreshold: Double, colorGrayArea: Double) -> Text
+    
     func confirmedSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
     func deathsSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
     func recoveredSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
@@ -32,9 +34,11 @@ protocol SummaryProvider {
     func summary(total: Int?, new: Int?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
     func summary(total: Int, new: Int?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
     func summary(percentage: Double?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
+    func summary(double: Double?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
     
     func summary(total: Int, new: Int?) -> String
     func summary(total: Int?, new: Int?) -> String
+    func summary(double: Double?) -> String
     
     func summaryFor(metric: BasicMeasurementMetric, colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
     func summaryFor(metric: Province.SummaryMetric, colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
@@ -65,24 +69,35 @@ extension SummaryProvider {
         }
     }
     
+    func newSummaryElement(total: Int, new: Int, colorTreshold: Double, colorGrayArea: Double) -> Text {
+        let ratio = Double(new) / Double(total)
+        return newSummaryElement(new: new, ratio: ratio, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea)
+    }
+    
+    func newSummaryElement(new: Int, ratio: Double, colorTreshold: Double, colorGrayArea: Double) -> Text {
+        let formatter = NumberFormatter()
+        formatter.usesGroupingSeparator = true
+        formatter.numberStyle = .decimal
+        let sign = new > 0 ? "+" : (new < 0 ? "-" : "=")
+        var s = "\(sign)\(formatter.string(from: NSNumber(value: new)) ?? Constants.notAvailableString)"
+        if new != 0 {
+            s += ", \(PercentageFormatter(precision: 2).string(from: NSNumber(value: ratio)) ?? Constants.notAvailableString)"
+        }
+        return Text(s).foregroundColor(getColor(ratio: ratio, treshold: colorTreshold, grayArea: colorGrayArea))
+    }
+    
+    
     func summary(total: Int, new: Int?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
         let colorNumbers = UserDefaults().bool(forKey: UserDefaultsKeys.colorNumbers)
         let numberFormatter = NumberFormatter()
         numberFormatter.usesGroupingSeparator = true
         numberFormatter.numberStyle = .decimal
-        let percentageFormatter = PercentageFormatter(precision: 2)
         
         if let new = new {
             let ratio = Double(new) / Double(total)
-            let sign = new > 0 ? "+" : (new < 0 ? "-" : "=")
-            var s2 = "\(sign)\(numberFormatter.string(from: NSNumber(value: new)) ?? Constants.notAvailableString)"
-            if new != 0 {
-                s2 += ", \(percentageFormatter.string(from: NSNumber(value: ratio)) ?? Constants.notAvailableString)"
-            }
             let t1 = Text("\(numberFormatter.string(from: NSNumber(value: total)) ?? Constants.notAvailableString) (")
-            let t2 = Text(s2)
+            let t2 = newSummaryElement(new: new, ratio: ratio, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea)
             let t3 = Text(")")
-            
             if colorNumbers {
                 let color = getColor(ratio: ratio, treshold: colorTreshold, grayArea: colorGrayArea)
                 return t1 + t2.foregroundColor(reversedColor(color, reversed: reversed)) + t3
@@ -108,6 +123,16 @@ extension SummaryProvider {
         return text.foregroundColor(reversedColor(color, reversed: reversed))
     }
     
+    func summary(double: Double?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
+        // TODO: Implement summary of Double/R; Add configuration options for coloring
+        guard let d = double else { return Text(Constants.notAvailableString) }
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 1
+        formatter.maximumFractionDigits = 3
+        return Text(formatter.string(from: NSNumber(value: d)) ?? Constants.notAvailableString)
+    }
+    
     func summary(total: Int, new: Int?) -> String {
         let numberFormatter = NumberFormatter()
         numberFormatter.usesGroupingSeparator = true
@@ -126,6 +151,15 @@ extension SummaryProvider {
     func summary(total: Int?, new: Int?) -> String {
         guard let total = total else { return Constants.notAvailableString }
         return summary(total: total, new: new)
+    }
+    
+    func summary(double: Double?) -> String {
+        guard let d = double else { return Constants.notAvailableString }
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 1
+        formatter.maximumFractionDigits = 3
+        return formatter.string(from: NSNumber(value: d)) ?? Constants.notAvailableString
     }
     
     func confirmedSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {

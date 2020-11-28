@@ -11,14 +11,12 @@ import SwiftUI
 import Reachability
 
 class DataManager: ObservableObject {
-    
-    @Environment(\.colorScheme) private var colorScheme
-    
     @Published var countries: [Country]
     @Published var latestGlobal: GlobalMeasurement?
     @Published var error: NetworkError?
     var loading: Bool { _loading }
     
+    private var dataTasks: Set<DataTask>
     private let reachability: Reachability
     private var _loading = false
     private var _sortBy: CountrySortingCriteria
@@ -66,7 +64,8 @@ class DataManager: ObservableObject {
                 if let serverResponse = serverResponse {
                     completion(.success(serverResponse))
                 } else {
-                    completion(.failure(.noResponse))
+                    let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
+                    completion(.failure(.invalidResponse(response: string)))
                 }
             } else {
                 completion(.failure(.noResponse))
@@ -90,15 +89,14 @@ class DataManager: ObservableObject {
         }
     }
     
-    /// load Summary from Self.getSummary and call `callback` when done.
-    /// - Parameter callback: function to call back
-    func loadSummary(callback: (() -> Void)? = nil) {
+    func loadSummary() {
         DispatchQueue.main.async {
             self._loading = true
         }
         Self.getSummary { result in
             switch Self.parseSummary(result) {
             case .success((let countries, let latestGlobal)):
+                self.dataTasks.remove(.summary)
                 DispatchQueue.global().async {
                     indexForSpotlight(countries: countries, global: latestGlobal)
                 }
@@ -107,16 +105,12 @@ class DataManager: ObservableObject {
                     self.countries = countries
                     self.latestGlobal = latestGlobal
                     self.error = nil
-                    self._loading = false
                 }
             case .failure(let error):
-                DispatchQueue.main.async {
-                    self.error = error
-                    self._loading = false
-                }
+                self.handleError(error, task: .summary)
             }
-            if let callback = callback {
-                callback()
+            DispatchQueue.main.async {
+                self._loading = false
             }
         }
     }
@@ -148,7 +142,8 @@ class DataManager: ObservableObject {
                 if let serverResponse = serverResponse {
                     completion(.success((country, serverResponse)))
                 } else {
-                    completion(.failure(.invalidResponse(response: String(data: data, encoding: .utf8) ?? Constants.notAvailableString)))
+                    let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
+                    completion(.failure(.invalidResponse(response: string)))
                 }
             } else {
                 completion(.failure(.noResponse))
@@ -182,18 +177,18 @@ class DataManager: ObservableObject {
         Self.getHistoryData(for: country) { result in
             switch Self.parseHistoryData(result) {
             case .success(let country):
+                self.dataTasks.remove(.historyData(countryCode: countryCode))
                 DispatchQueue.main.async {
                     if let idx = self.countries.firstIndex(of: country) {
                         self.countries[idx] = country
                     }
                     self.error = nil
-                    self._loading = false
                 }
             case .failure(let error):
-                DispatchQueue.main.async {
-                    self.error = error
-                    self._loading = false
-                }
+                self.handleError(error, task: .historyData(countryCode: countryCode))
+            }
+            DispatchQueue.main.async {
+                self._loading = false
             }
         }
     }
@@ -224,12 +219,7 @@ class DataManager: ObservableObject {
                     completion(.failure(.otherWith(error: error)))
                 }
             } else if let data = data {
-                let formatter = DateFormatter()
-                formatter.dateFormat = Constants.covidDashApiDotComDateFormat
-                formatter.timeZone = TimeZone(secondsFromGMT: 0)
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .formatted(formatter)
+                let decoder = CovidDashApiDotComJSONDecoder()
                 let serverResponse = try? decoder.decode(DetailedCountryMeasurementResponse.self, from: data)
                 if let serverResponse = serverResponse {
                     country.latest.active = serverResponse.data.active
@@ -245,7 +235,8 @@ class DataManager: ObservableObject {
                     
                     completion(.success(country))
                 } else {
-                    completion(.failure(.invalidResponse(response: String(data: data, encoding: .utf8) ?? Constants.notAvailableString)))
+                    let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
+                    completion(.failure(.invalidResponse(response: string)))
                 }
             } else {
                 completion(.failure(.noResponse))
@@ -266,6 +257,7 @@ class DataManager: ObservableObject {
         Self.getDetailedCountryData(for: country, at: date) { result in
             switch result {
             case .success(let country):
+                self.dataTasks.remove(.detailedCountryData(countryCode: countryCode, atDate: date))
                 DispatchQueue.main.async {
                     if let idx = self.countries.firstIndex(of: country) {
                         self.countries[idx] = country
@@ -273,9 +265,7 @@ class DataManager: ObservableObject {
                     self.error = nil
                 }
             case .failure(let error):
-                DispatchQueue.main.async {
-                    self.error = error
-                }
+                self.handleError(error, task: .detailedCountryData(countryCode: countryCode, atDate: date))
             }
             DispatchQueue.main.async {
                 self._loading = false
@@ -352,6 +342,7 @@ class DataManager: ObservableObject {
         DataManager.getProvinceData(for: country) { result in
             switch result {
             case .success(let country):
+                self.dataTasks.remove(.provinceData(countryCode: countryCode))
                 DispatchQueue.main.async {
                     if let idx = self.countries.firstIndex(of: country) {
                         self.countries[idx] = country
@@ -362,9 +353,7 @@ class DataManager: ObservableObject {
                     indexForSpotlight(countries: self.countries, global: self.latestGlobal)
                 }
             case .failure(let error):
-                DispatchQueue.main.async {
-                    self.error = error
-                }
+                self.handleError(error, task: .provinceData(countryCode: countryCode))
             }
             DispatchQueue.main.async {
                 self._loading = false
@@ -416,6 +405,7 @@ class DataManager: ObservableObject {
         countries = [Country]()
         _sortBy = .countryCode
         _reversed = false
+        dataTasks = .init()
         
         self.reachability = try! Reachability()
         
@@ -424,7 +414,18 @@ class DataManager: ObservableObject {
                 DispatchQueue.main.async {
                     self.error = nil
                 }
-                self.loadSummary()
+                for task in self.dataTasks {
+                    switch task {
+                    case .summary:
+                        self.loadSummary()
+                    case .historyData(countryCode: let countryCode):
+                        self.loadHistoryData(for: countryCode)
+                    case .detailedCountryData(countryCode: let countryCode, atDate: let date):
+                        self.loadDetailedCountryData(for: countryCode, at: date)
+                    case .provinceData(countryCode: let countryCode):
+                        self.loadProvinceData(for: countryCode)
+                    }
+                }
             }
         }
         do {
@@ -451,11 +452,30 @@ class DataManager: ObservableObject {
     }
     
     
+    // MARK: Error handling
+    
+    
+    private func handleError(_ error: NetworkError?, task: DataTask) {
+        DispatchQueue.main.async {
+            self.error = error
+        }
+        if error == .noNetworkConnection || error == .constrainedNetwork {
+            dataTasks.insert(task)
+        }
+    }
+    
     // MARK: CountrySortingCriteria
     
     
     enum CountrySortingCriteria {
         case countryCode, countryName, totalConfirmed, newConfirmed, totalDeaths, newDeaths, totalRecovered, newRecovered, activeCases
+    }
+    
+    enum DataTask: Hashable {
+        case summary
+        case historyData(countryCode: String)
+        case detailedCountryData(countryCode: String, atDate: Date?)
+        case provinceData(countryCode: String)
     }
 }
 

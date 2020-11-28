@@ -7,20 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4910220A2572464700027B68 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 491022092572464700027B68 /* Launch Screen.storyboard */; };
+		491022E0257254E600027B68 /* CountrySummarySquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491022DF257254E600027B68 /* CountrySummarySquareView.swift */; };
 		4910AAD2254214E300BDAC0C /* PercentageFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4910AAD1254214E300BDAC0C /* PercentageFormatter.swift */; };
 		4914F3E82544032A00CBC521 /* SummaryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914F3E72544032A00CBC521 /* SummaryProvider.swift */; };
-		4914F3E92544032A00CBC521 /* SummaryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914F3E72544032A00CBC521 /* SummaryProvider.swift */; };
 		4914F3F4254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914F3F3254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift */; };
 		491E3831256AAB6E00E435CC /* WidgetSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491E3830256AAB6E00E435CC /* WidgetSettingsView.swift */; };
 		49370B1A25429832009BFE4C /* CountryProvincesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B1925429832009BFE4C /* CountryProvincesDetailView.swift */; };
 		49370B2225429E0B009BFE4C /* ProvinceInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */; };
 		49370B2A2542AA56009BFE4C /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
-		49370B372542AA5F009BFE4C /* shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5F724E8051300399145 /* shared.swift */; };
-		49370B382542AA5F009BFE4C /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
-		49370B392542AA5F009BFE4C /* MovingAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49806BE6252F782400767A6E /* MovingAverage.swift */; };
-		49370B3A2542AA5F009BFE4C /* PercentageFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4910AAD1254214E300BDAC0C /* PercentageFormatter.swift */; };
-		49370B3B2542AA5F009BFE4C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5E824E7F50200399145 /* DataManager.swift */; };
 		493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E08252383A70060BA27 /* ModelDecodableTests.swift */; };
+		494A26AF25723CF80022A49E /* Country+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26AE25723CF80022A49E /* Country+Hashable.swift */; };
+		494A26B025723CF80022A49E /* Country+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26AE25723CF80022A49E /* Country+Hashable.swift */; };
+		494A26C025723E230022A49E /* Province+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26BF25723E230022A49E /* Province+Hashable.swift */; };
+		494A26C125723E230022A49E /* Province+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26BF25723E230022A49E /* Province+Hashable.swift */; };
 		4954F5DE24E7F4D300399145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4954F5C924E7F4D300399145 /* Assets.xcassets */; };
 		497844E42541939800364E18 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 497844E32541939800364E18 /* Reachability */; };
 		497E012B2531FD52006CEF67 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5E824E7F50200399145 /* DataManager.swift */; };
@@ -36,7 +36,6 @@
 		497E01382531FD52006CEF67 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5C824E7F4D200399145 /* ContentView.swift */; };
 		497E01392531FD52006CEF67 /* CountryViewSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */; };
 		4984D9332568140000CDCEA5 /* CovidDashApiDotComJSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4984D9322568140000CDCEA5 /* CovidDashApiDotComJSONDecoder.swift */; };
-		4984D9342568140000CDCEA5 /* CovidDashApiDotComJSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4984D9322568140000CDCEA5 /* CovidDashApiDotComJSONDecoder.swift */; };
 		4986866D2569733800C833AA /* CountrySummaryMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986866C2569733800C833AA /* CountrySummaryMeasurementForDecodingOnly.swift */; };
 		498686762569739000C833AA /* CountrySummaryMeasurementForDecodingOnly+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686752569739000C833AA /* CountrySummaryMeasurementForDecodingOnly+Equatable.swift */; };
 		498686842569741900C833AA /* SummaryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686832569741900C833AA /* SummaryResponse.swift */; };
@@ -47,74 +46,35 @@
 		498686AB2569751000C833AA /* DetailedCountryMeasurementResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686AA2569751000C833AA /* DetailedCountryMeasurementResponse.swift */; };
 		498686B02569752900C833AA /* DetailedCountryMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686AF2569752900C833AA /* DetailedCountryMeasurementForDecodingOnly.swift */; };
 		498686B52569754200C833AA /* BasicMeasurementMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686B42569754200C833AA /* BasicMeasurementMetric.swift */; };
-		498686BD2569758F00C833AA /* CountrySummaryMeasurementForDecodingOnly+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686752569739000C833AA /* CountrySummaryMeasurementForDecodingOnly+Equatable.swift */; };
-		498686C12569759300C833AA /* DetailedCountryMeasurementResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686AA2569751000C833AA /* DetailedCountryMeasurementResponse.swift */; };
-		498686C22569759300C833AA /* DetailedCountryMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686AF2569752900C833AA /* DetailedCountryMeasurementForDecodingOnly.swift */; };
-		498686C32569759300C833AA /* SummaryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686832569741900C833AA /* SummaryResponse.swift */; };
-		498686C42569759300C833AA /* CountrySummaryMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986866C2569733800C833AA /* CountrySummaryMeasurementForDecodingOnly.swift */; };
-		498686C52569759300C833AA /* CountryProvincesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986869B2569749700C833AA /* CountryProvincesResponse.swift */; };
-		498686C62569759300C833AA /* ProvinceMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686A0256974C200C833AA /* ProvinceMeasurementForDecodingOnly.swift */; };
-		498686C72569759300C833AA /* CountryHistoryMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686932569747500C833AA /* CountryHistoryMeasurementForDecodingOnly.swift */; };
-		498686C82569759300C833AA /* ProvinceMeasurementRegionForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686A5256974D600C833AA /* ProvinceMeasurementRegionForDecodingOnly.swift */; };
-		498686CD2569759700C833AA /* BasicMeasurementMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686B42569754200C833AA /* BasicMeasurementMetric.swift */; };
 		498686D225698E2C00C833AA /* CountrySummaryMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686D125698E2C00C833AA /* CountrySummaryMeasurement.swift */; };
 		498686D725698E4A00C833AA /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686D625698E4A00C833AA /* Country.swift */; };
-		498686DB25698EE700C833AA /* CountrySummaryMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686D125698E2C00C833AA /* CountrySummaryMeasurement.swift */; };
-		498686DC25698EE700C833AA /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686D625698E4A00C833AA /* Country.swift */; };
 		498686E425698F9600C833AA /* MeasurementMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686E325698F9600C833AA /* MeasurementMetric.swift */; };
-		498686E525698F9600C833AA /* MeasurementMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686E325698F9600C833AA /* MeasurementMetric.swift */; };
 		498686EA2569944E00C833AA /* Province.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686E92569944E00C833AA /* Province.swift */; };
-		498686EB2569944E00C833AA /* Province.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686E92569944E00C833AA /* Province.swift */; };
 		498686F02569949100C833AA /* ProvinceMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686EF2569949100C833AA /* ProvinceMeasurement.swift */; };
-		498686F12569949100C833AA /* ProvinceMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686EF2569949100C833AA /* ProvinceMeasurement.swift */; };
 		498686F6256994A800C833AA /* CountryHistoryMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686F5256994A800C833AA /* CountryHistoryMeasurement.swift */; };
-		498686F7256994A800C833AA /* CountryHistoryMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686F5256994A800C833AA /* CountryHistoryMeasurement.swift */; };
 		498686FC256994C500C833AA /* GlobalMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686FB256994C500C833AA /* GlobalMeasurement.swift */; };
-		498686FD256994C500C833AA /* GlobalMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686FB256994C500C833AA /* GlobalMeasurement.swift */; };
 		49868702256994D900C833AA /* DataRepresentationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868701256994D900C833AA /* DataRepresentationType.swift */; };
-		49868703256994D900C833AA /* DataRepresentationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868701256994D900C833AA /* DataRepresentationType.swift */; };
 		498687092569951C00C833AA /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687082569951C00C833AA /* NetworkError.swift */; };
-		4986870A2569951C00C833AA /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687082569951C00C833AA /* NetworkError.swift */; };
 		498687122569954B00C833AA /* Country+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687112569954B00C833AA /* Country+Equatable.swift */; };
-		498687132569954B00C833AA /* Country+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687112569954B00C833AA /* Country+Equatable.swift */; };
 		498687182569955E00C833AA /* Country+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687172569955E00C833AA /* Country+Identifiable.swift */; };
-		498687192569955E00C833AA /* Country+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687172569955E00C833AA /* Country+Identifiable.swift */; };
 		4986871E2569957100C833AA /* CountryHistoryMeasurement+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986871D2569957100C833AA /* CountryHistoryMeasurement+Identifiable.swift */; };
-		4986871F2569957100C833AA /* CountryHistoryMeasurement+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986871D2569957100C833AA /* CountryHistoryMeasurement+Identifiable.swift */; };
 		498687242569958800C833AA /* Province+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687232569958800C833AA /* Province+Identifiable.swift */; };
-		498687252569958800C833AA /* Province+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687232569958800C833AA /* Province+Identifiable.swift */; };
 		4986872A256995A500C833AA /* CountryProvincesResponse+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868729256995A500C833AA /* CountryProvincesResponse+Equatable.swift */; };
-		4986872B256995A500C833AA /* CountryProvincesResponse+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868729256995A500C833AA /* CountryProvincesResponse+Equatable.swift */; };
 		49868730256995D000C833AA /* ProvinceMeasurementForDecodingOnly+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986872F256995D000C833AA /* ProvinceMeasurementForDecodingOnly+Equatable.swift */; };
-		49868731256995D000C833AA /* ProvinceMeasurementForDecodingOnly+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986872F256995D000C833AA /* ProvinceMeasurementForDecodingOnly+Equatable.swift */; };
 		49868736256995FB00C833AA /* Country+Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868735256995FB00C833AA /* Country+Searchable.swift */; };
-		49868737256995FB00C833AA /* Country+Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868735256995FB00C833AA /* Country+Searchable.swift */; };
 		4986873F2569961300C833AA /* Province+Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986873E2569961300C833AA /* Province+Searchable.swift */; };
-		498687402569961300C833AA /* Province+Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986873E2569961300C833AA /* Province+Searchable.swift */; };
 		4986874D256996B800C833AA /* JSONDecoder.KeyDecodingStrategy+convertFromPascalCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986874C256996B800C833AA /* JSONDecoder.KeyDecodingStrategy+convertFromPascalCase.swift */; };
-		4986874E256996B800C833AA /* JSONDecoder.KeyDecodingStrategy+convertFromPascalCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986874C256996B800C833AA /* JSONDecoder.KeyDecodingStrategy+convertFromPascalCase.swift */; };
 		498687562569970200C833AA /* String+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687552569970200C833AA /* String+Identifiable.swift */; };
-		498687572569970200C833AA /* String+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687552569970200C833AA /* String+Identifiable.swift */; };
 		4986875C2569971600C833AA /* String+firstCharLowercased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986875B2569971600C833AA /* String+firstCharLowercased.swift */; };
-		4986875D2569971600C833AA /* String+firstCharLowercased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986875B2569971600C833AA /* String+firstCharLowercased.swift */; };
 		498687622569973900C833AA /* Int+nDayHumanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687612569973900C833AA /* Int+nDayHumanReadable.swift */; };
-		498687632569973900C833AA /* Int+nDayHumanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687612569973900C833AA /* Int+nDayHumanReadable.swift */; };
 		498687682569975000C833AA /* Int+humanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687672569975000C833AA /* Int+humanReadable.swift */; };
-		498687692569975000C833AA /* Int+humanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687672569975000C833AA /* Int+humanReadable.swift */; };
 		4986876E2569977D00C833AA /* Optional<Int>+humanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986876D2569977D00C833AA /* Optional<Int>+humanReadable.swift */; };
-		4986876F2569977D00C833AA /* Optional<Int>+humanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986876D2569977D00C833AA /* Optional<Int>+humanReadable.swift */; };
 		4986877B256997ED00C833AA /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986877A256997ED00C833AA /* UserDefaultsKeys.swift */; };
-		4986877C256997ED00C833AA /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986877A256997ED00C833AA /* UserDefaultsKeys.swift */; };
 		49868784256997FB00C833AA /* DefaultSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868783256997FB00C833AA /* DefaultSettings.swift */; };
-		49868785256997FB00C833AA /* DefaultSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868783256997FB00C833AA /* DefaultSettings.swift */; };
 		4986878A2569980600C833AA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687892569980600C833AA /* Constants.swift */; };
-		4986878B2569980600C833AA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687892569980600C833AA /* Constants.swift */; };
 		498687902569982100C833AA /* SpecialCountries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986878F2569982100C833AA /* SpecialCountries.swift */; };
-		498687912569982100C833AA /* SpecialCountries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986878F2569982100C833AA /* SpecialCountries.swift */; };
 		498687962569984D00C833AA /* UsefulURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687952569984D00C833AA /* UsefulURLs.swift */; };
-		498687972569984D00C833AA /* UsefulURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687952569984D00C833AA /* UsefulURLs.swift */; };
 		498687A8256A2B3400C833AA /* DataManager+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687A7256A2B3400C833AA /* DataManager+Equatable.swift */; };
-		498687A9256A2B3400C833AA /* DataManager+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687A7256A2B3400C833AA /* DataManager+Equatable.swift */; };
 		498687AF256A2CEB00C833AA /* MockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687AE256A2CEB00C833AA /* MockDataManager.swift */; };
 		498687B6256A2D9400C833AA /* Province.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686E92569944E00C833AA /* Province.swift */; };
 		498687B7256A2D9400C833AA /* PercentageFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4910AAD1254214E300BDAC0C /* PercentageFormatter.swift */; };
@@ -165,33 +125,21 @@
 		498687FD256A31B400C833AA /* NetworkError+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687FC256A31B400C833AA /* NetworkError+Equatable.swift */; };
 		49868802256A31E300C833AA /* NetworkError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868801256A31E300C833AA /* NetworkError+LocalizedError.swift */; };
 		49868807256A338E00C833AA /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868806256A338E00C833AA /* MockData.swift */; };
-		4986880B256A339600C833AA /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868806256A338E00C833AA /* MockData.swift */; };
 		4986880F256A339700C833AA /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868806256A338E00C833AA /* MockData.swift */; };
 		49868814256A34FA00C833AA /* MockDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868813256A34FA00C833AA /* MockDataManagerTests.swift */; };
-		49868818256A360F00C833AA /* NetworkError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868801256A31E300C833AA /* NetworkError+LocalizedError.swift */; };
-		49868819256A360F00C833AA /* NetworkError+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687FC256A31B400C833AA /* NetworkError+Equatable.swift */; };
 		4986881D256A361000C833AA /* NetworkError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868801256A31E300C833AA /* NetworkError+LocalizedError.swift */; };
 		4986881E256A361000C833AA /* NetworkError+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687FC256A31B400C833AA /* NetworkError+Equatable.swift */; };
 		49868823256A3BC800C833AA /* DataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868822256A3BC800C833AA /* DataManagerTests.swift */; };
 		4986883D256A6F7A00C833AA /* SpotlightIndexSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868830256A6F7000C833AA /* SpotlightIndexSettingsView.swift */; };
 		499A5420255ED68200D1D3D8 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499A541F255ED68200D1D3D8 /* Searchable.swift */; };
-		499A5421255ED68200D1D3D8 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499A541F255ED68200D1D3D8 /* Searchable.swift */; };
-		49B5562D2531F694000D2030 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B5562C2531F694000D2030 /* WidgetKit.framework */; };
-		49B5562F2531F694000D2030 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B5562E2531F694000D2030 /* SwiftUI.framework */; };
-		49B5563B2531F695000D2030 /* Covid19WidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 49B5562A2531F694000D2030 /* Covid19WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		49B90EDC25432EB900E89F5D /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EDB25432EB900E89F5D /* CustomButtonStyle.swift */; };
 		49B90EEC2543371900E89F5D /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49B90EEB2543371900E89F5D /* SwiftUICharts */; };
-		49B90EEE2543372400E89F5D /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49B90EED2543372400E89F5D /* SwiftUICharts */; };
 		49B90EFC2543460100E89F5D /* ProvinceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EFB2543460100E89F5D /* ProvinceDetailView.swift */; };
 		49DD25C6254EBCE200452A92 /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DD25C5254EBCE200452A92 /* NotificationSettingsView.swift */; };
 		49DD9EFE2545C69B006B1866 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DD9EFD2545C69B006B1866 /* UIConstants.swift */; };
-		49EEFE9F2532DED0008ECBDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49B556342531F695000D2030 /* Assets.xcassets */; };
-		49EEFEA02532DED0008ECBDA /* Covid19Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B556312531F694000D2030 /* Covid19Widget.swift */; };
-		49EEFEA22532DED0008ECBDA /* Covid19Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 49B556332531F694000D2030 /* Covid19Widget.intentdefinition */; };
 		49F3525D25442D87009ED5AE /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F3525C25442D87009ED5AE /* GeneralSettingsView.swift */; };
 		49F3529125442E64009ED5AE /* OtherSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F3529025442E64009ED5AE /* OtherSettingsView.swift */; };
 		49F35296254432E2009ED5AE /* AttributionsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F35295254432E2009ED5AE /* AttributionsSettingsView.swift */; };
-		49F352BA254464F4009ED5AE /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 49F352B9254464F4009ED5AE /* Reachability */; };
 		49F9DD712541AC9D003D457B /* ComparisonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F9DD702541AC9D003D457B /* ComparisonView.swift */; };
 		49F9DD792541B079003D457B /* ComparisonDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F9DD782541B079003D457B /* ComparisonDetailView.swift */; };
 /* End PBXBuildFile section */
@@ -204,13 +152,6 @@
 			remoteGlobalIDString = 4954F5CD24E7F4D300399145;
 			remoteInfo = "Covid19DashboardX (iOS)";
 		};
-		49B556392531F695000D2030 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4954F5C224E7F4D200399145 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 49B556292531F694000D2030;
-			remoteInfo = Covid19WidgetExtension;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -220,7 +161,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				49B5563B2531F695000D2030 /* Covid19WidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -228,6 +168,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		491022092572464700027B68 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		491022C32572542F00027B68 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Reachability.swift; path = "/Users/miguel/Library/Developer/Xcode/DerivedData/Covid19DashboardX-eonoqxujyjsqtgdqdgwmuindcvrs/SourcePackages/checkouts/Reachability.swift"; sourceTree = "<absolute>"; };
+		491022DF257254E600027B68 /* CountrySummarySquareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountrySummarySquareView.swift; sourceTree = "<group>"; };
 		4910AAD1254214E300BDAC0C /* PercentageFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageFormatter.swift; sourceTree = "<group>"; };
 		4914F3E72544032A00CBC521 /* SummaryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryProvider.swift; sourceTree = "<group>"; };
 		4914F3F3254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvinceSummaryMetricPickerView.swift; sourceTree = "<group>"; };
@@ -242,6 +185,8 @@
 		493C2DFC252383620060BA27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		493C2E08252383A70060BA27 /* ModelDecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDecodableTests.swift; sourceTree = "<group>"; };
 		4942F2D925299AB100EE2959 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		494A26AE25723CF80022A49E /* Country+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Country+Hashable.swift"; sourceTree = "<group>"; };
+		494A26BF25723E230022A49E /* Province+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Province+Hashable.swift"; sourceTree = "<group>"; };
 		4954F5C724E7F4D200399145 /* Covid19DashboardXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Covid19DashboardXApp.swift; sourceTree = "<group>"; };
 		4954F5C824E7F4D200399145 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4954F5C924E7F4D300399145 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -299,7 +244,6 @@
 		49868822256A3BC800C833AA /* DataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerTests.swift; sourceTree = "<group>"; };
 		49868830256A6F7000C833AA /* SpotlightIndexSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightIndexSettingsView.swift; sourceTree = "<group>"; };
 		499A541F255ED68200D1D3D8 /* Searchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Searchable.swift; sourceTree = "<group>"; };
-		49B5562A2531F694000D2030 /* Covid19WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Covid19WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B5562C2531F694000D2030 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = Library/Frameworks/WidgetKit.framework; sourceTree = DEVELOPER_DIR; };
 		49B5562E2531F694000D2030 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		49B556312531F694000D2030 /* Covid19Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Covid19Widget.swift; sourceTree = "<group>"; };
@@ -333,17 +277,6 @@
 			files = (
 				497844E42541939800364E18 /* Reachability in Frameworks */,
 				49B90EEC2543371900E89F5D /* SwiftUICharts in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		49B556272531F694000D2030 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				49B90EEE2543372400E89F5D /* SwiftUICharts in Frameworks */,
-				49F352BA254464F4009ED5AE /* Reachability in Frameworks */,
-				49B5562F2531F694000D2030 /* SwiftUI.framework in Frameworks */,
-				49B5562D2531F694000D2030 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,7 +325,6 @@
 			children = (
 				4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */,
 				493C2DF8252383620060BA27 /* Covid19DashboardXTests.xctest */,
-				49B5562A2531F694000D2030 /* Covid19WidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -456,6 +388,8 @@
 				4986872F256995D000C833AA /* ProvinceMeasurementForDecodingOnly+Equatable.swift */,
 				498687FC256A31B400C833AA /* NetworkError+Equatable.swift */,
 				49868801256A31E300C833AA /* NetworkError+LocalizedError.swift */,
+				494A26AE25723CF80022A49E /* Country+Hashable.swift */,
+				494A26BF25723E230022A49E /* Province+Hashable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -538,6 +472,7 @@
 		49B5562B2531F694000D2030 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				491022C32572542F00027B68 /* Reachability.swift */,
 				49B5562C2531F694000D2030 /* WidgetKit.framework */,
 				49B5562E2531F694000D2030 /* SwiftUI.framework */,
 			);
@@ -571,6 +506,8 @@
 				49B90EFB2543460100E89F5D /* ProvinceDetailView.swift */,
 				493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */,
 				49DD9EFD2545C69B006B1866 /* UIConstants.swift */,
+				491022092572464700027B68 /* Launch Screen.storyboard */,
+				491022DF257254E600027B68 /* CountrySummarySquareView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -622,7 +559,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				49B5563A2531F695000D2030 /* PBXTargetDependency */,
 			);
 			name = "Covid19DashboardX (iOS)";
 			packageProductDependencies = (
@@ -633,34 +569,13 @@
 			productReference = 4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */;
 			productType = "com.apple.product-type.application";
 		};
-		49B556292531F694000D2030 /* Covid19WidgetExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 49B5563F2531F695000D2030 /* Build configuration list for PBXNativeTarget "Covid19WidgetExtension" */;
-			buildPhases = (
-				49B556262531F694000D2030 /* Sources */,
-				49B556272531F694000D2030 /* Frameworks */,
-				49B556282531F694000D2030 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Covid19WidgetExtension;
-			packageProductDependencies = (
-				49B90EED2543372400E89F5D /* SwiftUICharts */,
-				49F352B9254464F4009ED5AE /* Reachability */,
-			);
-			productName = Covid19WidgetExtension;
-			productReference = 49B5562A2531F694000D2030 /* Covid19WidgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		4954F5C224E7F4D200399145 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1200;
+				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					493C2DF7252383620060BA27 = {
@@ -670,9 +585,6 @@
 					};
 					4954F5CD24E7F4D300399145 = {
 						CreatedOnToolsVersion = 12.0;
-					};
-					49B556292531F694000D2030 = {
-						CreatedOnToolsVersion = 12.0.1;
 					};
 				};
 			};
@@ -695,7 +607,6 @@
 			targets = (
 				4954F5CD24E7F4D300399145 /* Covid19DashboardX (iOS) */,
 				493C2DF7252383620060BA27 /* Covid19DashboardXTests */,
-				49B556292531F694000D2030 /* Covid19WidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -712,17 +623,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4910220A2572464700027B68 /* Launch Screen.storyboard in Resources */,
 				49370B2A2542AA56009BFE4C /* ISO_CountryCodes.plist in Resources */,
 				4954F5DE24E7F4D300399145 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		49B556282531F694000D2030 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				49370B382542AA5F009BFE4C /* ISO_CountryCodes.plist in Resources */,
-				49EEFE9F2532DED0008ECBDA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -762,10 +665,12 @@
 				49868802256A31E300C833AA /* NetworkError+LocalizedError.swift in Sources */,
 				498687F2256A2DBD00C833AA /* JSONDecoder.KeyDecodingStrategy+convertFromPascalCase.swift in Sources */,
 				498687E3256A2DAB00C833AA /* SummaryProvider.swift in Sources */,
+				494A26B025723CF80022A49E /* Country+Hashable.swift in Sources */,
 				498687D7256A2D9F00C833AA /* ProvinceMeasurementForDecodingOnly+Equatable.swift in Sources */,
 				498687CF256A2D9F00C833AA /* Country+Searchable.swift in Sources */,
 				498687BE256A2D9400C833AA /* Country.swift in Sources */,
 				498687C6256A2D9A00C833AA /* CountryHistoryMeasurementForDecodingOnly.swift in Sources */,
+				494A26C125723E230022A49E /* Province+Hashable.swift in Sources */,
 				498687E9256A2DB700C833AA /* UserDefaultsKeys.swift in Sources */,
 				498687DB256A2DA600C833AA /* DataRepresentationType.swift in Sources */,
 				498687EA256A2DB700C833AA /* DefaultSettings.swift in Sources */,
@@ -807,6 +712,7 @@
 				498686FC256994C500C833AA /* GlobalMeasurement.swift in Sources */,
 				497E012B2531FD52006CEF67 /* DataManager.swift in Sources */,
 				49370B1A25429832009BFE4C /* CountryProvincesDetailView.swift in Sources */,
+				491022E0257254E600027B68 /* CountrySummarySquareView.swift in Sources */,
 				49F35296254432E2009ED5AE /* AttributionsSettingsView.swift in Sources */,
 				49868730256995D000C833AA /* ProvinceMeasurementForDecodingOnly+Equatable.swift in Sources */,
 				497E01342531FD52006CEF67 /* Covid19DashboardXApp.swift in Sources */,
@@ -856,8 +762,10 @@
 				497E012D2531FD52006CEF67 /* SummaryView.swift in Sources */,
 				498686F02569949100C833AA /* ProvinceMeasurement.swift in Sources */,
 				498686EA2569944E00C833AA /* Province.swift in Sources */,
+				494A26C025723E230022A49E /* Province+Hashable.swift in Sources */,
 				498686B02569752900C833AA /* DetailedCountryMeasurementForDecodingOnly.swift in Sources */,
 				4986875C2569971600C833AA /* String+firstCharLowercased.swift in Sources */,
+				494A26AF25723CF80022A49E /* Country+Hashable.swift in Sources */,
 				498687122569954B00C833AA /* Country+Equatable.swift in Sources */,
 				498686D725698E4A00C833AA /* Country.swift in Sources */,
 				498687182569955E00C833AA /* Country+Identifiable.swift in Sources */,
@@ -868,64 +776,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		49B556262531F694000D2030 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				498686C62569759300C833AA /* ProvinceMeasurementForDecodingOnly.swift in Sources */,
-				498687632569973900C833AA /* Int+nDayHumanReadable.swift in Sources */,
-				49EEFEA02532DED0008ECBDA /* Covid19Widget.swift in Sources */,
-				4986872B256995A500C833AA /* CountryProvincesResponse+Equatable.swift in Sources */,
-				4986874E256996B800C833AA /* JSONDecoder.KeyDecodingStrategy+convertFromPascalCase.swift in Sources */,
-				498687972569984D00C833AA /* UsefulURLs.swift in Sources */,
-				49868785256997FB00C833AA /* DefaultSettings.swift in Sources */,
-				49868731256995D000C833AA /* ProvinceMeasurementForDecodingOnly+Equatable.swift in Sources */,
-				498686F7256994A800C833AA /* CountryHistoryMeasurement.swift in Sources */,
-				498686C82569759300C833AA /* ProvinceMeasurementRegionForDecodingOnly.swift in Sources */,
-				498687132569954B00C833AA /* Country+Equatable.swift in Sources */,
-				4986870A2569951C00C833AA /* NetworkError.swift in Sources */,
-				4986880B256A339600C833AA /* MockData.swift in Sources */,
-				498687692569975000C833AA /* Int+humanReadable.swift in Sources */,
-				498687912569982100C833AA /* SpecialCountries.swift in Sources */,
-				498686BD2569758F00C833AA /* CountrySummaryMeasurementForDecodingOnly+Equatable.swift in Sources */,
-				4986871F2569957100C833AA /* CountryHistoryMeasurement+Identifiable.swift in Sources */,
-				499A5421255ED68200D1D3D8 /* Searchable.swift in Sources */,
-				49370B3B2542AA5F009BFE4C /* DataManager.swift in Sources */,
-				4986875D2569971600C833AA /* String+firstCharLowercased.swift in Sources */,
-				4986877C256997ED00C833AA /* UserDefaultsKeys.swift in Sources */,
-				498686C22569759300C833AA /* DetailedCountryMeasurementForDecodingOnly.swift in Sources */,
-				498687402569961300C833AA /* Province+Searchable.swift in Sources */,
-				49868819256A360F00C833AA /* NetworkError+Equatable.swift in Sources */,
-				498686DC25698EE700C833AA /* Country.swift in Sources */,
-				49370B392542AA5F009BFE4C /* MovingAverage.swift in Sources */,
-				498686C12569759300C833AA /* DetailedCountryMeasurementResponse.swift in Sources */,
-				49868818256A360F00C833AA /* NetworkError+LocalizedError.swift in Sources */,
-				498686DB25698EE700C833AA /* CountrySummaryMeasurement.swift in Sources */,
-				498687A9256A2B3400C833AA /* DataManager+Equatable.swift in Sources */,
-				498686CD2569759700C833AA /* BasicMeasurementMetric.swift in Sources */,
-				49370B372542AA5F009BFE4C /* shared.swift in Sources */,
-				498687572569970200C833AA /* String+Identifiable.swift in Sources */,
-				49EEFEA22532DED0008ECBDA /* Covid19Widget.intentdefinition in Sources */,
-				49868703256994D900C833AA /* DataRepresentationType.swift in Sources */,
-				4986878B2569980600C833AA /* Constants.swift in Sources */,
-				498687192569955E00C833AA /* Country+Identifiable.swift in Sources */,
-				4986876F2569977D00C833AA /* Optional<Int>+humanReadable.swift in Sources */,
-				498686C42569759300C833AA /* CountrySummaryMeasurementForDecodingOnly.swift in Sources */,
-				49868737256995FB00C833AA /* Country+Searchable.swift in Sources */,
-				498686E525698F9600C833AA /* MeasurementMetric.swift in Sources */,
-				498687252569958800C833AA /* Province+Identifiable.swift in Sources */,
-				498686C52569759300C833AA /* CountryProvincesResponse.swift in Sources */,
-				49370B3A2542AA5F009BFE4C /* PercentageFormatter.swift in Sources */,
-				498686F12569949100C833AA /* ProvinceMeasurement.swift in Sources */,
-				498686EB2569944E00C833AA /* Province.swift in Sources */,
-				498686C32569759300C833AA /* SummaryResponse.swift in Sources */,
-				4914F3E92544032A00CBC521 /* SummaryProvider.swift in Sources */,
-				4984D9342568140000CDCEA5 /* CovidDashApiDotComJSONDecoder.swift in Sources */,
-				498686FD256994C500C833AA /* GlobalMeasurement.swift in Sources */,
-				498686C72569759300C833AA /* CountryHistoryMeasurementForDecodingOnly.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -933,11 +783,6 @@
 			isa = PBXTargetDependency;
 			target = 4954F5CD24E7F4D300399145 /* Covid19DashboardX (iOS) */;
 			targetProxy = 493C2DFD252383620060BA27 /* PBXContainerItemProxy */;
-		};
-		49B5563A2531F695000D2030 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 49B556292531F694000D2030 /* Covid19WidgetExtension */;
-			targetProxy = 49B556392531F695000D2030 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1150,53 +995,6 @@
 			};
 			name = Release;
 		};
-		49B5563D2531F695000D2030 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MHQFP8C3YS;
-				INFOPLIST_FILE = Covid19Widget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mithem.Covid19DashboardX.Covid19DashboardWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		49B5563E2531F695000D2030 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MHQFP8C3YS;
-				INFOPLIST_FILE = Covid19Widget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mithem.Covid19DashboardX.Covid19DashboardWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1223,15 +1021,6 @@
 			buildConfigurations = (
 				4954F5E324E7F4D300399145 /* Debug */,
 				4954F5E424E7F4D300399145 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		49B5563F2531F695000D2030 /* Build configuration list for PBXNativeTarget "Covid19WidgetExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				49B5563D2531F695000D2030 /* Debug */,
-				49B5563E2531F695000D2030 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1267,16 +1056,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 49B7D1BB2529DAD600AE2B9B /* XCRemoteSwiftPackageReference "ChartView" */;
 			productName = SwiftUICharts;
-		};
-		49B90EED2543372400E89F5D /* SwiftUICharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 49B7D1BB2529DAD600AE2B9B /* XCRemoteSwiftPackageReference "ChartView" */;
-			productName = SwiftUICharts;
-		};
-		49F352B9254464F4009ED5AE /* Reachability */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 497844E22541939800364E18 /* XCRemoteSwiftPackageReference "Reachability" */;
-			productName = Reachability;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

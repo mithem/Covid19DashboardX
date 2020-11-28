@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Province: SummaryProvider {
+struct Province: SummaryProvider, Equatable {
     var name: String
     var totalConfirmed: Int { measurements.last?.totalConfirmed ?? 0 }
     var newConfirmed: Int { measurements.last?.newConfirmed ?? 0 }
@@ -18,6 +18,8 @@ struct Province: SummaryProvider {
     var activeCases: Int? { measurements.last?.active }
     var newActive: Int? { measurements.last?.newActive }
     var caseFatalityRate: Double? { measurements.last?.caseFatalityRate }
+    
+    var active: Int? { activeCases }
     
     var measurements: [ProvinceMeasurement]
     

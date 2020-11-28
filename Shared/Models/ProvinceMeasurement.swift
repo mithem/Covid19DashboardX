@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProvinceMeasurement {
+struct ProvinceMeasurement: Hashable {
     var date: Date
     var totalConfirmed: Int
     var newConfirmed: Int
