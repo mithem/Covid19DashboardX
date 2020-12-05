@@ -56,4 +56,28 @@ class MockDataManagerTests: XCTestCase {
             XCTAssertEqual(result, .failure(.constrainedNetwork))
         }
     }
+    
+    func testGetGlobalSummary() {
+        MDM.forceError = nil
+        MDM.getGlobalSummary { result in
+            switch result {
+            case .success(let measurement):
+                XCTAssertEqual(measurement, MockData.latestGlobalFromSummaryResponse)
+            case .failure(let error):
+                XCTAssertNil(error)
+            }
+        }
+        
+        let responseText = "Hello, world!"
+        
+        MDM.forceError = NetworkError.invalidResponse(response: responseText)
+        MDM.getGlobalSummary { result in
+            switch result {
+            case .success(_):
+                XCTAssertTrue(false)
+            case .failure(let error):
+                XCTAssertEqual(error, .invalidResponse(response: responseText))
+            }
+        }
+    }
 }

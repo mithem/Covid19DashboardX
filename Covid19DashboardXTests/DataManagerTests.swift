@@ -13,9 +13,8 @@ class DataManagerTests: XCTestCase {
     func testParseSummary() {
         MDM.getSummary { result in
             switch MDM.parseSummary(result) {
-            case .success(let (countries, latestGlobal)):
+            case .success(let countries):
                 XCTAssertEqual(countries, MockData.countriesFromSummaryResponse)
-                XCTAssertEqual(latestGlobal, MockData.latestGlobalFromSummaryResponse)
             case .failure(let error):
                 XCTAssertNil(error)
             }

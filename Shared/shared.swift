@@ -55,16 +55,14 @@ func resetSettingsToDefaults() {
     ud.set(ds.dataRepresentationType, forKey: uk.dataRepresentationType)
 }
 
-func indexForSpotlight(countries: [Country], global: GlobalMeasurement?) {
+func indexForSpotlight(countries: [Country]) {
     var items = [CSSearchableItem]()
     let formatter = DateFormatter()
     formatter.dateStyle = .short
     let dateString = " (\(formatter.string(from: Date())))"
     let index = CSSearchableIndex.default()
     
-    let globalIdentifierAndName = "Global"
-    
-    var identifiers = [globalIdentifierAndName]
+    var identifiers = [String]()
     for country in countries {
         identifiers.append(country.code)
         for province in country.provinces {
@@ -79,14 +77,6 @@ func indexForSpotlight(countries: [Country], global: GlobalMeasurement?) {
         }
         
         if !UserDefaults().bool(forKey: UserDefaultsKeys.disableSpotlightIndexing) {
-            if let global = global {
-                let set = CSSearchableItemAttributeSet(contentType: .content)
-                set.title = globalIdentifierAndName
-                set.contentDescription = global.summaryFor(metric: .confirmed) + dateString
-                let item = CSSearchableItem(uniqueIdentifier: globalIdentifierAndName, domainIdentifier: nil, attributeSet: set)
-                items.append(item)
-            }
-            
             for country in countries {
                 
                 let set = CSSearchableItemAttributeSet(contentType: .content)
@@ -109,6 +99,34 @@ func indexForSpotlight(countries: [Country], global: GlobalMeasurement?) {
             }
             
             index.indexSearchableItems(items) { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+}
+
+func indexGlobalMeasurementForSpotlight(_ measurement: GlobalMeasurement) {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .short
+    let dateString = " (\(formatter.string(from: Date())))"
+    let index = CSSearchableIndex.default()
+    
+    let nameAndIdentifier = "Global"
+    
+    let set = CSSearchableItemAttributeSet(contentType: .content)
+    set.title = nameAndIdentifier
+    set.contentDescription = measurement.summaryFor(metric: .confirmed) + dateString
+    let item = CSSearchableItem(uniqueIdentifier: nameAndIdentifier, domainIdentifier: nil, attributeSet: set)
+    
+    index.deleteSearchableItems(withIdentifiers: [nameAndIdentifier]) { error in
+        if let error = error {
+            print(error.localizedDescription)
+        }
+        
+        if !UserDefaults().bool(forKey: UserDefaultsKeys.disableSpotlightIndexing) {
+            index.indexSearchableItems([item]) { error in
                 if let error = error {
                     print(error.localizedDescription)
                 }

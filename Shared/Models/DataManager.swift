@@ -73,7 +73,7 @@ class DataManager: ObservableObject {
         }.resume()
     }
     
-    class func parseSummary(_ data: Result<SummaryResponse, NetworkError>) -> Result<(countries: [Country], latestGlobal: GlobalMeasurement), NetworkError> {
+    class func parseSummary(_ data: Result<SummaryResponse, NetworkError>) -> Result<[Country], NetworkError> {
         switch data {
         case .success(let response):
             var tempCountries = [Country]()
@@ -83,7 +83,7 @@ class DataManager: ObservableObject {
                 let newCountry = Country(code: country.countryCode, name: country.country, latest: measurement)
                 tempCountries.append(newCountry)
             }
-            return .success((countries: tempCountries, latestGlobal: response.global))
+            return .success(tempCountries)
         case .failure(let error):
             return .failure(error)
         }
@@ -95,15 +95,62 @@ class DataManager: ObservableObject {
         }
         Self.getSummary { result in
             switch Self.parseSummary(result) {
-            case .success((let countries, let latestGlobal)):
+            case .success(let countries):
                 self.dataTasks.remove(.summary)
                 DispatchQueue.global().async {
-                    indexForSpotlight(countries: countries, global: latestGlobal)
+                    indexForSpotlight(countries: countries)
                 }
                 DispatchQueue.main.async {
                     self.sortCountries()
                     self.countries = countries
-                    self.latestGlobal = latestGlobal
+                    self.error = nil
+                }
+            case .failure(let error):
+                self.handleError(error, task: .summary)
+            }
+            DispatchQueue.main.async {
+                self._loading = false
+            }
+        }
+    }
+    
+    
+    // MARK: Global summary
+    
+    
+    class func getGlobalSummary(completion: @escaping (Result<GlobalMeasurement, NetworkError>) -> Void) {
+        guard let url = URL(string: "https://covid-api.com/api/reports/total") else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                completion(.failure(.init(error: error)))
+            } else if let data = data {
+                let decoder = CovidDashApiDotComJSONDecoder()
+                let serverResponse = try? decoder.decode(GlobalMeasurementForDecodingOnly.self, from: data)
+                if let serverResponse = serverResponse {
+                    completion(.success(serverResponse.toGlobalMeasurement()))
+                } else {
+                    let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
+                    completion(.failure(.invalidResponse(response: string)))
+                }
+            } else {
+                completion(.failure(.noResponse))
+            }
+        }.resume()
+    }
+    
+    
+    func loadGlobalSummary() {
+        DispatchQueue.main.async {
+            self._loading = true
+        }
+        Self.getGlobalSummary { result in
+            switch result {
+            case .success(let globalMeasurement):
+                DispatchQueue.global().async {
+                    indexGlobalMeasurementForSpotlight(globalMeasurement)
+                }
+                DispatchQueue.main.async {
+                    self.latestGlobal = globalMeasurement
                     self.error = nil
                 }
             case .failure(let error):
@@ -125,15 +172,7 @@ class DataManager: ObservableObject {
         request.allowsConstrainedNetworkAccess = UserDefaults().bool(forKey: UserDefaultsKeys.ignoreLowDataMode)
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                if let error = error as? URLError {
-                    if error.networkUnavailableReason == .constrained {
-                        completion(.failure(.constrainedNetwork))
-                    } else {
-                        completion(.failure(.urlError(error)))
-                    }
-                } else {
-                    completion(.failure(.otherWith(error: error)))
-                }
+                completion(.failure(.init(error: error)))
             } else if let data = data {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromPascalCase
@@ -214,15 +253,7 @@ class DataManager: ObservableObject {
         request.allowsConstrainedNetworkAccess = UserDefaults().bool(forKey: UserDefaultsKeys.ignoreLowDataMode)
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
-                if let error = error as? URLError {
-                    if error.networkUnavailableReason == .constrained {
-                        completion(.failure(.constrainedNetwork))
-                    } else {
-                        completion(.failure(.urlError(error)))
-                    }
-                } else {
-                    completion(.failure(.otherWith(error: error)))
-                }
+                completion(.failure(.init(error: error)))
             } else if let data = data {
                 let decoder = CovidDashApiDotComJSONDecoder()
                 let serverResponse = try? decoder.decode(CountryProvincesResponse.self, from: data)
@@ -273,7 +304,7 @@ class DataManager: ObservableObject {
                     self.error = nil
                 }
                 DispatchQueue.global().async {
-                    indexForSpotlight(countries: self.countries, global: self.latestGlobal)
+                    indexForSpotlight(countries: self.countries)
                 }
             case .failure(let error):
                 self.handleError(error, task: .provinceData(countryCode: countryCode))

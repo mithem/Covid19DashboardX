@@ -33,4 +33,12 @@ class MockDataManager: DataManager {
             completion(.success(MockData.countries[0]))
         }
     }
+    
+    override class func getGlobalSummary(completion: @escaping (Result<GlobalMeasurement, NetworkError>) -> Void) {
+        if let error = forceError {
+            completion(.failure(.init(error: error)))
+        } else {
+            completion(.success(MockData.latestGlobalFromSummaryResponse))
+        }
+    }
 }

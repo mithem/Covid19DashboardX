@@ -7,15 +7,17 @@
 
 import Foundation
 
-struct GlobalMeasurement: Decodable, Equatable, SummaryProvider {
+struct GlobalMeasurement: Equatable, SummaryProvider {
+    let lastUpdate: Date
     let totalConfirmed: Int
     let newConfirmed: Int
     let totalDeaths: Int
     let newDeaths: Int
     let totalRecovered: Int
     let newRecovered: Int
-    let active: Int?
+    let active: Int
+    let newActive: Int
     let caseFatalityRate: Double?
     
-    var activeCases: Int? { active ?? totalConfirmed - totalRecovered - totalDeaths }
+    var activeCases: Int? { active }
 }

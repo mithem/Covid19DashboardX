@@ -8,7 +8,6 @@
 import Foundation
 
 struct SummaryResponse: Decodable, Equatable {
-    let global: GlobalMeasurement
     let countries: [CountrySummaryMeasurementForDecodingOnly]
     let date: Date
 }
