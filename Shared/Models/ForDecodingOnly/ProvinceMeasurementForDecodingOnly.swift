@@ -19,4 +19,8 @@ struct ProvinceMeasurementForDecodingOnly: Decodable {
     let activeDiff: Int
     let fatalityRate: Double
     let region: ProvinceMeasurementRegionForDecodingOnly
+    
+    func toProvinceMeasurement() -> ProvinceMeasurement {
+        return .init(date: date, totalConfirmed: confirmed, newConfirmed: confirmedDiff, totalRecovered: recovered, newRecovered: recoveredDiff, totalDeaths: deaths, newDeaths: deathsDiff, active: active, newActive: activeDiff, caseFatalityRate: fatalityRate)
+    }
 }

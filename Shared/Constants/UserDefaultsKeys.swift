@@ -17,8 +17,13 @@ struct UserDefaultsKeys {
     
     static let colorThresholdForPercentages = "colorThresholdForPercentages"
     static let colorGrayAreaForPercentages = "colorGrayAreaForPercentages"
-    static let caseFatalityRateGreenTreshold = "caseFatalityRateGreenTreshold"
-    static let caseFatalityRateRedTreshold = "caseFatalityRateRedTreshold"
+    
+    /// Proportion of new cases/deaths/recovered/etc. to total cases/... which sets the middle value.
+    /// Everything under this is considered rather green than red.
+    /// `absoluteNumbersDeltaGrayAreaProportion` is used to configure how broad the gray band/area shall be
+    static let colorTresholdForDeltas = "absoluteRedProportion"
+    /// Range of proportions of new cases/... to total cases/... to configure gray instead of green (below) or red (above)
+    static let colorGrayAreaForDeltas = "absoulteGreenProportion"
     
     static let ignoreLowDataMode = "ignoreLowDataMode"
     
@@ -27,13 +32,6 @@ struct UserDefaultsKeys {
     static let notificationIdentifiers = "notificationIdentifiers"
     
     static let widgetCountry = "widgetCountry"
-    
-    /// Proportion of new cases/deaths/recovered/etc. to total cases/... which sets the middle value.
-    /// Everything under this is considered rather green than red.
-    /// `absoluteNumbersDeltaGrayAreaProportion` is used to configure how broad the gray band/area shall be
-    static let absoluteNumbersDeltaTresholdProportion = "absoluteRedProportion"
-    /// Range of proportions of new cases/... to total cases/... to configure gray instead of green (below) or red (above)
-    static let absoluteNumbersDeltaGrayAreaProportion = "absoulteGreenProportion"
     
     static let disableSpotlightIndexing = "disableSpotlightIndexing"
 }

@@ -78,7 +78,7 @@ class DataManager: ObservableObject {
         case .success(let response):
             var tempCountries = [Country]()
             for country in response.countries {
-                let measurement = CountrySummaryMeasurement(date: country.date, totalConfirmed: country.totalConfirmed, newConfirmed: country.newConfirmed, totalDeaths: country.totalDeaths, newDeaths: country.newDeaths, totalRecovered: country.totalRecovered, newRecovered: country.newRecovered, active: country.active, newActive: country.newActive, caseFatalityRate: country.caseFatalityRate)
+                let measurement = country.toCountrySummaryMeasurement()
                 
                 let newCountry = Country(code: country.countryCode, name: country.country, latest: measurement)
                 tempCountries.append(newCountry)
@@ -155,7 +155,7 @@ class DataManager: ObservableObject {
         switch data {
         case .success(let (country, measurements)):
             for measurement in measurements {
-                country.measurements.append(CountryHistoryMeasurement(confirmed: measurement.cases ?? measurement.confirmed ?? 0, deaths: measurement.deaths, recovered: measurement.recovered, active: measurement.active, date: measurement.date))
+                country.measurements.append(measurement.toCountryHistoryMeasurement())
             }
             return .success(country)
         case .failure(let error):
@@ -186,86 +186,6 @@ class DataManager: ObservableObject {
                 }
             case .failure(let error):
                 self.handleError(error, task: .historyData(countryCode: countryCode))
-            }
-            DispatchQueue.main.async {
-                self._loading = false
-            }
-        }
-    }
-    
-    
-    // MARK: Detailed country data (CFR etc)
-    
-    
-    /// get country data like the CFR and active cases from covid-api.com
-    class func getDetailedCountryData(for country: Country, at date: Date? = nil, completion: @escaping GetCountryDataCompletionHandler) {
-        let code = Constants.alpha2_to_alpha3_countryCodes[country.code] as? String ?? country.code
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = "covid-api.com"
-        components.path = "/api/reports/total"
-        components.queryItems = [.init(name: "iso", value: code)]
-        if let date = date {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "Y-m-d" // why do they have different date formats as in/outputs?
-            components.queryItems?.append(.init(name: "date", value: formatter.string(from: date)))
-        }
-        guard let url = components.url else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                if let error = error as? URLError {
-                    completion(.failure(.urlError(error)))
-                } else {
-                    completion(.failure(.otherWith(error: error)))
-                }
-            } else if let data = data {
-                let decoder = CovidDashApiDotComJSONDecoder()
-                let serverResponse = try? decoder.decode(DetailedCountryMeasurementResponse.self, from: data)
-                if let serverResponse = serverResponse {
-                    country.latest.active = serverResponse.data.active
-                    country.latest.caseFatalityRate = serverResponse.data.fatalityRate
-                    country.latest.date = serverResponse.data.date
-                    country.latest.newActive = serverResponse.data.activeDiff
-                    country.latest.newConfirmed = serverResponse.data.confirmedDiff
-                    country.latest.newDeaths = serverResponse.data.deathsDiff
-                    country.latest.newRecovered = serverResponse.data.recoveredDiff
-                    country.latest.totalConfirmed = serverResponse.data.confirmed
-                    country.latest.totalRecovered = serverResponse.data.recovered
-                    country.latest.totalDeaths = serverResponse.data.deaths
-                    
-                    completion(.success(country))
-                } else {
-                    let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
-                    completion(.failure(.invalidResponse(response: string)))
-                }
-            } else {
-                completion(.failure(.noResponse))
-            }
-        }.resume()
-    }
-    
-    func loadDetailedCountryData(for country: Country, at date: Date? = nil) {
-        loadDetailedCountryData(for: country.code, at: date)
-    }
-    
-    func loadDetailedCountryData(for countryCode: String, at date: Date? = nil) {
-        DispatchQueue.main.async {
-            self._loading = true
-        }
-        guard let country = self.countries.first(where: {$0.code == countryCode}) else { return }
-        country.code = countryCode // is this needed? Don't wanna search all this..
-        Self.getDetailedCountryData(for: country, at: date) { result in
-            switch result {
-            case .success(let country):
-                self.dataTasks.remove(.detailedCountryData(countryCode: countryCode, atDate: date))
-                DispatchQueue.main.async {
-                    if let idx = self.countries.firstIndex(of: country) {
-                        self.countries[idx] = country
-                    }
-                    self.error = nil
-                }
-            case .failure(let error):
-                self.handleError(error, task: .detailedCountryData(countryCode: countryCode, atDate: date))
             }
             DispatchQueue.main.async {
                 self._loading = false
@@ -311,8 +231,11 @@ class DataManager: ObservableObject {
                         completion(.failure(.noResponse))
                     } else {
                         for measurement in serverResponse.data {
+                            if measurement.region.iso.lowercased().starts(with: "de") {
+                                print("\(measurement.region.province): \(measurement.deaths) deaths, \(measurement.deathsDiff) new")
+                            }
                             if measurement.region.province != country.name && !measurement.region.province.isEmpty {
-                                let newMeasurement = ProvinceMeasurement(date: measurement.date, totalConfirmed: measurement.confirmed, newConfirmed: measurement.confirmedDiff, totalRecovered: measurement.deaths, newRecovered: measurement.deathsDiff, totalDeaths: measurement.recovered, newDeaths: measurement.recoveredDiff, active: measurement.active, newActive: measurement.activeDiff, caseFatalityRate: measurement.fatalityRate)
+                                let newMeasurement = measurement.toProvinceMeasurement()
                                 let province = Province(name: measurement.region.province, measurements: [newMeasurement])
                                 country.provinces.append(province)
                             }
@@ -420,8 +343,6 @@ class DataManager: ObservableObject {
                         self.loadSummary()
                     case .historyData(countryCode: let countryCode):
                         self.loadHistoryData(for: countryCode)
-                    case .detailedCountryData(countryCode: let countryCode, atDate: let date):
-                        self.loadDetailedCountryData(for: countryCode, at: date)
                     case .provinceData(countryCode: let countryCode):
                         self.loadProvinceData(for: countryCode)
                     }
@@ -474,7 +395,6 @@ class DataManager: ObservableObject {
     enum DataTask: Hashable {
         case summary
         case historyData(countryCode: String)
-        case detailedCountryData(countryCode: String, atDate: Date?)
         case provinceData(countryCode: String)
     }
 }

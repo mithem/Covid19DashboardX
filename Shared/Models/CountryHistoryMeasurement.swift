@@ -13,7 +13,7 @@ struct CountryHistoryMeasurement: Equatable, Hashable {
     var recovered: Int?
     var active: Int?
     var date: Date
-    var caseFatalityRate: Int?
+    var caseFatalityRate: Double?
     
     func metric(for basicMetric: BasicMeasurementMetric) -> Double {
         switch basicMetric {

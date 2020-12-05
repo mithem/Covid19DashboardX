@@ -18,4 +18,8 @@ struct DetailedCountryMeasurementForDecodingOnly: Decodable {
     let active: Int
     let activeDiff: Int
     let fatalityRate: Double
+    
+    func toCountrySummaryMeasurement() -> CountrySummaryMeasurement {
+        return .init(date: date, totalConfirmed: confirmed, newConfirmed: confirmedDiff, totalDeaths: deaths, newDeaths: deathsDiff, totalRecovered: recovered, newRecovered: recoveredDiff, active: active, newActive: activeDiff, caseFatalityRate: fatalityRate)
+    }
 }

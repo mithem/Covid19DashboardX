@@ -20,8 +20,10 @@ struct SummaryView: View {
     
     @AppStorage(UserDefaultsKeys.activeMetric) var activeMetric = DefaultSettings.measurementMetric
     @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = DefaultSettings.colorNumbers
-    @AppStorage(UserDefaultsKeys.colorThresholdForPercentages) var colorTreshold = DefaultSettings.colorTresholdForPercentages
-    @AppStorage(UserDefaultsKeys.colorGrayAreaForPercentages) var colorGrayArea = DefaultSettings.colorGrayAreaForPercentages
+    @AppStorage(UserDefaultsKeys.colorThresholdForPercentages) var colorPercentagesTreshold = DefaultSettings.colorTresholdForPercentages
+    @AppStorage(UserDefaultsKeys.colorGrayAreaForPercentages) var colorPercentagesGrayArea = DefaultSettings.colorGrayAreaForPercentages
+    @AppStorage(UserDefaultsKeys.colorTresholdForDeltas) var colorDeltaTreshold = DefaultSettings.colorTresholdForDeltas
+    @AppStorage(UserDefaultsKeys.colorGrayAreaForDeltas) var colorDeltaGrayArea = DefaultSettings.colorGrayAreaForDeltas
     
     init() {
         self.manager = DataManager()
@@ -129,11 +131,11 @@ struct SummaryView: View {
                 List {
                     BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
                     SearchBar(searchTerm: $searchTerm)
-                    Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: false) ?? Text(Constants.notAvailableString))
+                    Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorPercentagesTreshold, colorDeltaGrayArea: colorPercentagesGrayArea, reversed: false) ?? Text(Constants.notAvailableString))
                     ForEach(manager.countries.filter { c in
                         c.isIncluded(lowercasedSearchTerm)
                     }, id: \.code) { country in
-                        CountryInlineView(country: country, colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, activeMetric: $activeMetric, manager: manager)
+                        CountryInlineView(country: country, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, activeMetric: $activeMetric, manager: manager)
                             .contextMenu {
                                 Button(action: {
                                     manager.loadSummary()

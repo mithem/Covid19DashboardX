@@ -9,4 +9,8 @@ import Foundation
 
 struct DetailedCountryMeasurementResponse: Decodable {
     let data: DetailedCountryMeasurementForDecodingOnly
+    
+    func toCountrySummaryMeasurement() -> CountrySummaryMeasurement {
+        return data.toCountrySummaryMeasurement()
+    }
 }

@@ -11,10 +11,10 @@ struct GeneralSettingsView: View {
     @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = DefaultSettings.colorNumbers
     @AppStorage(UserDefaultsKeys.maximumN) var maximumN = DefaultSettings.maximumN
     @AppStorage(UserDefaultsKeys.ignoreLowDataMode) var ignoreLowDataMode = DefaultSettings.ignoreLowDataMode
-    @AppStorage(UserDefaultsKeys.colorThresholdForPercentages) var colorTreshold = DefaultSettings.colorTresholdForPercentages
-    @AppStorage(UserDefaultsKeys.colorGrayAreaForPercentages) var colorGrayArea = DefaultSettings.colorGrayAreaForPercentages
-    @AppStorage(UserDefaultsKeys.absoluteNumbersDeltaTresholdProportion) var absoluteNumbersDeltaTresholdProportion = DefaultSettings.absoluteNumbersDeltaTresholdProportion
-    @AppStorage(UserDefaultsKeys.absoluteNumbersDeltaGrayAreaProportion) var absoluteNumbersDeltaGrayAreaProportion = DefaultSettings.absoluteNumbersDeltaGrayAreaProportion
+    @AppStorage(UserDefaultsKeys.colorThresholdForPercentages) var colorPercentagesTreshold = DefaultSettings.colorTresholdForPercentages
+    @AppStorage(UserDefaultsKeys.colorGrayAreaForPercentages) var colorPercentagesGrayArea = DefaultSettings.colorGrayAreaForPercentages
+    @AppStorage(UserDefaultsKeys.colorTresholdForDeltas) var colorDeltaTreshold = DefaultSettings.colorTresholdForDeltas
+    @AppStorage(UserDefaultsKeys.colorGrayAreaForDeltas) var colorDeltaGrayArea = DefaultSettings.colorGrayAreaForDeltas
     
     let percentageFormatter = PercentageFormatter()
     
@@ -30,15 +30,15 @@ struct GeneralSettingsView: View {
                 Toggle("Ignore low data mode", isOn: $ignoreLowDataMode)
             }
             Section {
-                Stepper("CFR color treshold: \(percent(colorTreshold))", value: $colorTreshold, in: 0...0.5, step: 0.0025)
-                Stepper("CFR color gray area: \(percent(colorGrayArea))", value: $colorGrayArea, in: 0...0.25, step: 0.00125)
-                Text("CFRs of \(percent(colorTreshold)) with an deviation of ±\(percent(colorGrayArea)) will be displayed gray, above red, below green.")
+                Stepper("CFR color treshold: \(percent(colorPercentagesTreshold))", value: $colorPercentagesTreshold, in: 0...0.5, step: 0.001)
+                Stepper("CFR color gray area: \(percent(colorPercentagesGrayArea))", value: $colorPercentagesGrayArea, in: 0...0.25, step: 0.0005)
+                Text("CFRs of \(percent(colorPercentagesTreshold)) with an deviation of ±\(percent(colorPercentagesGrayArea)) will be displayed gray, above red, below green.")
                     .foregroundColor(.secondary)
             }
             Section {
-                Stepper("New cases proportion color treshold: \(percent(absoluteNumbersDeltaTresholdProportion))", value: $absoluteNumbersDeltaTresholdProportion, in: 0...0.75, step: 0.0025)
-                Stepper("New cases proportion gray area: \(percent(absoluteNumbersDeltaGrayAreaProportion))", value: $absoluteNumbersDeltaGrayAreaProportion, in: 0...0.375, step: 0.00125)
-                Text("When the ratio of new cases to total ones (confirmed, recovered, etc.) exceeds \(percent(absoluteNumbersDeltaTresholdProportion)), ±\(percent(absoluteNumbersDeltaGrayAreaProportion)), it will be displayed green or red, respectively.")
+                Stepper("New cases proportion color treshold: \(percent(colorDeltaTreshold))", value: $colorDeltaTreshold, in: 0...0.75, step: 0.001)
+                Stepper("New cases proportion gray area: \(percent(colorDeltaGrayArea))", value: $colorDeltaGrayArea, in: 0...0.375, step: 0.0005)
+                Text("When the ratio of new cases to total ones (confirmed, recovered, etc.) exceeds \(percent(colorDeltaTreshold)), ±\(percent(colorDeltaGrayArea)), it will be displayed green or red, respectively.")
                     .foregroundColor(.secondary)
             }
         }

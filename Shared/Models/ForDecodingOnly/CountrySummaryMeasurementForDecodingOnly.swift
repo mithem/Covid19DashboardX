@@ -39,4 +39,8 @@ struct CountrySummaryMeasurementForDecodingOnly: Decodable, Identifiable {
         self.newActive = newActive
         self.caseFatalityRate = caseFatalityRate
     }
+    
+    func toCountrySummaryMeasurement() -> CountrySummaryMeasurement {
+        return .init(date: date, totalConfirmed: totalConfirmed, newConfirmed: newConfirmed, totalDeaths: totalDeaths, newDeaths: newDeaths, totalRecovered: totalRecovered, newRecovered: newRecovered, active: active, newActive: newActive, caseFatalityRate: caseFatalityRate)
+    }
 }

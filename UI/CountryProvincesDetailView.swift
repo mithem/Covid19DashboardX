@@ -13,8 +13,10 @@ struct CountryProvincesDetailView: View {
     
     @AppStorage(UserDefaultsKeys.provinceMetric) var activeMetric = DefaultSettings.provinceMetric
     @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = DefaultSettings.colorNumbers
-    @AppStorage(UserDefaultsKeys.colorThresholdForPercentages) var colorTreshold = DefaultSettings.colorTresholdForPercentages
-    @AppStorage(UserDefaultsKeys.colorGrayAreaForPercentages) var colorGrayArea = DefaultSettings.colorGrayAreaForPercentages
+    @AppStorage(UserDefaultsKeys.colorTresholdForDeltas) var colorDeltaTreshold = DefaultSettings.colorTresholdForDeltas
+    @AppStorage(UserDefaultsKeys.colorGrayAreaForDeltas) var colorDeltaGrayArea = DefaultSettings.colorGrayAreaForDeltas
+    @AppStorage(UserDefaultsKeys.colorThresholdForPercentages) var colorPercentagesTreshold = DefaultSettings.colorTresholdForPercentages
+    @AppStorage(UserDefaultsKeys.colorGrayAreaForPercentages) var colorPercentagesGrayArea = DefaultSettings.colorGrayAreaForPercentages
     
     @State private var searchTerm = ""
     @State private var lowercasedSearchTerm = ""
@@ -25,7 +27,7 @@ struct CountryProvincesDetailView: View {
                 if country.provinces.count > 0 {
                     SearchBar(searchTerm: $searchTerm)
                 }
-                Text("Total: \(country.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: false))")
+                Text("Total: \(country.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, colorPercentagesTreshold: colorPercentagesTreshold, colorPercentagesGrayArea: colorPercentagesGrayArea, reversed: false))")
                 if let error = manager.error {
                     if error == .constrainedNetwork {
                         Text("Low data mode")
@@ -61,7 +63,7 @@ struct CountryProvincesDetailView: View {
     
     var ProvincesList: some View {
         ForEach(country.provinces.filter { $0.isIncluded(lowercasedSearchTerm) }) { province in
-            ProvinceInlineView(province: province, colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, activeMetric: activeMetric, manager: manager)
+            ProvinceInlineView(province: province, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, colorPercentagesTreshold: colorPercentagesTreshold, colorPercentagesGrayArea: colorDeltaGrayArea, activeMetric: activeMetric, manager: manager)
                 .contextMenu {
                     Button(action: {
                         manager.loadProvinceData(for: country)

@@ -56,16 +56,4 @@ class MockDataManagerTests: XCTestCase {
             XCTAssertEqual(result, .failure(.constrainedNetwork))
         }
     }
-    
-    func testGetDetailedCountryData() {
-        MDM.forceError = nil
-        MDM.getDetailedCountryData(for: MockData.countries[0], at: Date()) { result in
-            XCTAssertEqual(result, .success(MockData.countries[0]))
-        }
-        
-        MDM.forceError = NetworkError.invalidResponse(response: "Hello, world!")
-        MDM.getDetailedCountryData(for: MockData.countries[0], at: Date()) { result in
-            XCTAssertEqual(result, .failure(.invalidResponse(response: "Hello, world!")))
-        }
-    }
 }

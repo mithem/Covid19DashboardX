@@ -20,4 +20,8 @@ struct CountryHistoryMeasurementForDecodingOnly: Decodable {
     var countryCode: String
     var lat: String
     var lon: String
+    
+    func toCountryHistoryMeasurement() -> CountryHistoryMeasurement {
+        return .init(confirmed: confirmed ?? 0, deaths: deaths, recovered: recovered, active: active, date: date, caseFatalityRate: caseFatalityRate)
+    }
 }

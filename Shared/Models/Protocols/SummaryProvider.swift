@@ -20,28 +20,28 @@ protocol SummaryProvider {
     
     func newSummaryElement(total: Int, new: Int, colorTreshold: Double, colorGrayArea: Double) -> Text
     
-    func confirmedSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
-    func deathsSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
-    func recoveredSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
-    func activeSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
-    func cfrSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
+    func confirmedSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
+    func deathsSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
+    func recoveredSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
+    func activeSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
+    func cfrSummary(colorNumbers: Bool, colorPercentagesTreshold: Double, colorPercentagesGrayArea: Double, reversed: Bool) -> Text
     
     func confirmedSummary() -> String
     func deathsSummary() -> String
     func recoveredSummary() -> String
     func activeSummary() -> String
     
-    func summary(total: Int?, new: Int?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
-    func summary(total: Int, new: Int?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
-    func summary(percentage: Double?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
-    func summary(double: Double?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
+    func summary(total: Int?, new: Int?, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
+    func summary(total: Int, new: Int?, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
+    func summary(percentage: Double?, colorPercentagesTreshold: Double, colorPercentagesGrayArea: Double, reversed: Bool) -> Text
+    func summary(double: Double?) -> Text
     
     func summary(total: Int, new: Int?) -> String
     func summary(total: Int?, new: Int?) -> String
     func summary(double: Double?) -> String
     
-    func summaryFor(metric: BasicMeasurementMetric, colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
-    func summaryFor(metric: Province.SummaryMetric, colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text
+    func summaryFor(metric: BasicMeasurementMetric, colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
+    func summaryFor(metric: Province.SummaryMetric, colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, colorPercentagesTreshold: Double, colorPercentagesGrayArea: Double, reversed: Bool) -> Text
     func summaryFor(metric: BasicMeasurementMetric) -> String
 }
 
@@ -87,7 +87,7 @@ extension SummaryProvider {
     }
     
     
-    func summary(total: Int, new: Int?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
+    func summary(total: Int, new: Int?, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
         let colorNumbers = UserDefaults().bool(forKey: UserDefaultsKeys.colorNumbers)
         let numberFormatter = NumberFormatter()
         numberFormatter.usesGroupingSeparator = true
@@ -96,10 +96,10 @@ extension SummaryProvider {
         if let new = new {
             let ratio = Double(new) / Double(total)
             let t1 = Text("\(numberFormatter.string(from: NSNumber(value: total)) ?? Constants.notAvailableString) (")
-            let t2 = newSummaryElement(new: new, ratio: ratio, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea)
+            let t2 = newSummaryElement(new: new, ratio: ratio, colorTreshold: colorDeltaTreshold, colorGrayArea: colorDeltaGrayArea)
             let t3 = Text(")")
             if colorNumbers {
-                let color = getColor(ratio: ratio, treshold: colorTreshold, grayArea: colorGrayArea)
+                let color = getColor(ratio: ratio, treshold: colorDeltaTreshold, grayArea: colorDeltaGrayArea)
                 return t1 + t2.foregroundColor(reversedColor(color, reversed: reversed)) + t3
             }
             
@@ -109,22 +109,21 @@ extension SummaryProvider {
         }
     }
     
-    func summary(total: Int?, new: Int?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
+    func summary(total: Int?, new: Int?, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
         guard let toTal = total else { return Text(Constants.notAvailableString) }
-        return summary(total: toTal, new: new, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+        return summary(total: toTal, new: new, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
     }
     
-    func summary(percentage: Double?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
+    func summary(percentage: Double?, colorPercentagesTreshold: Double, colorPercentagesGrayArea: Double, reversed: Bool) -> Text {
         guard let perCent = percentage else { return Text(Constants.notAvailableString) }
         let perCentString = PercentageFormatter().string(from: NSNumber(value: perCent)) ?? Constants.notAvailableString
         let text = Text(perCentString)
-        let color = getColor(ratio: perCent, treshold: colorTreshold, grayArea: colorGrayArea)
+        let color = getColor(ratio: perCent, treshold: colorPercentagesTreshold, grayArea: colorPercentagesGrayArea)
         
         return text.foregroundColor(reversedColor(color, reversed: reversed))
     }
     
-    func summary(double: Double?, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
-        // TODO: Implement summary of Double/R; Add configuration options for coloring
+    func summary(double: Double?) -> Text {
         guard let d = double else { return Text(Constants.notAvailableString) }
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -162,20 +161,20 @@ extension SummaryProvider {
         return formatter.string(from: NSNumber(value: d)) ?? Constants.notAvailableString
     }
     
-    func confirmedSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
-        return summary(total: totalConfirmed, new: newConfirmed, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+    func confirmedSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
+        return summary(total: totalConfirmed, new: newConfirmed, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
     }
-    func deathsSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
-        return summary(total: totalDeaths, new: newDeaths, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+    func deathsSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
+        return summary(total: totalDeaths, new: newDeaths, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
     }
-    func recoveredSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
-        return summary(total: totalRecovered, new: newRecovered, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+    func recoveredSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
+        return summary(total: totalRecovered, new: newRecovered, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
     }
-    func activeSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
-        return summary(total: activeCases, new: nil, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+    func activeSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
+        return summary(total: activeCases, new: nil, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
     }
-    func cfrSummary(colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
-        return summary(percentage: caseFatalityRate, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+    func cfrSummary(colorNumbers: Bool, colorPercentagesTreshold: Double, colorPercentagesGrayArea: Double, reversed: Bool) -> Text {
+        return summary(percentage: caseFatalityRate, colorPercentagesTreshold: colorPercentagesTreshold, colorPercentagesGrayArea: colorPercentagesGrayArea, reversed: reversed)
     }
     
     func confirmedSummary() -> String {
@@ -194,31 +193,31 @@ extension SummaryProvider {
         return summary(total: activeCases, new: nil)
     }
     
-    func summaryFor(metric: BasicMeasurementMetric, colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
+    func summaryFor(metric: BasicMeasurementMetric, colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
         switch metric {
         case .confirmed:
-            return confirmedSummary(colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+            return confirmedSummary(colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
         case .deaths:
-            return deathsSummary(colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+            return deathsSummary(colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
         case .recovered:
-            return recoveredSummary(colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+            return recoveredSummary(colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
         case .active:
-            return activeSummary(colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+            return activeSummary(colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
         }
     }
     
-    func summaryFor(metric: Province.SummaryMetric, colorNumbers: Bool, colorTreshold: Double, colorGrayArea: Double, reversed: Bool) -> Text {
+    func summaryFor(metric: Province.SummaryMetric, colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, colorPercentagesTreshold: Double, colorPercentagesGrayArea: Double, reversed: Bool) -> Text {
         switch metric {
         case .confirmed:
-            return confirmedSummary(colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+            return confirmedSummary(colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
         case .recovered:
-            return recoveredSummary(colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+            return recoveredSummary(colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
         case .deaths:
-            return deathsSummary(colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+            return deathsSummary(colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
         case .active:
-            return activeSummary(colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+            return activeSummary(colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
         case .caseFatalityRate:
-            return cfrSummary(colorNumbers: colorNumbers, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea, reversed: reversed)
+            return cfrSummary(colorNumbers: colorNumbers, colorPercentagesTreshold: colorPercentagesTreshold, colorPercentagesGrayArea: colorPercentagesGrayArea, reversed: reversed)
         }
     }
     
