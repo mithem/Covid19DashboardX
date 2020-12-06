@@ -1,5 +1,5 @@
 //
-//  ProvinceDetailView.swift
+//  SummaryProviderDetailView.swift
 //  Covid19DashboardX (iOS)
 //
 //  Created by Miguel Themann on 23.10.20.
@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct ProvinceDetailView: View {
-    let province: Province
+struct SummaryProviderDetailView: View {
+    let provider: SummaryProvider
     let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     var body: some View {
         LazyVGrid(columns: columns) {
             ForEach(MeasurementMetric.allCases) { metric in
-                Card(metric: metric, value: province.value(for: metric))
+                Card(metric: metric, value: provider.value(for: metric))
             }
         }
-        .navigationTitle(province.name)
+        .navigationTitle(provider.description)
     }
 }
 
@@ -37,13 +37,12 @@ fileprivate struct Card: View {
                         .foregroundColor(foregroundColor)
                     Spacer()
                 }
-                .padding(5)
-                Spacer()
+                .padding(.horizontal, 5)
+                Text(value)
+                    .foregroundColor(foregroundColor)
+                    .font(.title)
+                    .bold()
             }
-            Text(value)
-                .foregroundColor(foregroundColor)
-                .font(.title)
-                .bold()
         }
         .frame(width: 150, height: 80)
     }
@@ -85,9 +84,9 @@ struct Card_Previews: PreviewProvider {
     }
 }
 
-struct ProvinceDetailView_Previews: PreviewProvider {
+struct SummaryProviderDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ProvinceDetailView(province: MockData.countries[0].provinces[0])
+        SummaryProviderDetailView(provider: MockData.countries[0].provinces[0])
             
     }
 }

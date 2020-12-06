@@ -16,8 +16,10 @@ struct GlobalMeasurement: Equatable, SummaryProvider {
     let totalRecovered: Int
     let newRecovered: Int
     let active: Int
-    let newActive: Int
+    let newActive: Int?
     let caseFatalityRate: Double?
+    
+    let description = "Global"
     
     var activeCases: Int? { active }
 }

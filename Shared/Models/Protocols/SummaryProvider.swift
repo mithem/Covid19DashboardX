@@ -16,7 +16,11 @@ protocol SummaryProvider {
     var totalRecovered: Int { get }
     var newRecovered: Int { get }
     var activeCases: Int? { get }
+    var newActive: Int? { get }
     var caseFatalityRate: Double? { get }
+    
+    /// Used to display in SummaryProviderDetailView
+    var description: String { get }
     
     func newSummaryElement(total: Int, new: Int, colorTreshold: Double, colorGrayArea: Double) -> Text
     
@@ -43,6 +47,8 @@ protocol SummaryProvider {
     func summaryFor(metric: BasicMeasurementMetric, colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
     func summaryFor(metric: Province.SummaryMetric, colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, colorPercentagesTreshold: Double, colorPercentagesGrayArea: Double, reversed: Bool) -> Text
     func summaryFor(metric: BasicMeasurementMetric) -> String
+    
+    func value(for metric: MeasurementMetric) -> String
 }
 
 extension SummaryProvider {
@@ -68,6 +74,8 @@ extension SummaryProvider {
             return .gray
         }
     }
+    
+    var description: String { Constants.notAvailableString }
     
     func newSummaryElement(total: Int, new: Int, colorTreshold: Double, colorGrayArea: Double) -> Text {
         let ratio = Double(new) / Double(total)
@@ -235,5 +243,43 @@ extension SummaryProvider {
         }
         s += " \(metric.humanReadable)"
         return s
+    }
+    
+    func value(for metric: MeasurementMetric) -> String {
+        var v: Any
+        switch metric {
+        case .active:
+            v =  activeCases as Any
+        case .newActive:
+            v =  newActive as Any
+        case .totalConfirmed:
+            v =  totalConfirmed
+        case .newConfirmed:
+            v =  newConfirmed
+        case .totalRecovered:
+            v =  totalRecovered
+        case .newRecovered:
+            v =  newRecovered
+        case .totalDeaths:
+            v =  totalDeaths
+        case .newDeaths:
+            v =  newDeaths
+        case .caseFatalityRate:
+            v =  caseFatalityRate as Any
+        }
+        let formatter = NumberFormatter()
+        formatter.usesGroupingSeparator = true
+        if let v = v as? Int {
+            formatter.numberStyle = .scientific
+            formatter.maximumSignificantDigits = 5
+            return formatter.string(from: NSNumber(value: v)) ?? Constants.notAvailableString
+        } else if let v = v as? Double {
+            formatter.numberStyle = .percent
+            formatter.minimumFractionDigits = 2
+            formatter.maximumFractionDigits = 5
+            return formatter.string(from: NSNumber(value: v)) ?? Constants.notAvailableString
+        } else {
+            return Constants.notAvailableString
+        }
     }
 }

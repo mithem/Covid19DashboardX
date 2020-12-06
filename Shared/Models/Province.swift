@@ -23,45 +23,6 @@ struct Province: SummaryProvider, Equatable {
     
     var measurements: [ProvinceMeasurement]
     
-    func value(for metric: MeasurementMetric) -> String {
-        var v: Any
-        switch metric {
-        case .active:
-            v =  activeCases as Any
-        case .newActive:
-            v =  newActive as Any
-        case .totalConfirmed:
-            v =  totalConfirmed
-        case .newConfirmed:
-            v =  newConfirmed
-        case .totalRecovered:
-            v =  totalRecovered
-        case .newRecovered:
-            v =  newRecovered
-        case .totalDeaths:
-            v =  totalDeaths
-        case .newDeaths:
-            v =  newDeaths
-        case .caseFatalityRate:
-            v =  caseFatalityRate as Any
-        }
-        let formatter = NumberFormatter()
-        formatter.usesGroupingSeparator = true
-        if let v = v as? Int {
-            formatter.numberStyle = .decimal
-            return formatter.string(from: NSNumber(value: v)) ?? Constants.notAvailableString
-        } else if let v = v as? Double {
-            formatter.numberStyle = .percent
-            formatter.minimumFractionDigits = 2
-            formatter.maximumFractionDigits = 5
-            return formatter.string(from: NSNumber(value: v)) ?? Constants.notAvailableString
-        } else {
-            return Constants.notAvailableString
-        }
-    }
-    
-    
-    
     enum SummaryMetric: String, CaseIterable, Identifiable {
         var id: SummaryMetric { self }
         case confirmed, recovered, deaths, active, caseFatalityRate

@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct GlobalMeasurementForDecodingOnly: Decodable {
-    let date: Date
+struct GlobalMeasurementForDecodingOnly: Decodable, Equatable {
     let lastUpdate: Date
     let confirmed: Int
     let confirmedDiff: Int

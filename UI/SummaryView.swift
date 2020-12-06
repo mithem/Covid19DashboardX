@@ -30,7 +30,7 @@ struct SummaryView: View {
     }
     
     var actionSheetButtonsForSorting: [ActionSheet.Button] {
-        var buttons: [ActionSheet.Button] = [.default(Text("Refresh")) {manager.loadSummary()}, .default(Text("Country code"), action: {manager.sortBy = .countryCode}), .default(Text("Country name"), action: {manager.sortBy = .countryName})]
+        var buttons: [ActionSheet.Button] = [.default(Text("Refresh")) {manager.execute(task: .summary)}, .default(Text("Country code"), action: {manager.sortBy = .countryCode}), .default(Text("Country name"), action: {manager.sortBy = .countryName})]
         
         let confirmed: [ActionSheet.Button] = [.default(Text("Total confirmed"), action: {manager.sortBy = .totalConfirmed}), .default(Text("New confirmed"), action: {manager.sortBy = .newConfirmed})]
         let deaths: [ActionSheet.Button] = [.default(Text("Total deaths"), action: {manager.sortBy = .totalDeaths}), .default(Text("New deaths"), action: {manager.sortBy = .newDeaths})]
@@ -76,7 +76,6 @@ struct SummaryView: View {
                     VStack {
                         Text(error.localizedDescription)
                             .padding()
-                        //.onAppear(perform: handleNetworkErrors)
                     }
                 } else {
                     VStack {
@@ -121,63 +120,46 @@ struct SummaryView: View {
     
     var RefreshButton: some View {
         Button("Refresh") {
-            manager.loadSummary()
+            manager.execute(task: .summary)
         }
         .buttonStyle(CustomButtonStyle())
     }
     
     var CountriesView: some View {
-            VStack {
-                List {
-                    BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
-                    SearchBar(searchTerm: $searchTerm)
-                    Text("Global: ") + (manager.latestGlobal?.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorPercentagesTreshold, colorDeltaGrayArea: colorPercentagesGrayArea, reversed: false) ?? Text(Constants.notAvailableString))
-                    ForEach(manager.countries.filter { c in
-                        c.isIncluded(lowercasedSearchTerm)
-                    }, id: \.code) { country in
-                        CountryInlineView(country: country, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, activeMetric: $activeMetric, manager: manager)
-                            .contextMenu {
-                                Button(action: {
-                                    manager.loadSummary()
-                                }) {
-                                    Text("Refresh summaries")
-                                    Image(systemName: "arrow.clockwise")
-                                }
-                                Button(action: {
-                                    DispatchQueue.main.async {
-                                        manager.countries = []
-                                    }
-                                    manager.loadSummary()
-                                }) {
-                                    Text("Reset all data")
-                                    Image(systemName: "trash")
-                                }
-                            }
+        VStack {
+            List {
+                BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
+                SearchBar(searchTerm: $searchTerm)
+                if let latestGlobal = manager.latestGlobal {
+                    NavigationLink(destination: SummaryProviderDetailView(provider: latestGlobal)) {
+                        Text("Global: ") + (latestGlobal.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorPercentagesTreshold, colorDeltaGrayArea: colorPercentagesGrayArea, reversed: false))
                     }
+                    .modifier(AttachToRefreshContextMenu(manager: manager))
+                } else if manager.loading {
                     HStack {
-                        Spacer()
-                        Text("Stay safe ❤️")
-                            .foregroundColor(.secondary)
-                            .grayscale(0.35)
-                        Spacer()
-                    }
-                    .onTapGesture {
-                        UIApplication.shared.open(UsefulURLs.whoCovid19AdviceForPublic)
+                        Text("Global: loading…")
+                        ProgressView()
                     }
                 }
-                .listStyle(InsetGroupedListStyle())
-                .animation(.easeInOut)
+                ForEach(manager.countries.filter { c in
+                    c.isIncluded(lowercasedSearchTerm)
+                }, id: \.code) { country in
+                    CountryInlineView(country: country, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, activeMetric: $activeMetric, manager: manager)
+                        .modifier(AttachToRefreshContextMenu(manager: manager))
+                }
+                HStack {
+                    Spacer()
+                    Text("Stay safe ❤️")
+                        .foregroundColor(.secondary)
+                        .grayscale(0.35)
+                    Spacer()
+                }
+                .onTapGesture {
+                    UIApplication.shared.open(UsefulURLs.whoCovid19AdviceForPublic)
+                }
             }
-    }
-    
-    func handleNetworkErrors() {
-        if manager.countries.count == 0 {
-            switch manager.error {
-            case .urlError(_):
-                manager.loadSummary()
-            default:
-                break
-            }
+            .listStyle(InsetGroupedListStyle())
+            .animation(.easeInOut)
         }
     }
     
@@ -187,6 +169,30 @@ struct SummaryView: View {
         let center = UNUserNotificationCenter.current()
         center.removeDeliveredNotifications(withIdentifiers: identifiers) // Do not remove all for future-proofing
         ud.set([String](), forKey: UserDefaultsKeys.notificationIdentifiers)
+    }
+}
+
+fileprivate struct AttachToRefreshContextMenu: ViewModifier {
+    @ObservedObject var manager: DataManager
+    func body(content: Content) -> some View {
+        content
+            .contextMenu {
+                Button(action: {
+                    manager.execute(task: .summary)
+                }) {
+                    Text("Refresh summaries")
+                    Image(systemName: "arrow.clockwise")
+                }
+                Button(action: {
+                    DispatchQueue.main.async {
+                        manager.countries = []
+                    }
+                    manager.execute(task: .summary)
+                }) {
+                    Text("Reset all data")
+                    Image(systemName: "trash")
+                }
+            }
     }
 }
 

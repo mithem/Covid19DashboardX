@@ -124,8 +124,15 @@ class DataManager: ObservableObject {
             if let error = error {
                 completion(.failure(.init(error: error)))
             } else if let data = data {
-                let decoder = CovidDashApiDotComJSONDecoder()
-                let serverResponse = try? decoder.decode(GlobalMeasurementForDecodingOnly.self, from: data)
+                let decoder = GlobalMeasurementResponse.Decoder()
+                var serverResponse: GlobalMeasurementResponse?
+                
+                switch decoder.decode(from: data) {
+                case .success(let response):
+                    serverResponse = response
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
                 if let serverResponse = serverResponse {
                     completion(.success(serverResponse.toGlobalMeasurement()))
                 } else {
@@ -369,14 +376,7 @@ class DataManager: ObservableObject {
                     self.error = nil
                 }
                 for task in self.dataTasks {
-                    switch task {
-                    case .summary:
-                        self.loadSummary()
-                    case .historyData(countryCode: let countryCode):
-                        self.loadHistoryData(for: countryCode)
-                    case .provinceData(countryCode: let countryCode):
-                        self.loadProvinceData(for: countryCode)
-                    }
+                    self.execute(task: task)
                 }
             }
         }
@@ -392,7 +392,7 @@ class DataManager: ObservableObject {
                 self._loading = false
             }
         } else {
-            loadSummary()
+            execute(task: .summary)
         }
     }
     
@@ -422,6 +422,23 @@ class DataManager: ObservableObject {
     enum CountrySortingCriteria {
         case countryCode, countryName, totalConfirmed, newConfirmed, totalDeaths, newDeaths, totalRecovered, newRecovered, activeCases
     }
+    
+    
+    // MARK: Task management
+    
+    
+    func execute(task: DataTask) {
+        switch task {
+        case .summary:
+            self.loadGlobalSummary()
+            self.loadSummary()
+        case .historyData(countryCode: let countryCode):
+            self.loadHistoryData(for: countryCode)
+        case .provinceData(countryCode: let countryCode):
+            self.loadProvinceData(for: countryCode)
+        }
+    }
+    
     
     enum DataTask: Hashable {
         case summary
