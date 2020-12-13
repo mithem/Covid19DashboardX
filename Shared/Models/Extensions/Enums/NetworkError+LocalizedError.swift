@@ -20,6 +20,8 @@ extension NetworkError: LocalizedError {
             return "No network connection."
         case .constrainedNetwork:
             return "Low data mode is on."
+        case .cachingInProgress:
+            return "Serverside caching in progress. Please try again later."
         case .otherWith(error: let error):
             return error.localizedDescription
         case .other:

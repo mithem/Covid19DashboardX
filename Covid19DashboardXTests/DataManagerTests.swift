@@ -10,9 +10,10 @@ import XCTest
 class DataManagerTests: XCTestCase {
     typealias MDM = MockDataManager
     
-    func testParseSummary() {
-        MDM.getSummary { result in
-            switch MDM.parseSummary(result) {
+    func testParseSummarySuccess() {
+        MDM.forceError = nil
+        MDM.getSummary { data, error in
+            switch MDM.parseSummary(data, error) {
             case .success(let countries):
                 XCTAssertEqual(countries, MockData.countriesFromSummaryResponse)
             case .failure(let error):
@@ -21,7 +22,20 @@ class DataManagerTests: XCTestCase {
         }
     }
     
-    func testParseHistoryData() {
+    func testParseSummaryError() {
+        MDM.forceError = NetworkError.cachingInProgress
+        MDM.getSummary { data, error in
+            switch MDM.parseSummary(data, error) {
+            case .success(let countries):
+                XCTAssertNil(countries)
+            case .failure(let error):
+                XCTAssertEqual(error, .cachingInProgress)
+            }
+        }
+    }
+    
+    func testParseHistoryDataSuccess() {
+        MDM.forceError = nil
         MDM.getHistoryData(for: MockData.countries[0]) { result in
             switch MDM.parseHistoryData(result) {
             case .success(let country):

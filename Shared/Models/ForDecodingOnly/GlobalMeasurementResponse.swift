@@ -9,10 +9,8 @@ import Foundation
 
 struct GlobalMeasurementResponse: CustomDecodable, Equatable {
     
-    class Decoder: JSONDecoder, CustomJSONDecoder {
-        typealias T = GlobalMeasurementResponse
-        
-        override init() {
+    class Decoder: CustomJSONDecoder {
+        required init() {
             super.init()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "YYYY-mm-DD HH:mm:ss"

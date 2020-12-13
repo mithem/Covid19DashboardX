@@ -47,45 +47,53 @@ class DataManager: ObservableObject {
     // MARK: Summary data
     
     
-    class func getSummary(completion: @escaping (Result<SummaryResponse, NetworkError>) -> Void) {
+    class func getSummary(completion: @escaping (Data?, NetworkError?) -> Void) {
         guard let url = URL(string: "https://api.covid19api.com/summary") else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                if let error = error as? URLError {
-                    completion(.failure(.urlError(error)))
-                } else {
-                    completion(.failure(.otherWith(error: error)))
-                }
-            } else if let data = data {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromPascalCase
-                decoder.dateDecodingStrategy = .iso8601
-                let serverResponse = try? decoder.decode(SummaryResponse.self, from: data)
-                if let serverResponse = serverResponse {
-                    completion(.success(serverResponse))
-                } else {
-                    let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
-                    completion(.failure(.invalidResponse(response: string)))
-                }
-            } else {
-                completion(.failure(.noResponse))
-            }
+            completion(data, NetworkError(error: error))
         }.resume()
     }
     
-    class func parseSummary(_ data: Result<SummaryResponse, NetworkError>) -> Result<[Country], NetworkError> {
-        switch data {
-        case .success(let response):
-            var tempCountries = [Country]()
-            for country in response.countries {
-                let measurement = country.toCountrySummaryMeasurement()
-                
-                let newCountry = Country(code: country.countryCode, name: country.country, latest: measurement)
-                tempCountries.append(newCountry)
+    class func parseSummary(_ data: Data?, _ error: Error?) -> Result<[Country], NetworkError> {
+        if let error = error {
+            if let error = error as? URLError {
+                return .failure(.urlError(error))
+            } else {
+                return .failure(.otherWith(error: error))
             }
-            return .success(tempCountries)
-        case .failure(let error):
-            return .failure(error)
+        } else if let data = data {
+            let result = SummaryResponse.decode(from: data)
+            switch result {
+            case .failure(let error):
+                switch error {
+                case .decodingError(_):
+                    let result2 = ServerCachingInProgressResponse.decode(from: data)
+                    switch result2 {
+                    case .success(let response):
+                        if response.message.lowercased() == "caching in progress" {
+                            return .failure(.cachingInProgress)
+                        } else {
+                            let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
+                            return .failure(.invalidResponse(response: string))
+                        }
+                    case .failure(let error):
+                        return .failure(.init(error: error))
+                    }
+                default:
+                    return .failure(NetworkError(error: error))
+                }
+            case .success(let response):
+                var tempCountries = [Country]()
+                for country in response.countries {
+                    let measurement = country.toCountrySummaryMeasurement()
+                    
+                    let newCountry = Country(code: country.countryCode, name: country.country, latest: measurement)
+                    tempCountries.append(newCountry)
+                }
+                return .success(tempCountries)
+            }
+        } else {
+            return .failure(.noResponse)
         }
     }
     
@@ -93,8 +101,8 @@ class DataManager: ObservableObject {
         DispatchQueue.main.async {
             self._loading = true
         }
-        Self.getSummary { result in
-            switch Self.parseSummary(result) {
+        Self.getSummary { data, error in
+            switch Self.parseSummary(data, error) {
             case .success(let countries):
                 self.dataTasks.remove(.summary)
                 DispatchQueue.global().async {
@@ -124,21 +132,8 @@ class DataManager: ObservableObject {
             if let error = error {
                 completion(.failure(.init(error: error)))
             } else if let data = data {
-                let decoder = GlobalMeasurementResponse.Decoder()
-                var serverResponse: GlobalMeasurementResponse?
-                
-                switch decoder.decode(from: data) {
-                case .success(let response):
-                    serverResponse = response
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-                if let serverResponse = serverResponse {
-                    completion(.success(serverResponse.toGlobalMeasurement()))
-                } else {
-                    let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
-                    completion(.failure(.invalidResponse(response: string)))
-                }
+                /// That's what I call _dense_
+                completion(GlobalMeasurementResponse.decode(from: data).map {$0.toGlobalMeasurement()}.mapError {NetworkError(error: $0)})
             } else {
                 completion(.failure(.noResponse))
             }
@@ -181,16 +176,7 @@ class DataManager: ObservableObject {
             if let error = error {
                 completion(.failure(.init(error: error)))
             } else if let data = data {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromPascalCase
-                decoder.dateDecodingStrategy = .iso8601
-                let serverResponse = try? decoder.decode([CountryHistoryMeasurementForDecodingOnly].self, from: data)
-                if let serverResponse = serverResponse {
-                    completion(.success((country, serverResponse)))
-                } else {
-                    let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
-                    completion(.failure(.invalidResponse(response: string)))
-                }
+                completion([CountryHistoryMeasurementForDecodingOnly].decode(from: data).map {(country, $0)}.mapError {NetworkError(error: $0)})
             } else {
                 completion(.failure(.noResponse))
             }
@@ -243,7 +229,7 @@ class DataManager: ObservableObject {
     // MARK: Province data
     
     
-    class func getProvinceData(for country: Country, at date: Date? = nil, completion: @escaping GetCountryDataCompletionHandler) {
+    class func getProvinceData(for country: Country, at date: Date? = nil, completion: @escaping (Result<CountryProvincesResponse, NetworkError>) -> Void) {
         let code = Constants.alpha2_to_alpha3_countryCodes[country.code] as? String ?? country.code
         var components = URLComponents()
         components.scheme = "https"
@@ -262,32 +248,35 @@ class DataManager: ObservableObject {
             if let error = error {
                 completion(.failure(.init(error: error)))
             } else if let data = data {
-                let decoder = CovidDashApiDotComJSONDecoder()
-                let serverResponse = try? decoder.decode(CountryProvincesResponse.self, from: data)
-                if let serverResponse = serverResponse {
-                    if serverResponse.data.isEmpty {
-                        completion(.failure(.noResponse))
-                    } else {
-                        for measurement in serverResponse.data {
-                            if measurement.region.iso.lowercased().starts(with: "de") {
-                                print("\(measurement.region.province): \(measurement.deaths) deaths, \(measurement.deathsDiff) new")
-                            }
-                            if measurement.region.province != country.name && !measurement.region.province.isEmpty {
-                                let newMeasurement = measurement.toProvinceMeasurement()
-                                let province = Province(name: measurement.region.province, measurements: [newMeasurement])
-                                country.provinces.append(province)
-                            }
-                        }
-                        completion(.success(country))
-                    }
-                } else {
-                    let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
-                    completion(.failure(.invalidResponse(response: string)))
-                }
+                completion(CountryProvincesResponse.decode(from: data).mapError {NetworkError(error: $0)})
             } else {
                 completion(.failure(.noResponse))
             }
         }.resume()
+    }
+    
+    class func parseProvinceData(_ data: Result<CountryProvincesResponse, NetworkError>, country: Country) -> CountryDataResult {
+        switch data {
+        case .success(let response):
+            if response.data.isEmpty {
+                return .failure(.noResponse)
+            } else {
+                for measurement in response.data {
+                    if measurement.region.iso.lowercased().starts(with: "de") {
+                        print("\(measurement.region.province): \(measurement.deaths) deaths, \(measurement.deathsDiff) new")
+                    }
+                    if measurement.region.province != country.name && !measurement.region.province.isEmpty {
+                        let newMeasurement = measurement.toProvinceMeasurement()
+                        let province = Province(name: measurement.region.province, measurements: [newMeasurement])
+                        country.provinces.append(province)
+                    }
+                }
+                return .success(country)
+            }
+        case .failure(let error):
+            return .failure(error)
+        }
+        
     }
     
     func loadProvinceData(for country: Country) {
@@ -301,7 +290,7 @@ class DataManager: ObservableObject {
         guard let country = self.countries.first(where: {$0.code == countryCode}) else { return }
         country.code = countryCode // is this needed? Don't wanna search all this..
         DataManager.getProvinceData(for: country) { result in
-            switch result {
+            switch Self.parseProvinceData(result, country: country) {
             case .success(let country):
                 self.dataTasks.remove(.provinceData(countryCode: countryCode))
                 DispatchQueue.main.async {

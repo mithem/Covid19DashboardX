@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CountrySummaryMeasurementForDecodingOnly: Decodable, Identifiable {
+struct CountrySummaryMeasurementForDecodingOnly: Codable, Identifiable {
     
     var id: String { countryCode }
     let country: String

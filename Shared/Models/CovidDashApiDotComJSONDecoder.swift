@@ -7,8 +7,8 @@
 
 import Foundation
 
-class CovidDashApiDotComJSONDecoder: JSONDecoder {
-    override init() {
+class CovidDashApiDotComJSONDecoder: CustomJSONDecoder {
+    required init() {
         super.init()
         let formatter = DateFormatter()
         formatter.dateFormat = Constants.covidDashApiDotComDateFormat

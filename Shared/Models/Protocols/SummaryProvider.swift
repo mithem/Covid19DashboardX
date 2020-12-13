@@ -35,8 +35,8 @@ protocol SummaryProvider {
     func recoveredSummary() -> String
     func activeSummary() -> String
     
-    func summary(total: Int?, new: Int?, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
-    func summary(total: Int, new: Int?, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
+    func summary(total: Int?, new: Int?, colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
+    func summary(total: Int, new: Int?, colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
     func summary(percentage: Double?, colorPercentagesTreshold: Double, colorPercentagesGrayArea: Double, reversed: Bool) -> Text
     func summary(double: Double?) -> Text
     
@@ -95,8 +95,7 @@ extension SummaryProvider {
     }
     
     
-    func summary(total: Int, new: Int?, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
-        let colorNumbers = UserDefaults().bool(forKey: UserDefaultsKeys.colorNumbers)
+    func summary(total: Int, new: Int?, colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
         let numberFormatter = NumberFormatter()
         numberFormatter.usesGroupingSeparator = true
         numberFormatter.numberStyle = .decimal
@@ -117,9 +116,9 @@ extension SummaryProvider {
         }
     }
     
-    func summary(total: Int?, new: Int?, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
+    func summary(total: Int?, new: Int?, colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
         guard let toTal = total else { return Text(Constants.notAvailableString) }
-        return summary(total: toTal, new: new, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
+        return summary(total: toTal, new: new, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
     }
     
     func summary(percentage: Double?, colorPercentagesTreshold: Double, colorPercentagesGrayArea: Double, reversed: Bool) -> Text {
@@ -170,16 +169,16 @@ extension SummaryProvider {
     }
     
     func confirmedSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
-        return summary(total: totalConfirmed, new: newConfirmed, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
+        return summary(total: totalConfirmed, new: newConfirmed, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
     }
     func deathsSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
-        return summary(total: totalDeaths, new: newDeaths, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
+        return summary(total: totalDeaths, new: newDeaths,colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
     }
     func recoveredSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
-        return summary(total: totalRecovered, new: newRecovered, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
+        return summary(total: totalRecovered, new: newRecovered, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
     }
     func activeSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text {
-        return summary(total: activeCases, new: nil, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
+        return summary(total: activeCases, new: nil, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, reversed: reversed)
     }
     func cfrSummary(colorNumbers: Bool, colorPercentagesTreshold: Double, colorPercentagesGrayArea: Double, reversed: Bool) -> Text {
         return summary(percentage: caseFatalityRate, colorPercentagesTreshold: colorPercentagesTreshold, colorPercentagesGrayArea: colorPercentagesGrayArea, reversed: reversed)

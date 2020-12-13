@@ -13,13 +13,21 @@ class MockDataManagerTests: XCTestCase {
     
     func testGetSummary() {
         MDM.forceError = nil
-        MDM.getSummary { result in
-            XCTAssertEqual(result, .success(MockData.summaryResponse))
+        MDM.getSummary { data, error in
+            XCTAssertEqual(data, MockData.summaryResponse.encode())
+            XCTAssertNil(error)
         }
         
         MDM.forceError = NetworkError.noNetworkConnection
-        MDM.getSummary { result in
-            XCTAssertEqual(result, .failure(.noNetworkConnection))
+        MDM.getSummary { data, error in
+            XCTAssertEqual(error, .noNetworkConnection)
+            XCTAssertNil(data)
+        }
+        
+        MDM.forceError = NetworkError.cachingInProgress
+        MDM.getSummary { data, error in
+            XCTAssertEqual(data, ServerCachingInProgressResponse().encode())
+            XCTAssertNil(error)
         }
     }
     
@@ -48,7 +56,7 @@ class MockDataManagerTests: XCTestCase {
     func testGetProvinceData() {
         MDM.forceError = nil
         MDM.getProvinceData(for: MockData.countries[0]) { result in
-            XCTAssertEqual(result, .success(MockData.countries[0]))
+            XCTAssertEqual(result, .success(MockData.countryProvincesResponse))
         }
         
         MDM.forceError = NetworkError.constrainedNetwork

@@ -7,16 +7,8 @@
 
 import Foundation
 
-enum CustomDecodableError: Error, LocalizedError {
+enum CustomDecodableError: Error {
     case noData
+    case decodingError(_ error: DecodingError)
     case other(_ error: Error)
-    
-    var localizedDescription: String {
-        switch self {
-        case .noData:
-            return "No data."
-        case .other(let error):
-            return error.localizedDescription
-        }
-    }
 }

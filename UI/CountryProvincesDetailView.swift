@@ -26,8 +26,19 @@ struct CountryProvincesDetailView: View {
             List {
                 if country.provinces.count > 0 {
                     SearchBar(searchTerm: $searchTerm)
+                        .onChange(of: searchTerm) { value in
+                            lowercasedSearchTerm = value.lowercased()
+                        }
                 }
                 Text("Total: \(country.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, colorPercentagesTreshold: colorPercentagesTreshold, colorPercentagesGrayArea: colorPercentagesGrayArea, reversed: false))")
+                if manager.loading {
+                    HStack(spacing: 10) {
+                        ProgressView()
+                        Text("Loading…")
+                    }
+                } else if country.provinces.isEmpty {
+                    Text("For this country, there isn't province data available.")
+                }
                 if let error = manager.error {
                     if error == .constrainedNetwork {
                         Text("Low data mode")
@@ -42,20 +53,9 @@ struct CountryProvincesDetailView: View {
                     }
                 } else {
                     ProvincesList
-                    if manager.loading {
-                        HStack(spacing: 10) {
-                            ProgressView()
-                            Text("Loading…")
-                        }
-                    } else if country.provinces.isEmpty {
-                        Text("For this country, there isn't province data available.")
-                    }
                 }
             }
             .animation(.easeInOut)
-            .onChange(of: searchTerm) { value in
-                lowercasedSearchTerm = value.lowercased()
-            }
         }
         .padding()
         .navigationTitle("Details: \(country.name.localizedCapitalized)")

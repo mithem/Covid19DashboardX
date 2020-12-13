@@ -7,7 +7,22 @@
 
 import Foundation
 
-struct SummaryResponse: Decodable, Equatable {
+struct SummaryResponse: CustomCodable, Equatable {
+    class Decoder: CustomJSONDecoder {
+        required init() {
+            super.init()
+            keyDecodingStrategy = .convertFromPascalCase
+            dateDecodingStrategy = .iso8601
+        }
+    }
+    class Encoder: CustomJSONEncoder {
+        required init() {
+            super.init()
+            keyEncodingStrategy = .convertToPascalCase
+            dateEncodingStrategy = .iso8601
+        }
+    }
+    
     let countries: [CountrySummaryMeasurementForDecodingOnly]
     let date: Date
 }

@@ -7,7 +7,15 @@
 
 import Foundation
 
-struct CountryHistoryMeasurementForDecodingOnly: Decodable {
+struct CountryHistoryMeasurementForDecodingOnly: CustomDecodable {
+    class Decoder: CustomJSONDecoder {
+        required init() {
+            super.init()
+            keyDecodingStrategy = .convertFromPascalCase
+            dateDecodingStrategy = .iso8601
+        }
+    }
+    
     var cases: Int?
     var confirmed: Int?
     var deaths: Int?

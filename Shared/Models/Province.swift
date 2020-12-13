@@ -20,6 +20,7 @@ struct Province: SummaryProvider, Equatable {
     var caseFatalityRate: Double? { measurements.last?.caseFatalityRate }
     
     var active: Int? { activeCases }
+    var description: String { name }
     
     var measurements: [ProvinceMeasurement]
     
