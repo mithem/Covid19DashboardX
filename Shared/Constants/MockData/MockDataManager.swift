@@ -10,17 +10,11 @@ import Foundation
 class MockDataManager: DataManager {
     static var forceError: Error? = nil
     
-    override class func getSummary(completion: @escaping (Data?, NetworkError?) -> Void) {
+    override class func getSummary(completion: @escaping (Result<SummaryResponse, NetworkError>) -> Void) {
         if let error = NetworkError(error: forceError) {
-            switch NetworkError(error: error) {
-            case .cachingInProgress:
-                let data = ServerCachingInProgressResponse().encode()
-                completion(data, nil)
-            default:
-                completion(nil, error)
-            }
+            completion(.failure(error))
         } else {
-            completion(MockData.summaryResponse.encode(), nil)
+            completion(.success(MockData.summaryResponse))
         }
     }
     

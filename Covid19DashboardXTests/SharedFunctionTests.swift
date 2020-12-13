@@ -26,7 +26,7 @@ class SharedFunctionTests: XCTestCase {
         XCTAssertTrue(range ~= ln(100))
         
         let precision = Double(pow(10.0, -15))
-        for power in (0...100).map {Double($0)} {
+        for power in (0...100).map({Double($0)}) {
             XCTAssertTrue(((power - precision) ... (power + precision)) ~= ln(pow(Double.eulersNumber, power)))
         }
     }

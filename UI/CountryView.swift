@@ -39,23 +39,23 @@ struct CountryView: View {
             } else if let error = manager.error {
                 if error == .constrainedNetwork {
                     if country.measurements.isEmpty {
-                    VStack {
-                        Text("Low data mode on.")
-                            .padding()
-                        HStack {
-                            Button("Settings") {
-                                UIApplication.shared.open(UsefulURLs.cellularSettings)
+                        VStack {
+                            Text("Low data mode on.")
+                                .padding()
+                            HStack {
+                                Button("Settings") {
+                                    UIApplication.shared.open(UsefulURLs.cellularSettings)
+                                }
+                                Button("Ignore") {
+                                    UserDefaults().set(true, forKey: UserDefaultsKeys.ignoreLowDataMode)
+                                    manager.loadHistoryData(for: country)
+                                }
                             }
-                            Button("Ignore") {
-                                UserDefaults().set(true, forKey: UserDefaultsKeys.ignoreLowDataMode)
-                                manager.loadHistoryData(for: country)
-                            }
+                            .buttonStyle(CustomButtonStyle())
                         }
-                        .buttonStyle(CustomButtonStyle())
-                    }
-                    .onAppear {
-                        manager.loadHistoryData(for: country) // try
-                    }
+                        .onAppear {
+                            manager.loadHistoryData(for: country)
+                        }
                     } else {
                         DataView
                     }

@@ -255,6 +255,7 @@ extension SummaryProvider {
     
     func value(for metric: MeasurementMetric) -> String {
         var v: Any
+        var vIsTimeInterval = false
         switch metric {
         case .active:
             v =  activeCases as Any
@@ -276,6 +277,7 @@ extension SummaryProvider {
             v =  caseFatalityRate as Any
         case .momentaryDoublingTime:
             v = doublingTime as Any
+            vIsTimeInterval = true
         }
         let formatter = NumberFormatter()
         formatter.usesGroupingSeparator = true
@@ -283,7 +285,7 @@ extension SummaryProvider {
             formatter.numberStyle = .scientific
             formatter.maximumSignificantDigits = 5
             return formatter.string(from: NSNumber(value: v)) ?? Constants.notAvailableString
-        } else if let v = v as? TimeInterval {
+        } else if vIsTimeInterval, let v = v as? TimeInterval{
             return v.shortDescription
         } else if let v = v as? Double {
             formatter.numberStyle = .percent

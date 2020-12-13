@@ -19,7 +19,11 @@ enum NetworkError: Error {
     
     init(error: Error) {
         if let urlError = error as? URLError {
-            self = .urlError(urlError)
+            if urlError.networkUnavailableReason == URLError.NetworkUnavailableReason.constrained {
+                self = .constrainedNetwork
+            } else {
+                self = .urlError(urlError)
+            }
         } else if let decodable = error as? CustomDecodableError {
             switch decodable {
             case .noData:

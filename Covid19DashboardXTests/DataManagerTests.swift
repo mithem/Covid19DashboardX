@@ -12,8 +12,8 @@ class DataManagerTests: XCTestCase {
     
     func testParseSummarySuccess() {
         MDM.forceError = nil
-        MDM.getSummary { data, error in
-            switch MDM.parseSummary(data, error) {
+        MDM.getSummary { result in
+            switch MDM.parseSummary(result) {
             case .success(let countries):
                 XCTAssertEqual(countries, MockData.countriesFromSummaryResponse)
             case .failure(let error):
@@ -24,8 +24,8 @@ class DataManagerTests: XCTestCase {
     
     func testParseSummaryError() {
         MDM.forceError = NetworkError.cachingInProgress
-        MDM.getSummary { data, error in
-            switch MDM.parseSummary(data, error) {
+        MDM.getSummary { result in
+            switch MDM.parseSummary(result) {
             case .success(let countries):
                 XCTAssertNil(countries)
             case .failure(let error):

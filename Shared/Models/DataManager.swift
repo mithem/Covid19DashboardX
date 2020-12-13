@@ -47,53 +47,32 @@ class DataManager: ObservableObject {
     // MARK: Summary data
     
     
-    class func getSummary(completion: @escaping (Data?, NetworkError?) -> Void) {
-        guard let url = URL(string: "https://api.covid19api.com/summary") else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            completion(data, NetworkError(error: error))
-        }.resume()
+    class func getSummary(completion: @escaping (Result<SummaryResponse, NetworkError>) -> Void) {
+        APIConfig.Provider1.summary.request { result in
+            switch result {
+            case .success(let data):
+                completion(.success(data))
+            case .fallbackSuccessful(_):
+                completion(.failure(.cachingInProgress))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
-    class func parseSummary(_ data: Data?, _ error: Error?) -> Result<[Country], NetworkError> {
-        if let error = error {
-            if let error = error as? URLError {
-                return .failure(.urlError(error))
-            } else {
-                return .failure(.otherWith(error: error))
+    class func parseSummary(_ data: Result<SummaryResponse, NetworkError>) -> Result<[Country], NetworkError> {
+        switch data {
+        case .success(let response):
+            var tempCountries = [Country]()
+            for country in response.countries {
+                let measurement = country.toCountrySummaryMeasurement()
+                
+                let newCountry = Country(code: country.countryCode, name: country.country, latest: measurement)
+                tempCountries.append(newCountry)
             }
-        } else if let data = data {
-            let result = SummaryResponse.decode(from: data)
-            switch result {
-            case .failure(let error):
-                switch error {
-                case .decodingError(_):
-                    let result2 = ServerCachingInProgressResponse.decode(from: data)
-                    switch result2 {
-                    case .success(let response):
-                        if response.message.lowercased() == "caching in progress" {
-                            return .failure(.cachingInProgress)
-                        } else {
-                            let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
-                            return .failure(.invalidResponse(response: string))
-                        }
-                    case .failure(let error):
-                        return .failure(.init(error: error))
-                    }
-                default:
-                    return .failure(NetworkError(error: error))
-                }
-            case .success(let response):
-                var tempCountries = [Country]()
-                for country in response.countries {
-                    let measurement = country.toCountrySummaryMeasurement()
-                    
-                    let newCountry = Country(code: country.countryCode, name: country.country, latest: measurement)
-                    tempCountries.append(newCountry)
-                }
-                return .success(tempCountries)
-            }
-        } else {
-            return .failure(.noResponse)
+            return .success(tempCountries)
+        case .failure(let error):
+            return .failure(error)
         }
     }
     
@@ -101,8 +80,8 @@ class DataManager: ObservableObject {
         DispatchQueue.main.async {
             self._loading = true
         }
-        Self.getSummary { data, error in
-            switch Self.parseSummary(data, error) {
+        Self.getSummary { result in
+            switch Self.parseSummary(result) {
             case .success(let countries):
                 self.dataTasks.remove(.summary)
                 DispatchQueue.global().async {
@@ -127,17 +106,9 @@ class DataManager: ObservableObject {
     
     
     class func getGlobalSummary(completion: @escaping (Result<GlobalMeasurement, NetworkError>) -> Void) {
-        guard let url = URL(string: "https://covid-api.com/api/reports/total") else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                completion(.failure(.init(error: error)))
-            } else if let data = data {
-                /// That's what I call _dense_
-                completion(GlobalMeasurementResponse.decode(from: data).map {$0.toGlobalMeasurement()}.mapError {NetworkError(error: $0)})
-            } else {
-                completion(.failure(.noResponse))
-            }
-        }.resume()
+        APIConfig.Provider2.api.reports.total.request { result in
+            completion(result.toStandardResult().map {$0.toGlobalMeasurement()})
+        }
     }
     
     
@@ -169,18 +140,9 @@ class DataManager: ObservableObject {
     
     
     class func getHistoryData(for country: Country, completion: @escaping (Result<(Country, [CountryHistoryMeasurementForDecodingOnly]), NetworkError>) -> Void) {
-        guard let url = URL(string: "https://api.covid19api.com/total/country/\(country.code)") else { return }
-        var request = URLRequest(url: url)
-        request.allowsConstrainedNetworkAccess = UserDefaults().bool(forKey: UserDefaultsKeys.ignoreLowDataMode)
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(.init(error: error)))
-            } else if let data = data {
-                completion([CountryHistoryMeasurementForDecodingOnly].decode(from: data).map {(country, $0)}.mapError {NetworkError(error: $0)})
-            } else {
-                completion(.failure(.noResponse))
-            }
-        }.resume()
+        APIConfig.Provider1.total.country.request(pathAppendix: "/\(country.code)") { result in
+            completion(result.toStandardResult().map {(country, $0)})
+        }
     }
     
     class func parseHistoryData(_ data: Result<(Country, [CountryHistoryMeasurementForDecodingOnly]), NetworkError>) -> CountryDataResult {
@@ -231,28 +193,9 @@ class DataManager: ObservableObject {
     
     class func getProvinceData(for country: Country, at date: Date? = nil, completion: @escaping (Result<CountryProvincesResponse, NetworkError>) -> Void) {
         let code = Constants.alpha2_to_alpha3_countryCodes[country.code] as? String ?? country.code
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = "covid-api.com"
-        components.path = "/api/reports"
-        components.queryItems = [.init(name: "iso", value: code)]
-        if let date = date {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "Y-m-d" // why do they have different date formats as in/outputs?
-            components.queryItems?.append(.init(name: "date", value: formatter.string(from: date)))
+        APIConfig.Provider2.api.reports.request(queryItems: [.init(name: "iso", value: code)]) { result in
+            completion(result.toStandardResult())
         }
-        guard let url = components.url else { return }
-        var request = URLRequest(url: url)
-        request.allowsConstrainedNetworkAccess = UserDefaults().bool(forKey: UserDefaultsKeys.ignoreLowDataMode)
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                completion(.failure(.init(error: error)))
-            } else if let data = data {
-                completion(CountryProvincesResponse.decode(from: data).mapError {NetworkError(error: $0)})
-            } else {
-                completion(.failure(.noResponse))
-            }
-        }.resume()
     }
     
     class func parseProvinceData(_ data: Result<CountryProvincesResponse, NetworkError>, country: Country) -> CountryDataResult {

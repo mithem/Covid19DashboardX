@@ -13,21 +13,18 @@ class MockDataManagerTests: XCTestCase {
     
     func testGetSummary() {
         MDM.forceError = nil
-        MDM.getSummary { data, error in
-            XCTAssertEqual(data, MockData.summaryResponse.encode())
-            XCTAssertNil(error)
+        MDM.getSummary { result in
+            XCTAssertEqual(result, .success(MockData.summaryResponse))
         }
         
         MDM.forceError = NetworkError.noNetworkConnection
-        MDM.getSummary { data, error in
-            XCTAssertEqual(error, .noNetworkConnection)
-            XCTAssertNil(data)
+        MDM.getSummary { result in
+            XCTAssertEqual(result, .failure(.noNetworkConnection))
         }
         
         MDM.forceError = NetworkError.cachingInProgress
-        MDM.getSummary { data, error in
-            XCTAssertEqual(data, ServerCachingInProgressResponse().encode())
-            XCTAssertNil(error)
+        MDM.getSummary { result in
+            XCTAssertEqual(result, .failure(.cachingInProgress))
         }
     }
     
