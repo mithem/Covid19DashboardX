@@ -139,3 +139,15 @@ func deleteIndexForSpotlight(completion: @escaping (Error?) -> Void) {
     let index = CSSearchableIndex.default()
     index.deleteAllSearchableItems(completionHandler: completion)
 }
+
+func calculateDoublingRate(new: Int, total: Int, in days: Int) -> Double {
+    let ratio = (Double(new) / Double(total)) / Double(days)
+    let growthFactor = 1 + ratio
+    let days = ln(2) / ln(growthFactor)
+    return days
+}
+
+/// natural log
+func ln(_ value: Double) -> Double {
+    return log(value) / log(Double.eulersNumber)
+}

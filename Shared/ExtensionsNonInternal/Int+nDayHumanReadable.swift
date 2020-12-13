@@ -8,7 +8,6 @@
 import Foundation
 
 extension Int {
-    
     /// formatted String for self (n) days
     var nDaysHumanReadable: String {
         let formatter = DateComponentsFormatter()

@@ -22,6 +22,9 @@ protocol SummaryProvider {
     /// Used to display in SummaryProviderDetailView
     var description: String { get }
     
+    /// Number of days it takes for active cases to double
+    var doublingTime: TimeInterval? { get }
+    
     func newSummaryElement(total: Int, new: Int, colorTreshold: Double, colorGrayArea: Double) -> Text
     
     func confirmedSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
@@ -76,6 +79,12 @@ extension SummaryProvider {
     }
     
     var description: String { Constants.notAvailableString }
+    
+    var doublingTime: TimeInterval? {
+        guard let newActive = newActive else { return nil }
+        guard let active = activeCases else { return nil }
+        return calculateDoublingRate(new: newActive, total: active, in: 1)
+    }
     
     func newSummaryElement(total: Int, new: Int, colorTreshold: Double, colorGrayArea: Double) -> Text {
         let ratio = Double(new) / Double(total)
@@ -265,6 +274,8 @@ extension SummaryProvider {
             v =  newDeaths
         case .caseFatalityRate:
             v =  caseFatalityRate as Any
+        case .momentaryDoublingTime:
+            v = doublingTime as Any
         }
         let formatter = NumberFormatter()
         formatter.usesGroupingSeparator = true
@@ -272,6 +283,8 @@ extension SummaryProvider {
             formatter.numberStyle = .scientific
             formatter.maximumSignificantDigits = 5
             return formatter.string(from: NSNumber(value: v)) ?? Constants.notAvailableString
+        } else if let v = v as? TimeInterval {
+            return v.shortDescription
         } else if let v = v as? Double {
             formatter.numberStyle = .percent
             formatter.minimumFractionDigits = 2
