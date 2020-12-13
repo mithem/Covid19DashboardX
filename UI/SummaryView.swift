@@ -73,7 +73,12 @@ struct SummaryView: View {
                         Text("Loading...")
                     }
                 } else if let error = manager.error {
-                    VStack {
+                    if error == NetworkError.cachingInProgress {
+                        VStack {
+                            Text("The server is currently caching the newest data. Please try again in a bit.")
+                            RefreshButton
+                        }
+                    } else {
                         Text(error.localizedDescription)
                             .padding()
                     }
