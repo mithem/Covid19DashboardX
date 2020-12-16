@@ -18,7 +18,7 @@ struct MovingAverage {
     /// Calculate moving avg for each point by calculating the avg from the **surrounding** (-n/2 to +n/2) data points
     /// - Parameter data: original data
     /// - Returns: (shorter) moving avg array
-    /// - Complexity: Bad, like really bad (O(n*datalength))
+    /// - Complexity: O(n*datalength)
     static func calculateMovingAverage(from data: [Double], with n: Int) -> [Double] {
         if n == 1 {
             return data
