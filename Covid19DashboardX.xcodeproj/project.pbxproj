@@ -34,6 +34,94 @@
 		49370B2225429E0B009BFE4C /* ProvinceInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */; };
 		49370B2A2542AA56009BFE4C /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
 		493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E08252383A70060BA27 /* ModelDecodableTests.swift */; };
+		4941493D258B48FA003351AC /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B5562C2531F694000D2030 /* WidgetKit.framework */; };
+		4941493E258B48FA003351AC /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B5562E2531F694000D2030 /* SwiftUI.framework */; };
+		49414941258B48FA003351AC /* Covid19DashboardWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49414940258B48FA003351AC /* Covid19DashboardWidget.swift */; };
+		49414944258B48FC003351AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49414943258B48FC003351AC /* Assets.xcassets */; };
+		4941494A258B48FC003351AC /* Covid19DashboardWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4941493C258B48FA003351AC /* Covid19DashboardWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		49414959258B492F003351AC /* Covid19WidgetDashboard.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 49414956258B492E003351AC /* Covid19WidgetDashboard.intentdefinition */; };
+		49414970258B4956003351AC /* CountrySummarySquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491022DF257254E600027B68 /* CountrySummarySquareView.swift */; };
+		49414975258B4973003351AC /* ProvinceMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686EF2569949100C833AA /* ProvinceMeasurement.swift */; };
+		49414976258B4973003351AC /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5E824E7F50200399145 /* DataManager.swift */; };
+		49414977258B4973003351AC /* CountrySummaryMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686D125698E2C00C833AA /* CountrySummaryMeasurement.swift */; };
+		49414978258B4973003351AC /* CountryHistoryMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686F5256994A800C833AA /* CountryHistoryMeasurement.swift */; };
+		49414979258B4973003351AC /* Province.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686E92569944E00C833AA /* Province.swift */; };
+		4941497A258B4973003351AC /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686D625698E4A00C833AA /* Country.swift */; };
+		4941497B258B4973003351AC /* MovingAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49806BE6252F782400767A6E /* MovingAverage.swift */; };
+		4941497C258B4973003351AC /* CovidDashApiDotComJSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4984D9322568140000CDCEA5 /* CovidDashApiDotComJSONDecoder.swift */; };
+		4941497D258B4973003351AC /* GlobalMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686FB256994C500C833AA /* GlobalMeasurement.swift */; };
+		4941497E258B4973003351AC /* PercentageFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4910AAD1254214E300BDAC0C /* PercentageFormatter.swift */; };
+		49414983258B4978003351AC /* DetailedCountryMeasurementResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686AA2569751000C833AA /* DetailedCountryMeasurementResponse.swift */; };
+		49414984258B4978003351AC /* CountrySummaryMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986866C2569733800C833AA /* CountrySummaryMeasurementForDecodingOnly.swift */; };
+		49414985258B4978003351AC /* SummaryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686832569741900C833AA /* SummaryResponse.swift */; };
+		49414986258B4978003351AC /* ProvinceMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686A0256974C200C833AA /* ProvinceMeasurementForDecodingOnly.swift */; };
+		49414987258B4978003351AC /* DetailedCountryMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686AF2569752900C833AA /* DetailedCountryMeasurementForDecodingOnly.swift */; };
+		49414988258B4978003351AC /* GlobalMeasurementResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977E64A257CB28500E4015E /* GlobalMeasurementResponse.swift */; };
+		49414989258B4978003351AC /* GlobalMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D9B0AB257BF01D00B80B3E /* GlobalMeasurementForDecodingOnly.swift */; };
+		4941498A258B4978003351AC /* ServerCachingInProgressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DF961B2583D03C0076600C /* ServerCachingInProgressResponse.swift */; };
+		4941498B258B4978003351AC /* CountryHistoryMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686932569747500C833AA /* CountryHistoryMeasurementForDecodingOnly.swift */; };
+		4941498C258B4978003351AC /* CountryProvincesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986869B2569749700C833AA /* CountryProvincesResponse.swift */; };
+		4941498D258B4978003351AC /* ProvinceMeasurementRegionForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686A5256974D600C833AA /* ProvinceMeasurementRegionForDecodingOnly.swift */; };
+		49414992258B497D003351AC /* DataManager+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687A7256A2B3400C833AA /* DataManager+Equatable.swift */; };
+		49414993258B497D003351AC /* Province+Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986873E2569961300C833AA /* Province+Searchable.swift */; };
+		49414994258B497D003351AC /* Country+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687172569955E00C833AA /* Country+Identifiable.swift */; };
+		49414995258B497D003351AC /* CountryHistoryMeasurement+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986871D2569957100C833AA /* CountryHistoryMeasurement+Identifiable.swift */; };
+		49414996258B497D003351AC /* Country+Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868735256995FB00C833AA /* Country+Searchable.swift */; };
+		49414997258B497D003351AC /* CountryProvincesResponse+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868729256995A500C833AA /* CountryProvincesResponse+Equatable.swift */; };
+		49414998258B497D003351AC /* Country+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26AE25723CF80022A49E /* Country+Hashable.swift */; };
+		49414999258B497D003351AC /* ProvinceMeasurementForDecodingOnly+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986872F256995D000C833AA /* ProvinceMeasurementForDecodingOnly+Equatable.swift */; };
+		4941499A258B497D003351AC /* Province+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26BF25723E230022A49E /* Province+Hashable.swift */; };
+		4941499B258B497D003351AC /* Country+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687112569954B00C833AA /* Country+Equatable.swift */; };
+		4941499C258B497D003351AC /* Province+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687232569958800C833AA /* Province+Identifiable.swift */; };
+		4941499D258B497D003351AC /* CountrySummaryMeasurementForDecodingOnly+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686752569739000C833AA /* CountrySummaryMeasurementForDecodingOnly+Equatable.swift */; };
+		494149A2258B4981003351AC /* CustomEncodableError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC45A2585E1F300674477 /* CustomEncodableError+LocalizedError.swift */; };
+		494149A3258B4981003351AC /* NetworkError+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687FC256A31B400C833AA /* NetworkError+Equatable.swift */; };
+		494149A4258B4981003351AC /* MeasurementMetric+HumanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC4482585E13A00674477 /* MeasurementMetric+HumanReadable.swift */; };
+		494149A5258B4981003351AC /* BasicMeasurementMetric+HumanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC4542585E19600674477 /* BasicMeasurementMetric+HumanReadable.swift */; };
+		494149A6258B4981003351AC /* CustomDecodableError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC4422585E0CE00674477 /* CustomDecodableError+LocalizedError.swift */; };
+		494149A7258B4981003351AC /* BasicMeasurementMetric+shortDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC44E2585E16E00674477 /* BasicMeasurementMetric+shortDescription.swift */; };
+		494149A8258B4981003351AC /* NetworkError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868801256A31E300C833AA /* NetworkError+LocalizedError.swift */; };
+		494149A9258B4981003351AC /* CustomDecodableError+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC4392585E0AC00674477 /* CustomDecodableError+Equatable.swift */; };
+		494149AE258B4986003351AC /* CustomEncodableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF1D3C25852DAD00B2164F /* CustomEncodableError.swift */; };
+		494149AF258B4986003351AC /* BasicMeasurementMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686B42569754200C833AA /* BasicMeasurementMetric.swift */; };
+		494149B0258B4986003351AC /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687082569951C00C833AA /* NetworkError.swift */; };
+		494149B1258B4986003351AC /* DataRepresentationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868701256994D900C833AA /* DataRepresentationType.swift */; };
+		494149B2258B4986003351AC /* MeasurementMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498686E325698F9600C833AA /* MeasurementMetric.swift */; };
+		494149B3258B4986003351AC /* CustomDecodableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977E65C257CBC9700E4015E /* CustomDecodableError.swift */; };
+		494149B8258B4989003351AC /* CustomJSONEncoderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF1D0B258527AB00B2164F /* CustomJSONEncoderProtocol.swift */; };
+		494149B9258B4989003351AC /* CustomCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF1D172585285E00B2164F /* CustomCodable.swift */; };
+		494149BA258B4989003351AC /* CustomJSONDecoderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977E656257CBB1300E4015E /* CustomJSONDecoderProtocol.swift */; };
+		494149BB258B4989003351AC /* SummaryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914F3E72544032A00CBC521 /* SummaryProvider.swift */; };
+		494149BC258B4989003351AC /* CustomEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF1D11258527E200B2164F /* CustomEncodable.swift */; };
+		494149BD258B4989003351AC /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499A541F255ED68200D1D3D8 /* Searchable.swift */; };
+		494149BE258B4989003351AC /* CustomDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977E650257CB6CD00E4015E /* CustomDecodable.swift */; };
+		494149C3258B498D003351AC /* CustomJSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF1D21258528E800B2164F /* CustomJSONDecoder.swift */; };
+		494149C4258B498D003351AC /* CustomJSONEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF1D33258529A000B2164F /* CustomJSONEncoder.swift */; };
+		494149C9258B4992003351AC /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868806256A338E00C833AA /* MockData.swift */; };
+		494149CA258B4992003351AC /* DefaultSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868783256997FB00C833AA /* DefaultSettings.swift */; };
+		494149CB258B4992003351AC /* MockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687AE256A2CEB00C833AA /* MockDataManager.swift */; };
+		494149CC258B4992003351AC /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986877A256997ED00C833AA /* UserDefaultsKeys.swift */; };
+		494149CD258B4992003351AC /* SpecialCountries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986878F2569982100C833AA /* SpecialCountries.swift */; };
+		494149CE258B4992003351AC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687892569980600C833AA /* Constants.swift */; };
+		494149CF258B4992003351AC /* UsefulURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687952569984D00C833AA /* UsefulURLs.swift */; };
+		494149D4258B4996003351AC /* APIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498617652585FA2400C9AF17 /* APIProvider.swift */; };
+		494149D5258B4996003351AC /* APIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498617772585FC5D00C9AF17 /* APIConfig.swift */; };
+		494149D6258B4996003351AC /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986176D2585FA7700C9AF17 /* APIEndpoint.swift */; };
+		494149D7258B4996003351AC /* APIEndpointRequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496BF76D258631E2005F6237 /* APIEndpointRequestResult.swift */; };
+		494149DC258B499B003351AC /* JSONEncoder.KeyEncodingStrategy+convertToPascalCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF1D452585338700B2164F /* JSONEncoder.KeyEncodingStrategy+convertToPascalCase.swift */; };
+		494149DD258B499B003351AC /* Int+humanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687672569975000C833AA /* Int+humanReadable.swift */; };
+		494149DE258B499B003351AC /* String+firstCharUppercased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF1D4B258533D100B2164F /* String+firstCharUppercased.swift */; };
+		494149DF258B499B003351AC /* Int+nDayHumanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687612569973900C833AA /* Int+nDayHumanReadable.swift */; };
+		494149E0258B499B003351AC /* String+firstCharLowercased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986875B2569971600C833AA /* String+firstCharLowercased.swift */; };
+		494149E1258B499B003351AC /* Array+CustomDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494F8CEC257CE1790058857A /* Array+CustomDecodable.swift */; };
+		494149E2258B499B003351AC /* Double+EulersNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC4632585E93800674477 /* Double+EulersNumber.swift */; };
+		494149E3258B499B003351AC /* TimeInterval+shortDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC46E2585F37800674477 /* TimeInterval+shortDescription.swift */; };
+		494149E4258B499B003351AC /* JSONDecoder.KeyDecodingStrategy+convertFromPascalCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986874C256996B800C833AA /* JSONDecoder.KeyDecodingStrategy+convertFromPascalCase.swift */; };
+		494149E5258B499B003351AC /* Optional<Int>+humanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986876D2569977D00C833AA /* Optional<Int>+humanReadable.swift */; };
+		494149E6258B499B003351AC /* String+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687552569970200C833AA /* String+Identifiable.swift */; };
+		494149E7258B499D003351AC /* shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954F5F724E8051300399145 /* shared.swift */; };
+		494149EC258B49A0003351AC /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
+		494149ED258B49A1003351AC /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
 		494A26AF25723CF80022A49E /* Country+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26AE25723CF80022A49E /* Country+Hashable.swift */; };
 		494A26B025723CF80022A49E /* Country+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26AE25723CF80022A49E /* Country+Hashable.swift */; };
 		494A26C025723E230022A49E /* Province+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26BF25723E230022A49E /* Province+Hashable.swift */; };
@@ -41,6 +129,8 @@
 		494F8CED257CE1790058857A /* Array+CustomDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494F8CEC257CE1790058857A /* Array+CustomDecodable.swift */; };
 		494F8CEE257CE1790058857A /* Array+CustomDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494F8CEC257CE1790058857A /* Array+CustomDecodable.swift */; };
 		4954F5DE24E7F4D300399145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4954F5C924E7F4D300399145 /* Assets.xcassets */; };
+		4969C2B1258B4A620007A308 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 4969C2B0258B4A620007A308 /* SwiftUICharts */; };
+		4969C2B7258B4A7D0007A308 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 4969C2B6258B4A7D0007A308 /* Reachability */; };
 		496BF76E258631E2005F6237 /* APIEndpointRequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496BF76D258631E2005F6237 /* APIEndpointRequestResult.swift */; };
 		496BF77525863CED005F6237 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986176D2585FA7700C9AF17 /* APIEndpoint.swift */; };
 		496BF77625863CED005F6237 /* APIEndpointRequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496BF76D258631E2005F6237 /* APIEndpointRequestResult.swift */; };
@@ -209,6 +299,13 @@
 			remoteGlobalIDString = 4954F5CD24E7F4D300399145;
 			remoteInfo = "Covid19DashboardX (iOS)";
 		};
+		49414948258B48FC003351AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4954F5C224E7F4D200399145 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4941493B258B48FA003351AC;
+			remoteInfo = Covid19DashboardWidgetExtension;
+		};
 		4995BB9D2572A6A10098A176 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4954F5C224E7F4D200399145 /* Project object */;
@@ -225,6 +322,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				4941494A258B48FC003351AC /* Covid19DashboardWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,6 +355,11 @@
 		493C2DF8252383620060BA27 /* Covid19DashboardXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Covid19DashboardXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		493C2DFC252383620060BA27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		493C2E08252383A70060BA27 /* ModelDecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDecodableTests.swift; sourceTree = "<group>"; };
+		4941493C258B48FA003351AC /* Covid19DashboardWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Covid19DashboardWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		49414940258B48FA003351AC /* Covid19DashboardWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Covid19DashboardWidget.swift; sourceTree = "<group>"; };
+		49414943258B48FC003351AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		49414945258B48FC003351AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49414956258B492E003351AC /* Covid19WidgetDashboard.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Covid19WidgetDashboard.intentdefinition; sourceTree = "<group>"; };
 		4942F2D925299AB100EE2959 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		494A26AE25723CF80022A49E /* Country+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Country+Hashable.swift"; sourceTree = "<group>"; };
 		494A26BF25723E230022A49E /* Province+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Province+Hashable.swift"; sourceTree = "<group>"; };
@@ -269,6 +372,7 @@
 		4954F5E824E7F50200399145 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		4954F5EE24E7F9B100399145 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		4954F5F724E8051300399145 /* shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shared.swift; sourceTree = "<group>"; };
+		4969C2AF258B4A5B0007A308 /* ChartView */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ChartView; path = "/Users/miguel/Library/Developer/Xcode/DerivedData/Covid19DashboardX-eonoqxujyjsqtgdqdgwmuindcvrs/SourcePackages/checkouts/ChartView"; sourceTree = "<absolute>"; };
 		496BF76D258631E2005F6237 /* APIEndpointRequestResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointRequestResult.swift; sourceTree = "<group>"; };
 		4977E64A257CB28500E4015E /* GlobalMeasurementResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMeasurementResponse.swift; sourceTree = "<group>"; };
 		4977E650257CB6CD00E4015E /* CustomDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDecodable.swift; sourceTree = "<group>"; };
@@ -331,10 +435,6 @@
 		499A541F255ED68200D1D3D8 /* Searchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Searchable.swift; sourceTree = "<group>"; };
 		49B5562C2531F694000D2030 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = Library/Frameworks/WidgetKit.framework; sourceTree = DEVELOPER_DIR; };
 		49B5562E2531F694000D2030 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		49B556312531F694000D2030 /* Covid19Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Covid19Widget.swift; sourceTree = "<group>"; };
-		49B556332531F694000D2030 /* Covid19Widget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Covid19Widget.intentdefinition; sourceTree = "<group>"; };
-		49B556342531F695000D2030 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		49B556362531F695000D2030 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49B7D1C12529DB2000AE2B9B /* CountryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryView.swift; sourceTree = "<group>"; };
 		49B90EDB25432EB900E89F5D /* CustomButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyle.swift; sourceTree = "<group>"; };
 		49B90EFB2543460100E89F5D /* SummaryProviderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryProviderDetailView.swift; sourceTree = "<group>"; };
@@ -363,6 +463,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49414939258B48FA003351AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4969C2B1258B4A620007A308 /* SwiftUICharts in Frameworks */,
+				4969C2B7258B4A7D0007A308 /* Reachability in Frameworks */,
+				4941493E258B48FA003351AC /* SwiftUI.framework in Frameworks */,
+				4941493D258B48FA003351AC /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +523,17 @@
 			path = Covid19DashboardXTests;
 			sourceTree = "<group>";
 		};
+		4941493F258B48FA003351AC /* Covid19DashboardWidget */ = {
+			isa = PBXGroup;
+			children = (
+				49414940258B48FA003351AC /* Covid19DashboardWidget.swift */,
+				49414956258B492E003351AC /* Covid19WidgetDashboard.intentdefinition */,
+				49414943258B48FC003351AC /* Assets.xcassets */,
+				49414945258B48FC003351AC /* Info.plist */,
+			);
+			path = Covid19DashboardWidget;
+			sourceTree = "<group>";
+		};
 		4954F5C124E7F4D200399145 = {
 			isa = PBXGroup;
 			children = (
@@ -419,8 +541,8 @@
 				4954F5C624E7F4D200399145 /* Shared */,
 				4954F5D024E7F4D300399145 /* iOS */,
 				493C2DF9252383620060BA27 /* Covid19DashboardXTests */,
-				49B556302531F694000D2030 /* Covid19Widget */,
 				4995BB992572A6A10098A176 /* Covid19DashboardXUITests */,
+				4941493F258B48FA003351AC /* Covid19DashboardWidget */,
 				49B5562B2531F694000D2030 /* Frameworks */,
 				4954F5CF24E7F4D300399145 /* Products */,
 			);
@@ -444,6 +566,7 @@
 				4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */,
 				493C2DF8252383620060BA27 /* Covid19DashboardXTests.xctest */,
 				4995BB982572A6A10098A176 /* Covid19DashboardXUITests.xctest */,
+				4941493C258B48FA003351AC /* Covid19DashboardWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -637,20 +760,10 @@
 			children = (
 				491022C32572542F00027B68 /* Reachability.swift */,
 				49B5562C2531F694000D2030 /* WidgetKit.framework */,
+				4969C2AF258B4A5B0007A308 /* ChartView */,
 				49B5562E2531F694000D2030 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		49B556302531F694000D2030 /* Covid19Widget */ = {
-			isa = PBXGroup;
-			children = (
-				49B556312531F694000D2030 /* Covid19Widget.swift */,
-				49B556332531F694000D2030 /* Covid19Widget.intentdefinition */,
-				49B556342531F695000D2030 /* Assets.xcassets */,
-				49B556362531F695000D2030 /* Info.plist */,
-			);
-			path = Covid19Widget;
 			sourceTree = "<group>";
 		};
 		49DF95F62583CA0C0076600C /* MockData */ = {
@@ -728,6 +841,27 @@
 			productReference = 493C2DF8252383620060BA27 /* Covid19DashboardXTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		4941493B258B48FA003351AC /* Covid19DashboardWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4941494B258B48FC003351AC /* Build configuration list for PBXNativeTarget "Covid19DashboardWidgetExtension" */;
+			buildPhases = (
+				49414938258B48FA003351AC /* Sources */,
+				49414939258B48FA003351AC /* Frameworks */,
+				4941493A258B48FA003351AC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Covid19DashboardWidgetExtension;
+			packageProductDependencies = (
+				4969C2B0258B4A620007A308 /* SwiftUICharts */,
+				4969C2B6258B4A7D0007A308 /* Reachability */,
+			);
+			productName = Covid19DashboardWidgetExtension;
+			productReference = 4941493C258B48FA003351AC /* Covid19DashboardWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		4954F5CD24E7F4D300399145 /* Covid19DashboardX (iOS) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4954F5E224E7F4D300399145 /* Build configuration list for PBXNativeTarget "Covid19DashboardX (iOS)" */;
@@ -740,6 +874,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				49414949258B48FC003351AC /* PBXTargetDependency */,
 			);
 			name = "Covid19DashboardX (iOS)";
 			packageProductDependencies = (
@@ -782,6 +917,9 @@
 						LastSwiftMigration = 1200;
 						TestTargetID = 4954F5CD24E7F4D300399145;
 					};
+					4941493B258B48FA003351AC = {
+						CreatedOnToolsVersion = 12.2;
+					};
 					4954F5CD24E7F4D300399145 = {
 						CreatedOnToolsVersion = 12.0;
 					};
@@ -811,6 +949,7 @@
 				4954F5CD24E7F4D300399145 /* Covid19DashboardX (iOS) */,
 				493C2DF7252383620060BA27 /* Covid19DashboardXTests */,
 				4995BB972572A6A10098A176 /* Covid19DashboardXUITests */,
+				4941493B258B48FA003351AC /* Covid19DashboardWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -820,6 +959,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				494149ED258B49A1003351AC /* ISO_CountryCodes.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4941493A258B48FA003351AC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				494149EC258B49A0003351AC /* ISO_CountryCodes.plist in Resources */,
+				49414944258B48FC003351AC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -930,6 +1079,95 @@
 				49868823256A3BC800C833AA /* DataManagerTests.swift in Sources */,
 				498687DD256A2DA600C833AA /* MeasurementMetric.swift in Sources */,
 				491AC4702585F37800674477 /* TimeInterval+shortDescription.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49414938258B48FA003351AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49414984258B4978003351AC /* CountrySummaryMeasurementForDecodingOnly.swift in Sources */,
+				49414993258B497D003351AC /* Province+Searchable.swift in Sources */,
+				494149D4258B4996003351AC /* APIProvider.swift in Sources */,
+				494149E4258B499B003351AC /* JSONDecoder.KeyDecodingStrategy+convertFromPascalCase.swift in Sources */,
+				49414997258B497D003351AC /* CountryProvincesResponse+Equatable.swift in Sources */,
+				49414992258B497D003351AC /* DataManager+Equatable.swift in Sources */,
+				4941498A258B4978003351AC /* ServerCachingInProgressResponse.swift in Sources */,
+				494149BD258B4989003351AC /* Searchable.swift in Sources */,
+				494149A5258B4981003351AC /* BasicMeasurementMetric+HumanReadable.swift in Sources */,
+				49414975258B4973003351AC /* ProvinceMeasurement.swift in Sources */,
+				49414989258B4978003351AC /* GlobalMeasurementForDecodingOnly.swift in Sources */,
+				4941499A258B497D003351AC /* Province+Hashable.swift in Sources */,
+				4941497E258B4973003351AC /* PercentageFormatter.swift in Sources */,
+				494149DC258B499B003351AC /* JSONEncoder.KeyEncodingStrategy+convertToPascalCase.swift in Sources */,
+				494149BA258B4989003351AC /* CustomJSONDecoderProtocol.swift in Sources */,
+				4941497A258B4973003351AC /* Country.swift in Sources */,
+				494149D7258B4996003351AC /* APIEndpointRequestResult.swift in Sources */,
+				494149B2258B4986003351AC /* MeasurementMetric.swift in Sources */,
+				4941497C258B4973003351AC /* CovidDashApiDotComJSONDecoder.swift in Sources */,
+				49414976258B4973003351AC /* DataManager.swift in Sources */,
+				4941499D258B497D003351AC /* CountrySummaryMeasurementForDecodingOnly+Equatable.swift in Sources */,
+				49414995258B497D003351AC /* CountryHistoryMeasurement+Identifiable.swift in Sources */,
+				49414978258B4973003351AC /* CountryHistoryMeasurement.swift in Sources */,
+				49414983258B4978003351AC /* DetailedCountryMeasurementResponse.swift in Sources */,
+				494149CE258B4992003351AC /* Constants.swift in Sources */,
+				49414959258B492F003351AC /* Covid19WidgetDashboard.intentdefinition in Sources */,
+				494149E7258B499D003351AC /* shared.swift in Sources */,
+				494149DD258B499B003351AC /* Int+humanReadable.swift in Sources */,
+				494149A9258B4981003351AC /* CustomDecodableError+Equatable.swift in Sources */,
+				494149CC258B4992003351AC /* UserDefaultsKeys.swift in Sources */,
+				494149D6258B4996003351AC /* APIEndpoint.swift in Sources */,
+				494149BB258B4989003351AC /* SummaryProvider.swift in Sources */,
+				494149E6258B499B003351AC /* String+Identifiable.swift in Sources */,
+				49414988258B4978003351AC /* GlobalMeasurementResponse.swift in Sources */,
+				494149A7258B4981003351AC /* BasicMeasurementMetric+shortDescription.swift in Sources */,
+				494149C4258B498D003351AC /* CustomJSONEncoder.swift in Sources */,
+				494149BE258B4989003351AC /* CustomDecodable.swift in Sources */,
+				4941498C258B4978003351AC /* CountryProvincesResponse.swift in Sources */,
+				494149B1258B4986003351AC /* DataRepresentationType.swift in Sources */,
+				49414986258B4978003351AC /* ProvinceMeasurementForDecodingOnly.swift in Sources */,
+				494149A2258B4981003351AC /* CustomEncodableError+LocalizedError.swift in Sources */,
+				494149E1258B499B003351AC /* Array+CustomDecodable.swift in Sources */,
+				494149CB258B4992003351AC /* MockDataManager.swift in Sources */,
+				494149B8258B4989003351AC /* CustomJSONEncoderProtocol.swift in Sources */,
+				4941497B258B4973003351AC /* MovingAverage.swift in Sources */,
+				4941498D258B4978003351AC /* ProvinceMeasurementRegionForDecodingOnly.swift in Sources */,
+				494149D5258B4996003351AC /* APIConfig.swift in Sources */,
+				494149DF258B499B003351AC /* Int+nDayHumanReadable.swift in Sources */,
+				494149DE258B499B003351AC /* String+firstCharUppercased.swift in Sources */,
+				494149C3258B498D003351AC /* CustomJSONDecoder.swift in Sources */,
+				494149AE258B4986003351AC /* CustomEncodableError.swift in Sources */,
+				494149E5258B499B003351AC /* Optional<Int>+humanReadable.swift in Sources */,
+				49414941258B48FA003351AC /* Covid19DashboardWidget.swift in Sources */,
+				494149E3258B499B003351AC /* TimeInterval+shortDescription.swift in Sources */,
+				494149B9258B4989003351AC /* CustomCodable.swift in Sources */,
+				49414977258B4973003351AC /* CountrySummaryMeasurement.swift in Sources */,
+				494149CA258B4992003351AC /* DefaultSettings.swift in Sources */,
+				4941497D258B4973003351AC /* GlobalMeasurement.swift in Sources */,
+				4941499C258B497D003351AC /* Province+Identifiable.swift in Sources */,
+				494149BC258B4989003351AC /* CustomEncodable.swift in Sources */,
+				4941498B258B4978003351AC /* CountryHistoryMeasurementForDecodingOnly.swift in Sources */,
+				494149CD258B4992003351AC /* SpecialCountries.swift in Sources */,
+				49414987258B4978003351AC /* DetailedCountryMeasurementForDecodingOnly.swift in Sources */,
+				494149AF258B4986003351AC /* BasicMeasurementMetric.swift in Sources */,
+				494149A6258B4981003351AC /* CustomDecodableError+LocalizedError.swift in Sources */,
+				49414985258B4978003351AC /* SummaryResponse.swift in Sources */,
+				494149A3258B4981003351AC /* NetworkError+Equatable.swift in Sources */,
+				494149B3258B4986003351AC /* CustomDecodableError.swift in Sources */,
+				494149C9258B4992003351AC /* MockData.swift in Sources */,
+				494149A8258B4981003351AC /* NetworkError+LocalizedError.swift in Sources */,
+				49414970258B4956003351AC /* CountrySummarySquareView.swift in Sources */,
+				494149E2258B499B003351AC /* Double+EulersNumber.swift in Sources */,
+				49414996258B497D003351AC /* Country+Searchable.swift in Sources */,
+				4941499B258B497D003351AC /* Country+Equatable.swift in Sources */,
+				494149E0258B499B003351AC /* String+firstCharLowercased.swift in Sources */,
+				494149CF258B4992003351AC /* UsefulURLs.swift in Sources */,
+				49414998258B497D003351AC /* Country+Hashable.swift in Sources */,
+				49414994258B497D003351AC /* Country+Identifiable.swift in Sources */,
+				494149B0258B4986003351AC /* NetworkError.swift in Sources */,
+				49414999258B497D003351AC /* ProvinceMeasurementForDecodingOnly+Equatable.swift in Sources */,
+				49414979258B4973003351AC /* Province.swift in Sources */,
+				494149A4258B4981003351AC /* MeasurementMetric+HumanReadable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1059,6 +1297,11 @@
 			target = 4954F5CD24E7F4D300399145 /* Covid19DashboardX (iOS) */;
 			targetProxy = 493C2DFD252383620060BA27 /* PBXContainerItemProxy */;
 		};
+		49414949258B48FC003351AC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4941493B258B48FA003351AC /* Covid19DashboardWidgetExtension */;
+			targetProxy = 49414948258B48FC003351AC /* PBXContainerItemProxy */;
+		};
 		4995BB9E2572A6A10098A176 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4954F5CD24E7F4D300399145 /* Covid19DashboardX (iOS) */;
@@ -1113,6 +1356,53 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Covid19DashboardX.app/Covid19DashboardX";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4941494C258B48FC003351AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MHQFP8C3YS;
+				INFOPLIST_FILE = Covid19DashboardWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mithem.Covid19DashboardX.Covid19DashboardWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4941494D258B48FC003351AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MHQFP8C3YS;
+				INFOPLIST_FILE = Covid19DashboardWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mithem.Covid19DashboardX.Covid19DashboardWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1330,6 +1620,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		4941494B258B48FC003351AC /* Build configuration list for PBXNativeTarget "Covid19DashboardWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4941494C258B48FC003351AC /* Debug */,
+				4941494D258B48FC003351AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4954F5C524E7F4D200399145 /* Build configuration list for PBXProject "Covid19DashboardX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1379,6 +1678,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4969C2B0258B4A620007A308 /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49B7D1BB2529DAD600AE2B9B /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
+		};
+		4969C2B6258B4A7D0007A308 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 497844E22541939800364E18 /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
+		};
 		497844E32541939800364E18 /* Reachability */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 497844E22541939800364E18 /* XCRemoteSwiftPackageReference "Reachability" */;
