@@ -322,6 +322,7 @@ class DataManager: ObservableObject {
             DispatchQueue.main.async {
                 self.error = .noNetworkConnection
                 self._loading = false
+                self.dataTasks.insert(.summary)
             }
         } else {
             execute(task: .summary)
