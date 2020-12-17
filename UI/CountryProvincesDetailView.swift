@@ -30,7 +30,7 @@ struct CountryProvincesDetailView: View {
                             lowercasedSearchTerm = value.lowercased()
                         }
                 }
-                Text("Total: \(country.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, colorPercentagesTreshold: colorPercentagesTreshold, colorPercentagesGrayArea: colorPercentagesGrayArea, reversed: false))")
+                NavigationLink("Total: \(country.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, colorPercentagesTreshold: colorPercentagesTreshold, colorPercentagesGrayArea: colorPercentagesGrayArea, reversed: false))", destination: SummaryProviderDetailView(provider: country))
                 if manager.loading {
                     HStack(spacing: 10) {
                         ProgressView()

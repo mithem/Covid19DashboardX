@@ -268,6 +268,8 @@
 		49DF96172583CBA40076600C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687892569980600C833AA /* Constants.swift */; };
 		49DF961C2583D03C0076600C /* ServerCachingInProgressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DF961B2583D03C0076600C /* ServerCachingInProgressResponse.swift */; };
 		49DF961D2583D03C0076600C /* ServerCachingInProgressResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DF961B2583D03C0076600C /* ServerCachingInProgressResponse.swift */; };
+		49E6DA29258BB68400D9FE49 /* FutureEstimationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6DA28258BB68400D9FE49 /* FutureEstimationProvider.swift */; };
+		49E6DA2A258BB68400D9FE49 /* FutureEstimationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6DA28258BB68400D9FE49 /* FutureEstimationProvider.swift */; };
 		49F3525D25442D87009ED5AE /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F3525C25442D87009ED5AE /* GeneralSettingsView.swift */; };
 		49F3529125442E64009ED5AE /* OtherSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F3529025442E64009ED5AE /* OtherSettingsView.swift */; };
 		49F35296254432E2009ED5AE /* AttributionsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F35295254432E2009ED5AE /* AttributionsSettingsView.swift */; };
@@ -443,6 +445,7 @@
 		49DD25C5254EBCE200452A92 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
 		49DD9EFD2545C69B006B1866 /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		49DF961B2583D03C0076600C /* ServerCachingInProgressResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCachingInProgressResponse.swift; sourceTree = "<group>"; };
+		49E6DA28258BB68400D9FE49 /* FutureEstimationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureEstimationProvider.swift; sourceTree = "<group>"; };
 		49F3525C25442D87009ED5AE /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		49F3529025442E64009ED5AE /* OtherSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSettingsView.swift; sourceTree = "<group>"; };
 		49F35295254432E2009ED5AE /* AttributionsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionsSettingsView.swift; sourceTree = "<group>"; };
@@ -616,6 +619,7 @@
 				4910AAD1254214E300BDAC0C /* PercentageFormatter.swift */,
 				4954F5E824E7F50200399145 /* DataManager.swift */,
 				4984D9322568140000CDCEA5 /* CovidDashApiDotComJSONDecoder.swift */,
+				49E6DA28258BB68400D9FE49 /* FutureEstimationProvider.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1040,6 +1044,7 @@
 				498687CF256A2D9F00C833AA /* Country+Searchable.swift in Sources */,
 				498687BE256A2D9400C833AA /* Country.swift in Sources */,
 				498687C6256A2D9A00C833AA /* CountryHistoryMeasurementForDecodingOnly.swift in Sources */,
+				49E6DA2A258BB68400D9FE49 /* FutureEstimationProvider.swift in Sources */,
 				496BF77725863CED005F6237 /* APIConfig.swift in Sources */,
 				494A26C125723E230022A49E /* Province+Hashable.swift in Sources */,
 				49DF960B2583CBA30076600C /* UserDefaultsKeys.swift in Sources */,
@@ -1199,6 +1204,7 @@
 				49F35296254432E2009ED5AE /* AttributionsSettingsView.swift in Sources */,
 				49868730256995D000C833AA /* ProvinceMeasurementForDecodingOnly+Equatable.swift in Sources */,
 				497E01342531FD52006CEF67 /* Covid19DashboardXApp.swift in Sources */,
+				49E6DA29258BB68400D9FE49 /* FutureEstimationProvider.swift in Sources */,
 				49FF1D182585285E00B2164F /* CustomCodable.swift in Sources */,
 				4986874D256996B800C833AA /* JSONDecoder.KeyDecodingStrategy+convertFromPascalCase.swift in Sources */,
 				49FF1D12258527E200B2164F /* CustomEncodable.swift in Sources */,
