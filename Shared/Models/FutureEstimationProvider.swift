@@ -43,10 +43,10 @@ class FutureEstimationProvider: ObservableObject {
         
         init(cases: Int, new: Int) {
             
-            // f(x) = ae^(kt)
-            // f(x) / a = e^(kt)
-            // kt = ln(f(x) / a)
-            // k = ln(f(x) / a) / t
+            // f(t) = ae^(kt)
+            // f(t) / a = e^(kt)
+            // kt = ln(f(t) / a)
+            // k = ln(f(t) / a) / t
             
             let a = Double(cases)
             let y = Double(cases - new) // previous day's cases
