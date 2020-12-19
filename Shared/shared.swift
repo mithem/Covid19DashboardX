@@ -43,6 +43,7 @@ func resetSettingsToDefaults() {
     ud.set(ds.measurementMetric.rawValue, forKey: uk.activeMetric)
     ud.set(ds.provinceMetric.rawValue, forKey: uk.provinceMetric)
     ud.set(ds.maximumN, forKey: uk.maximumN)
+    ud.set(ds.maximumEstimationInterval, forKey: uk.maximumEstimationInterval)
     ud.set(ds.ignoreLowDataMode, forKey: uk.ignoreLowDataMode)
     ud.set(ds.colorTresholdForPercentages, forKey: uk.colorThresholdForPercentages)
     ud.set(ds.colorGrayAreaForPercentages, forKey: uk.colorGrayAreaForPercentages)
@@ -52,7 +53,7 @@ func resetSettingsToDefaults() {
     ud.set(ds.disableSpotlightIndexing, forKey: uk.disableSpotlightIndexing)
     ud.set(ds.notificationsEnabled, forKey: uk.notificationsEnabled)
     ud.set(ds.notificationDate, forKey: uk.notificationDate)
-    ud.set(ds.dataRepresentationType, forKey: uk.dataRepresentationType)
+    ud.set(ds.dataRepresentationType.rawValue, forKey: uk.dataRepresentationType)
 }
 
 func indexForSpotlight(countries: [Country]) {

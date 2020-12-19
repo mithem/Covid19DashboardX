@@ -10,6 +10,7 @@ import SwiftUI
 struct GeneralSettingsView: View {
     @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = DefaultSettings.colorNumbers
     @AppStorage(UserDefaultsKeys.maximumN) var maximumN = DefaultSettings.maximumN
+    @AppStorage(UserDefaultsKeys.maximumEstimationInterval) var maximumEstimationInterval = DefaultSettings.maximumEstimationInterval
     @AppStorage(UserDefaultsKeys.ignoreLowDataMode) var ignoreLowDataMode = DefaultSettings.ignoreLowDataMode
     @AppStorage(UserDefaultsKeys.colorThresholdForPercentages) var colorPercentagesTreshold = DefaultSettings.colorTresholdForPercentages
     @AppStorage(UserDefaultsKeys.colorGrayAreaForPercentages) var colorPercentagesGrayArea = DefaultSettings.colorGrayAreaForPercentages
@@ -27,6 +28,7 @@ struct GeneralSettingsView: View {
             Section {
                 Toggle("Color numbers", isOn: $colorNumbers)
                 Stepper("Maximum moving average interval: \(maximumN.nDaysHumanReadable)", value: $maximumN, in: 1...1_000_000) // should be sufficient for now
+                Stepper("Maximum future estimation interval: \(maximumEstimationInterval.nDaysHumanReadable)", value: $maximumEstimationInterval, in: 1...3652) // 10 years
                 Toggle("Ignore low data mode", isOn: $ignoreLowDataMode)
             }
             Section {
