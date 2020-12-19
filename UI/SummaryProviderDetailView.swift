@@ -11,10 +11,15 @@ struct SummaryProviderDetailView: View {
     let provider: SummaryProvider
     let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     var body: some View {
-        LazyVGrid(columns: columns) {
-            ForEach(MeasurementMetric.allCases) { metric in
-                Card(metric: metric, value: provider.value(for: metric))
+        VStack {
+            LazyVGrid(columns: columns) {
+                ForEach(MeasurementMetric.allCases) { metric in
+                    Card(metric: metric, value: provider.value(for: metric))
+                }
             }
+            NavigationLink("Future estimations", destination: FutureEstimationProviderView(futureEstimationProvider: FutureEstimationProvider(provider: provider)))
+                .buttonStyle(CustomButtonStyle())
+                .padding(.vertical)
         }
         .navigationTitle(provider.description)
     }
@@ -87,6 +92,6 @@ struct Card_Previews: PreviewProvider {
 struct SummaryProviderDetailView_Previews: PreviewProvider {
     static var previews: some View {
         SummaryProviderDetailView(provider: MockData.countries[0].provinces[0])
-            
+        
     }
 }

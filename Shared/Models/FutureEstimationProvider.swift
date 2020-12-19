@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FutureEstimationProvider {
+class FutureEstimationProvider: ObservableObject {
     let provider: SummaryProvider
     @Published var estimationInterval: Int
     @Published var metric: BasicMeasurementMetric
@@ -34,10 +34,11 @@ class FutureEstimationProvider {
     }
 
     struct EstimationFunction {
+        let a: Double
         let k: Double
         
         func estimationFunction(t: Double) -> Double {
-            return pow(Double.eulersNumber, k * t)
+            return a * pow(Double.eulersNumber, k * t)
         }
         
         init(cases: Int, new: Int) {
@@ -53,10 +54,11 @@ class FutureEstimationProvider {
             
             let k = ln(y / a) / t
             
-            self.init(k: k)
+            self.init(a: a, k: k)
         }
         
-        init(k: Double) {
+        init(a: Double, k: Double) {
+            self.a = a
             self.k = k
         }
     }
@@ -67,5 +69,16 @@ class FutureEstimationProvider {
         self.provider = provider
         self.estimationInterval = estimationInterval
         self.metric = metric
+    }
+    
+    convenience init(provider: SummaryProvider) {
+        let ud = UserDefaults()
+        var eI = ud.integer(forKey: UserDefaultsKeys.estimationInterval)
+        if eI == 0 {
+            eI = 1
+        }
+        let ms = ud.string(forKey: UserDefaultsKeys.activeMetric) ?? ""
+        let m = BasicMeasurementMetric(rawValue: ms) ?? .confirmed
+        self.init(provider: provider, estimationInterval: eI, metric: m)
     }
 }

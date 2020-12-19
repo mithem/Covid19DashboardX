@@ -34,4 +34,7 @@ struct UserDefaultsKeys {
     static let widgetCountry = "widgetCountry"
     
     static let disableSpotlightIndexing = "disableSpotlightIndexing"
+    
+    static let estimationInterval = "estimationInterval"
+    static let maximumEstimationInterval = "maximumEstimationInterval"
 }

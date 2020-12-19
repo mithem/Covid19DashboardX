@@ -22,4 +22,6 @@ struct DefaultSettings {
     static let widgetCountry = "USA"
     static let disableSpotlightIndexing = false
     static let dataRepresentationType = DataRepresentationType.normal
+    static let estimationInterval = 7
+    static let maximumEstimationInterval = 180
 }
