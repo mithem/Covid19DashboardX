@@ -18,7 +18,7 @@ struct ProvinceInlineView: View {
     @ObservedObject var manager: DataManager
     var body: some View {
         NavigationLink(destination: SummaryProviderDetailView(provider: province)) {
-            Text(province.name.localizedCapitalized + ": ") + province.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorPercentagesTreshold, colorDeltaGrayArea: colorPercentagesGrayArea, colorPercentagesTreshold: colorDeltaTreshold, colorPercentagesGrayArea: colorDeltaGrayArea, reversed: false)
+            Text(province.name.localizedCapitalized + ": ") + province.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, colorPercentagesTreshold: colorDeltaTreshold, colorPercentagesGrayArea: colorDeltaGrayArea, reversed: false)
         }
     }
 }
