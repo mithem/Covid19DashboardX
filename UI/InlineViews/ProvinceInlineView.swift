@@ -17,7 +17,7 @@ struct ProvinceInlineView: View {
     let activeMetric: Province.SummaryMetric
     @ObservedObject var manager: DataManager
     var body: some View {
-        NavigationLink(destination: SummaryProviderDetailView(provider: province)) {
+        NavigationLink(destination: SummaryProviderDetailView(manager: manager, provider: province)) {
             Text(province.name.localizedCapitalized + ": ") + province.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, colorPercentagesTreshold: colorDeltaTreshold, colorPercentagesGrayArea: colorDeltaGrayArea, reversed: false)
         }
     }
@@ -25,6 +25,6 @@ struct ProvinceInlineView: View {
 
 struct ProvinceInlineView_Previews: PreviewProvider {
     static var previews: some View {
-        ProvinceInlineView(province: MockData.countries[0].provinces.first!, colorNumbers: true, colorDeltaTreshold: DefaultSettings.colorTresholdForDeltas, colorDeltaGrayArea: DefaultSettings.colorGrayAreaForDeltas, colorPercentagesTreshold: DefaultSettings.colorTresholdForPercentages, colorPercentagesGrayArea: DefaultSettings.colorGrayAreaForPercentages, activeMetric: .confirmed, manager: DataManager())
+        ProvinceInlineView(province: MockData.countries[0].provinces.first!, colorNumbers: true, colorDeltaTreshold: DefaultSettings.colorTresholdForDeltas, colorDeltaGrayArea: DefaultSettings.colorGrayAreaForDeltas, colorPercentagesTreshold: DefaultSettings.colorTresholdForPercentages, colorPercentagesGrayArea: DefaultSettings.colorGrayAreaForPercentages, activeMetric: .confirmed, manager: MockDataManager())
     }
 }

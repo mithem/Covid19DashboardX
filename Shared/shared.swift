@@ -40,7 +40,7 @@ func resetSettingsToDefaults() {
     typealias ds = DefaultSettings
     
     ud.set(ds.colorNumbers, forKey: uk.colorNumbers)
-    ud.set(ds.measurementMetric.rawValue, forKey: uk.activeMetric)
+    ud.set(ds.measurementMetric.rawValue, forKey: uk.measurementMetric)
     ud.set(ds.provinceMetric.rawValue, forKey: uk.provinceMetric)
     ud.set(ds.maximumN, forKey: uk.maximumN)
     ud.set(ds.maximumEstimationInterval, forKey: uk.maximumEstimationInterval)

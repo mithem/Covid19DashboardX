@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct SummaryProviderDetailView: View {
-    let provider: SummaryProvider
+struct SummaryProviderDetailView<Provider: SummaryProvider>: View {
+    @ObservedObject var manager: DataManager
+    let provider: Provider
     let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     var body: some View {
         VStack {
@@ -17,7 +18,7 @@ struct SummaryProviderDetailView: View {
                     Card(metric: metric, value: provider.value(for: metric))
                 }
             }
-            NavigationLink("Future estimations", destination: FutureEstimationProviderView(futureEstimationProvider: FutureEstimationProvider(provider: provider)))
+            NavigationLink("Future estimations", destination: FutureEstimationProviderView(futureEstimationProvider: FutureEstimationProvider(provider: provider), manager: manager))
                 .buttonStyle(CustomButtonStyle())
                 .padding(.vertical)
         }
@@ -91,7 +92,7 @@ struct Card_Previews: PreviewProvider {
 
 struct SummaryProviderDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        SummaryProviderDetailView(provider: MockData.countries[0].provinces[0])
+        SummaryProviderDetailView(manager: MockDataManager(), provider: MockData.countries[0].provinces[0])
         
     }
 }

@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-protocol SummaryProvider {
+protocol SummaryProvider: Identifiable, Searchable {
+    var id: String { get }
     var totalConfirmed: Int { get }
     var newConfirmed: Int { get }
     var totalDeaths: Int { get }
@@ -55,6 +56,10 @@ protocol SummaryProvider {
 }
 
 extension SummaryProvider {
+    func isIncluded(searchTerm: String) -> Bool {
+        return id.contains(searchTerm)
+    }
+    
     private func reversedColor(_ color: Color, reversed: Bool) -> Color {
         switch color {
         case .green:

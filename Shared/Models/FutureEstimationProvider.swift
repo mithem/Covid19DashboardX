@@ -7,17 +7,19 @@
 
 import Foundation
 
-class FutureEstimationProvider: ObservableObject {
-    let provider: SummaryProvider
+class FutureEstimationProvider<Provider: SummaryProvider>: ObservableObject {
+    let provider: Provider
     @Published var estimationInterval: Int
     @Published var metric: BasicMeasurementMetric
+    
+    typealias IntersectionPoint = (t: Double, y: Double)
     
     var data: [Double]? {
         let v = values()
         guard let cases = v.cases else { return nil }
         guard let new = v.new else { return nil }
         let function = EstimationFunction(cases: cases, new: new)
-        return (0...estimationInterval).map {function.estimationFunction(t: Double($0))}
+        return (0...estimationInterval).map {function.value(t: Double($0))}
     }
     
     private func values() -> (cases: Int?, new: Int?) {
@@ -37,7 +39,7 @@ class FutureEstimationProvider: ObservableObject {
         let a: Double
         let k: Double
         
-        func estimationFunction(t: Double) -> Double {
+        func value(t: Double) -> Double {
             return a * pow(Double.eulersNumber, k * t)
         }
         
@@ -61,23 +63,46 @@ class FutureEstimationProvider: ObservableObject {
             self.a = a
             self.k = k
         }
+        
+        func intersection(with f: EstimationFunction) -> IntersectionPoint {
+            // ae^(kt) = be^(lt) | wolframalpha
+            // t = (ln(b) - ln(a)) / (k - l)
+            
+            let t = (ln(f.a) - ln(a)) / (k - f.k)
+            
+            return (t: t, y: value(t: t))
+        }
+    }
+    
+    func intersection(with p: FutureEstimationProvider) -> IntersectionPoint? {
+        let v1 = values()
+        guard let c1 = v1.cases else { return nil }
+        guard let n1 = v1.new else { return nil }
+        let f1 = EstimationFunction(cases: c1, new: n1)
+        
+        let v2 = p.values()
+        guard let c2 = v2.cases else { return nil }
+        guard let n2 = v2.new else { return nil }
+        let f2 = EstimationFunction(cases: c2, new: n2)
+        
+        return f1.intersection(with: f2)
     }
     
     // MARK: Life cycle
     
-    init(provider: SummaryProvider, estimationInterval: Int, metric: BasicMeasurementMetric) {
+    init(provider: Provider, estimationInterval: Int, metric: BasicMeasurementMetric) {
         self.provider = provider
         self.estimationInterval = estimationInterval
         self.metric = metric
     }
     
-    convenience init(provider: SummaryProvider) {
+    convenience init(provider: Provider) {
         let ud = UserDefaults()
         var eI = ud.integer(forKey: UserDefaultsKeys.estimationInterval)
         if eI == 0 {
             eI = 1
         }
-        let ms = ud.string(forKey: UserDefaultsKeys.activeMetric) ?? ""
+        let ms = ud.string(forKey: UserDefaultsKeys.measurementMetric) ?? ""
         let m = BasicMeasurementMetric(rawValue: ms) ?? .confirmed
         self.init(provider: provider, estimationInterval: eI, metric: m)
     }

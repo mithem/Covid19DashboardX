@@ -8,7 +8,7 @@
 import Foundation
 
 struct UserDefaultsKeys {
-    static let activeMetric = "activeMetric"
+    static let measurementMetric = "measurementMetric"
     static let provinceMetric = "provinceMetric"
     static let colorNumbers = "colorNumbers"
     static let dataRepresentationType = "dataRepresentationType"

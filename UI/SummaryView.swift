@@ -18,16 +18,12 @@ struct SummaryView: View {
     @State private var favorites = [String]()
     @State private var lowercasedSearchTerm = ""
     
-    @AppStorage(UserDefaultsKeys.activeMetric) var activeMetric = DefaultSettings.measurementMetric
+    @AppStorage(UserDefaultsKeys.measurementMetric) var activeMetric = DefaultSettings.measurementMetric
     @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = DefaultSettings.colorNumbers
     @AppStorage(UserDefaultsKeys.colorThresholdForPercentages) var colorPercentagesTreshold = DefaultSettings.colorTresholdForPercentages
     @AppStorage(UserDefaultsKeys.colorGrayAreaForPercentages) var colorPercentagesGrayArea = DefaultSettings.colorGrayAreaForPercentages
     @AppStorage(UserDefaultsKeys.colorTresholdForDeltas) var colorDeltaTreshold = DefaultSettings.colorTresholdForDeltas
     @AppStorage(UserDefaultsKeys.colorGrayAreaForDeltas) var colorDeltaGrayArea = DefaultSettings.colorGrayAreaForDeltas
-    
-    init() {
-        self.manager = DataManager()
-    }
     
     var actionSheetButtonsForSorting: [ActionSheet.Button] {
         var buttons: [ActionSheet.Button] = [.default(Text("Refresh")) {manager.execute(task: .summary)}, .default(Text("Country code"), action: {manager.sortBy = .countryCode}), .default(Text("Country name"), action: {manager.sortBy = .countryName})]
@@ -136,7 +132,7 @@ struct SummaryView: View {
                 BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
                 SearchBar(searchTerm: $searchTerm)
                 if let latestGlobal = manager.latestGlobal {
-                    NavigationLink(destination: SummaryProviderDetailView(provider: latestGlobal)) {
+                    NavigationLink(destination: SummaryProviderDetailView(manager: manager, provider: latestGlobal)) {
                         Text("Global: ") + (latestGlobal.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorPercentagesTreshold, colorDeltaGrayArea: colorPercentagesGrayArea, reversed: false))
                     }
                     .modifier(AttachToRefreshContextMenu(manager: manager))
@@ -207,6 +203,6 @@ fileprivate enum ActionSheetConfig {
 
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
-        SummaryView()
+        SummaryView(manager: MockDataManager())
     }
 }

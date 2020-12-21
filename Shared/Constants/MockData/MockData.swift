@@ -22,4 +22,5 @@ struct MockData {
     static let countryHistoryMeasurementsForDecodingOnly = [CountryHistoryMeasurementForDecodingOnly(cases: 100, confirmed: 100, deaths: 10, recovered: 40, active: 50, caseFatalityRate: 0.01, date: date, status: .confirmed, country: "Some country", countryCode: "SC", lat: "0.0", lon: "0.0"), CountryHistoryMeasurementForDecodingOnly(cases: 50, confirmed: nil, deaths: 5, recovered: 20, active: 25, caseFatalityRate: 0.01, date: date, status: .confirmed, country: "Another country", countryCode: "AC", lat: "", lon: "")]
     
     static let dataForPreviews = [[3, 7, 32, 1, 4, 7, 8, 45, 2, 1, 45, 6, 23], [45, 78, 105, 120, 120, 50, 584, 920, 458, 1050]].map {$0.map {Double($0)}}
+    static let futureEstimationProvider = FutureEstimationProvider(provider: countries[0], estimationInterval: 7, metric: .confirmed)
 }

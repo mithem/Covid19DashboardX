@@ -11,7 +11,7 @@ import SwiftUICharts
 struct CountryView: View {
     @ObservedObject var manager: DataManager
     @AppStorage(UserDefaultsKeys.dataRepresentationType) var dataRepresentationType = DataRepresentationType.normal
-    @AppStorage(UserDefaultsKeys.activeMetric) var activeMetric = BasicMeasurementMetric.confirmed
+    @AppStorage(UserDefaultsKeys.measurementMetric) var measurementMetric = DefaultSettings.measurementMetric
     @AppStorage(UserDefaultsKeys.currentN) var n = 1
     @AppStorage(UserDefaultsKeys.maximumN) var maximumN = DefaultSettings.maximumN
     
@@ -89,12 +89,12 @@ struct CountryView: View {
     
     var DataView: some View {
         VStack {
-            BasicMeasurementMetricPickerView(activeMetric: $activeMetric)
+            BasicMeasurementMetricPickerView(activeMetric: $measurementMetric)
             Spacer()
             VStack {
                 VStack {
                     HStack {
-                        Text(activeMetric.humanReadable)
+                        Text(measurementMetric.humanReadable)
                             .font(.title)
                             .bold()
                         Spacer()
@@ -114,7 +114,7 @@ struct CountryView: View {
                     .onAppear {
                         calcMovingAvg()
                     }
-                    .onChange(of: activeMetric, perform: { _ in
+                    .onChange(of: measurementMetric, perform: { _ in
                         calcMovingAvg()
                     })
             }
@@ -132,7 +132,10 @@ struct CountryView: View {
                 }
                 .buttonStyle(CustomButtonStyle())
                 .sheet(isPresented: $showingComparisonView) {
-                    ComparisonView(isPresented: $showingComparisonView, manager: manager, country: country)
+                    SummaryProviderSelectionView(isPresented: $showingComparisonView, providers: manager.countries, provider: country) { isPresented, country -> ComparisonDetailView in
+                        showingComparisonView = isPresented.wrappedValue
+                        return ComparisonDetailView(isPresented: $showingComparisonView, countries: (self.country, country))
+                    }
                 }
             }
             if maximumN > 1 {
@@ -163,7 +166,7 @@ struct CountryView: View {
     }
     
     func calcMovingAvg() {
-        alteredData = MovingAverage.calculateMovingAverage(from: getData(country.measurements.map {Double($0.metric(for: activeMetric))}, dataRepresentation: dataRepresentationType), with: n)
+        alteredData = MovingAverage.calculateMovingAverage(from: getData(country.measurements.map {Double($0.metric(for: measurementMetric))}, dataRepresentation: dataRepresentationType), with: n)
     }
 }
 

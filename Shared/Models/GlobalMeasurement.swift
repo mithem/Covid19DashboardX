@@ -8,6 +8,7 @@
 import Foundation
 
 struct GlobalMeasurement: Equatable, SummaryProvider {
+    var id = "Global"
     let lastUpdate: Date
     let totalConfirmed: Int
     let newConfirmed: Int
