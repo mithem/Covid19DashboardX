@@ -8,8 +8,8 @@
 import Foundation
 
 struct MockData {
-    private static let date = Date()
-    static let summaryResponse = SummaryResponse(countries: [CountrySummaryMeasurementForDecodingOnly(country: "Some country", countryCode: "SC", date: date, totalConfirmed: 20, newConfirmed: 1, totalDeaths: 1, newDeaths: 0, totalRecovered: 10, newRecovered: 1, caseFatalityRate: 0.01), CountrySummaryMeasurementForDecodingOnly(country: "Another country", countryCode: "AC", date: date, totalConfirmed: 20, newConfirmed: 2, totalDeaths: 2, newDeaths: 0, totalRecovered: 10, newRecovered: 2, active: 15, newActive: 3, caseFatalityRate: 0.0175)], date: date)
+    private static let date = Calendar.current.date(from: DateComponents(timeZone: TimeZone(secondsFromGMT: 0), year: 2020, month: 1, day: 1, hour: 0, minute: 12, second: 5))!
+    static let summaryResponse = SummaryResponse(countries: [CountrySummaryMeasurementForDecodingOnly(country: "Some country", countryCode: "SC", date: date, totalConfirmed: 20, newConfirmed: 1, totalDeaths: 1, newDeaths: 0, totalRecovered: 10, newRecovered: 1, caseFatalityRate: 0.01), CountrySummaryMeasurementForDecodingOnly(country: "Another country", countryCode: "AC", date: date, totalConfirmed: 20, newConfirmed: 2, totalDeaths: 2, newDeaths: 0, totalRecovered: 10, newRecovered: 2, active: 15, newActive: 3, caseFatalityRate: 0.02)], date: date)
     
     static let countriesFromSummaryResponse = [Country(code: "SC", name: "Some country", latest: CountrySummaryMeasurement(date: date, totalConfirmed: 20, newConfirmed: 1, totalDeaths: 1, newDeaths: 0, totalRecovered: 10, newRecovered: 1, active: nil, newActive: nil, caseFatalityRate: 0.01)), Country(code: "AC", name: "Another country", latest: CountrySummaryMeasurement(date: date, totalConfirmed: 20, newConfirmed: 2, totalDeaths: 2, newDeaths: 0, totalRecovered: 10, newRecovered: 2, active: 15, newActive: 3, caseFatalityRate: 0.0175))]
     

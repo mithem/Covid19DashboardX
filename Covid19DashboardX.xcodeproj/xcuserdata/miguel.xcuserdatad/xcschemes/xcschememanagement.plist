@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Covid19DashboardWidgetExtension.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>0</integer>
-		</dict>
 		<key>Covid19DashboardX (iOS).xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -28,6 +23,11 @@
 			<true/>
 		</dict>
 		<key>49102220257252D200027B68</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4954F5CD24E7F4D300399145</key>
 		<dict>
 			<key>primary</key>
 			<true/>

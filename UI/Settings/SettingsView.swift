@@ -15,7 +15,6 @@ struct SettingsView: View {
                 NavigationLink("General", destination: GeneralSettingsView())
                 NavigationLink("Notifications", destination: NotificationSettingsView())
                 NavigationLink("Spotlight", destination: SpotlightIndexSettingsView())
-                NavigationLink("Widget", destination: WidgetSettingsView(manager: manager))
             }
             Section {
                 NavigationLink("Other", destination: OtherSettingsView())

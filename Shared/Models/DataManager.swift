@@ -124,7 +124,6 @@ class DataManager: ObservableObject {
                 }
                 DispatchQueue.main.async {
                     self.latestGlobal = globalMeasurement
-                    self.error = nil
                 }
             case .failure(let error):
                 self.handleError(error, task: .summary)
@@ -304,8 +303,10 @@ class DataManager: ObservableObject {
         
         self.reachability.whenReachable = { reachability in
             if reachability.connection != .unavailable {
-                DispatchQueue.main.async {
-                    self.error = nil
+                if self.error == .some(.constrainedNetwork) || self.error == .some(.noNetworkConnection) {
+                    DispatchQueue.main.async {
+                        self.error = nil
+                    }
                 }
                 for task in self.dataTasks {
                     self.execute(task: task)

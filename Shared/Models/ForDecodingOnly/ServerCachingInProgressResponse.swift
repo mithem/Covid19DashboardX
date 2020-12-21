@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ServerCachingInProgressResponse: CustomCodable {
+struct ServerCachingInProgressResponse: CustomCodable, Equatable {
     typealias Decoder = CustomJSONDecoder
     typealias Encoder = CustomJSONEncoder
     
