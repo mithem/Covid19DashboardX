@@ -63,7 +63,7 @@ struct SummaryView: View {
             Group {
                 if !manager.countries.isEmpty {
                     CountriesView
-                } else if manager.loading {
+                } else if manager.loadingTasks.contains(.summary) {
                     VStack(spacing: 10) {
                         ProgressView()
                         Text("Loading...")
@@ -136,7 +136,7 @@ struct SummaryView: View {
                         Text("Global: ") + (latestGlobal.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorPercentagesTreshold, colorDeltaGrayArea: colorPercentagesGrayArea, reversed: false))
                     }
                     .modifier(AttachToRefreshContextMenu(manager: manager))
-                } else if manager.loading {
+                } else if manager.loadingTasks.contains(.globalSummary) {
                     HStack {
                         Text("Global: loading…")
                         ProgressView()
@@ -186,7 +186,7 @@ fileprivate struct AttachToRefreshContextMenu: ViewModifier {
                 }
                 Button(action: {
                     DispatchQueue.main.async {
-                        manager.countries = []
+                        manager.reset()
                     }
                     manager.execute(task: .summary)
                 }) {

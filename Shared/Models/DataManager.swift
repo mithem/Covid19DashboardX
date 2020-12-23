@@ -14,11 +14,10 @@ class DataManager: ObservableObject {
     @Published var countries: [Country]
     @Published var latestGlobal: GlobalMeasurement?
     @Published var error: NetworkError?
-    var loading: Bool { _loading }
+    @Published var loadingTasks: Set<DataTask>
     
-    private var dataTasks: Set<DataTask>
+    private var pendingTasks: Set<DataTask>
     private let reachability: Reachability
-    private var _loading = false
     private var _sortBy: CountrySortingCriteria
     var sortBy: CountrySortingCriteria {
         get {
@@ -78,12 +77,12 @@ class DataManager: ObservableObject {
     
     func loadSummary() {
         DispatchQueue.main.async {
-            self._loading = true
+            self.loadingTasks.insert(.summary)
         }
         Self.getSummary { result in
             switch Self.parseSummary(result) {
             case .success(let countries):
-                self.dataTasks.remove(.summary)
+                self.pendingTasks.remove(.summary)
                 DispatchQueue.global().async {
                     indexForSpotlight(countries: countries)
                 }
@@ -96,7 +95,7 @@ class DataManager: ObservableObject {
                 self.handleError(error, task: .summary)
             }
             DispatchQueue.main.async {
-                self._loading = false
+                self.loadingTasks.remove(.summary)
             }
         }
     }
@@ -114,7 +113,7 @@ class DataManager: ObservableObject {
     
     func loadGlobalSummary() {
         DispatchQueue.main.async {
-            self._loading = true
+            self.loadingTasks.insert(.globalSummary)
         }
         Self.getGlobalSummary { result in
             switch result {
@@ -129,7 +128,7 @@ class DataManager: ObservableObject {
                 self.handleError(error, task: .summary)
             }
             DispatchQueue.main.async {
-                self._loading = false
+                self.loadingTasks.remove(.globalSummary)
             }
         }
     }
@@ -162,7 +161,7 @@ class DataManager: ObservableObject {
     
     func loadHistoryData(for countryCode: String) {
         DispatchQueue.main.async {
-            self._loading = true
+            self.loadingTasks.insert(.historyData(countryCode: countryCode))
         }
         guard let country = self.countries.first(where: {$0.code == countryCode}) else { return }
         country.code = countryCode // is this needed? Don't wanna search all this..
@@ -170,7 +169,7 @@ class DataManager: ObservableObject {
         Self.getHistoryData(for: country) { result in
             switch Self.parseHistoryData(result) {
             case .success(let country):
-                self.dataTasks.remove(.historyData(countryCode: countryCode))
+                self.pendingTasks.remove(.historyData(countryCode: countryCode))
                 DispatchQueue.main.async {
                     if let idx = self.countries.firstIndex(of: country) {
                         self.countries[idx] = country
@@ -181,7 +180,7 @@ class DataManager: ObservableObject {
                 self.handleError(error, task: .historyData(countryCode: countryCode))
             }
             DispatchQueue.main.async {
-                self._loading = false
+                self.loadingTasks.remove(.historyData(countryCode: countryCode))
             }
         }
     }
@@ -227,14 +226,14 @@ class DataManager: ObservableObject {
     
     func loadProvinceData(for countryCode: String) {
         DispatchQueue.main.async {
-            self._loading = true
+            self.loadingTasks.insert(.provinceData(countryCode: countryCode))
         }
         guard let country = self.countries.first(where: {$0.code == countryCode}) else { return }
         country.code = countryCode // is this needed? Don't wanna search all this..
         DataManager.getProvinceData(for: country) { result in
             switch Self.parseProvinceData(result, country: country) {
             case .success(let country):
-                self.dataTasks.remove(.provinceData(countryCode: countryCode))
+                self.pendingTasks.remove(.provinceData(countryCode: countryCode))
                 DispatchQueue.main.async {
                     if let idx = self.countries.firstIndex(of: country) {
                         self.countries[idx] = country
@@ -248,7 +247,7 @@ class DataManager: ObservableObject {
                 self.handleError(error, task: .provinceData(countryCode: countryCode))
             }
             DispatchQueue.main.async {
-                self._loading = false
+                self.loadingTasks.remove(.provinceData(countryCode: countryCode))
             }
         }
     }
@@ -297,7 +296,8 @@ class DataManager: ObservableObject {
         countries = [Country]()
         _sortBy = .countryCode
         _reversed = false
-        dataTasks = .init()
+        pendingTasks = .init()
+        loadingTasks = .init()
         
         self.reachability = try! Reachability()
         
@@ -308,7 +308,7 @@ class DataManager: ObservableObject {
                         self.error = nil
                     }
                 }
-                for task in self.dataTasks {
+                for task in self.pendingTasks {
                     self.execute(task: task)
                 }
             }
@@ -322,8 +322,8 @@ class DataManager: ObservableObject {
         if reachability.connection == .unavailable {
             DispatchQueue.main.async {
                 self.error = .noNetworkConnection
-                self._loading = false
-                self.dataTasks.insert(.summary)
+                self.loadingTasks = .init()
+                self.pendingTasks.insert(.summary)
             }
         } else {
             execute(task: .summary)
@@ -332,9 +332,12 @@ class DataManager: ObservableObject {
     
     func reset() {
         latestGlobal = nil
-        countries = [Country]()
+        countries = []
+        error = nil
         sortBy = .countryCode
         reversed = false
+        pendingTasks = .init() // summary loading to be invoked somewhere else
+        loadingTasks = .init()
     }
     
     
@@ -346,7 +349,7 @@ class DataManager: ObservableObject {
             self.error = error
         }
         if error == .noNetworkConnection || error == .constrainedNetwork {
-            dataTasks.insert(task)
+            pendingTasks.insert(task)
         }
     }
     
@@ -364,8 +367,9 @@ class DataManager: ObservableObject {
     func execute(task: DataTask) {
         switch task {
         case .summary:
-            self.loadGlobalSummary()
             self.loadSummary()
+        case .globalSummary:
+            self.loadGlobalSummary()
         case .historyData(countryCode: let countryCode):
             self.loadHistoryData(for: countryCode)
         case .provinceData(countryCode: let countryCode):
@@ -376,6 +380,7 @@ class DataManager: ObservableObject {
     
     enum DataTask: Hashable {
         case summary
+        case globalSummary
         case historyData(countryCode: String)
         case provinceData(countryCode: String)
     }

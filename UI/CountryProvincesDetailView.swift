@@ -31,7 +31,7 @@ struct CountryProvincesDetailView: View {
                         }
                 }
                 NavigationLink("Total: \(country.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, colorPercentagesTreshold: colorPercentagesTreshold, colorPercentagesGrayArea: colorPercentagesGrayArea, reversed: false))", destination: SummaryProviderDetailView(manager: manager, provider: country))
-                if manager.loading {
+                if manager.loadingTasks.contains(.provinceData(countryCode: country.code)) {
                     HStack(spacing: 10) {
                         ProgressView()
                         Text("Loading…")

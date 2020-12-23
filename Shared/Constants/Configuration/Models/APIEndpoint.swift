@@ -39,16 +39,18 @@ extension APIEndpoint {
                 completion(.success(data))
             case .failure(let error):
                 if DataType.self == FallbackDataType.self {
-                    completion(.failure(NetworkError(error: error)))
+                    let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
+                    completion(.failure(.invalidResponse(response: string)))
                 } else {
                     switch error {
-                    case .decodingError(let error):
+                    case .decodingError(_):
                         let result2 = FallbackDataType.decode(from: data)
                         switch result2 {
                         case .success(let data):
                             completion(.fallbackSuccessful(data))
                         case .failure(_):
-                            completion(.failure(NetworkError(error: error)))
+                            let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
+                            completion(.failure(.invalidResponse(response: string)))
                         }
                     case .noData:
                         completion(.failure(.noResponse))

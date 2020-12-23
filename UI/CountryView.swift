@@ -66,7 +66,7 @@ struct CountryView: View {
                         RefreshButton
                     }
                 }
-            } else if manager.loading {
+            } else if manager.loadingTasks.contains(.historyData(countryCode: country.code)) {
                 LoadingView
                 Spacer()
             } else {

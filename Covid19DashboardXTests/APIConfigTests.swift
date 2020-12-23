@@ -9,8 +9,6 @@ import XCTest
 
 class APIConfigTests: XCTestCase {
     
-    let invalidJSONerrorMessage = "The data couldn’t be read because it isn’t in the correct format."
-    
     struct CustomDataType: CustomCodable, Equatable {
         typealias Encoder = CustomJSONEncoder
         typealias Decoder = CustomJSONDecoder
@@ -102,7 +100,7 @@ class APIConfigTests: XCTestCase {
             case .fallbackSuccessful(let data):
                 XCTAssertNil(data)
             case .failure(let error):
-                XCTAssertEqual(error, .invalidResponse(response: self.invalidJSONerrorMessage))
+                XCTAssertEqual(error, .invalidResponse(response: input))
             }
         }
     }
@@ -157,7 +155,7 @@ class APIConfigTests: XCTestCase {
             case .fallbackSuccessful(let data):
                 XCTAssertNil(data)
             case .failure(let error):
-                XCTAssertEqual(error.localizedDescription, self.invalidJSONerrorMessage)
+                XCTAssertEqual(error, .invalidResponse(response: input))
             }
         }
     }

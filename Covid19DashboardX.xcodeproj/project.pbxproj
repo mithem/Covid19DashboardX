@@ -34,8 +34,6 @@
 		49370B2225429E0B009BFE4C /* ProvinceInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */; };
 		49370B2A2542AA56009BFE4C /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
 		493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E08252383A70060BA27 /* ModelDecodableTests.swift */; };
-		493F1A042590763B0084B130 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 493F1A032590763B0084B130 /* Reachability */; };
-		493F1A07259076490084B130 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 493F1A06259076490084B130 /* SwiftUICharts */; };
 		493F1A0F25907EB60084B130 /* APIConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F1A0E25907EB60084B130 /* APIConfigTests.swift */; };
 		494149ED258B49A1003351AC /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
 		494A26AF25723CF80022A49E /* Country+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26AE25723CF80022A49E /* Country+Hashable.swift */; };
@@ -158,6 +156,8 @@
 		4986883D256A6F7A00C833AA /* SpotlightIndexSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868830256A6F7000C833AA /* SpotlightIndexSettingsView.swift */; };
 		4995BB9B2572A6A10098A176 /* Covid19DashboardXUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4995BB9A2572A6A10098A176 /* Covid19DashboardXUITests.swift */; };
 		499A5420255ED68200D1D3D8 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499A541F255ED68200D1D3D8 /* Searchable.swift */; };
+		49B1022E2593334A00A7F890 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49B1022D2593334A00A7F890 /* SwiftUICharts */; };
+		49B102342593337100A7F890 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 49B102332593337100A7F890 /* Reachability */; };
 		49B90EDC25432EB900E89F5D /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EDB25432EB900E89F5D /* CustomButtonStyle.swift */; };
 		49B90EFC2543460100E89F5D /* SummaryProviderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EFB2543460100E89F5D /* SummaryProviderDetailView.swift */; };
 		49D9B0AC257BF01D00B80B3E /* GlobalMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D9B0AB257BF01D00B80B3E /* GlobalMeasurementForDecodingOnly.swift */; };
@@ -374,8 +374,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				493F1A042590763B0084B130 /* Reachability in Frameworks */,
-				493F1A07259076490084B130 /* SwiftUICharts in Frameworks */,
+				49B1022E2593334A00A7F890 /* SwiftUICharts in Frameworks */,
+				49B102342593337100A7F890 /* Reachability in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -739,8 +739,8 @@
 			);
 			name = "Covid19DashboardX (iOS)";
 			packageProductDependencies = (
-				493F1A032590763B0084B130 /* Reachability */,
-				493F1A06259076490084B130 /* SwiftUICharts */,
+				49B1022D2593334A00A7F890 /* SwiftUICharts */,
+				49B102332593337100A7F890 /* Reachability */,
 			);
 			productName = "Covid19DashboardX (iOS)";
 			productReference = 4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */;
@@ -797,8 +797,8 @@
 			);
 			mainGroup = 4954F5C124E7F4D200399145;
 			packageReferences = (
-				493F1A022590763B0084B130 /* XCRemoteSwiftPackageReference "Reachability" */,
-				493F1A05259076490084B130 /* XCRemoteSwiftPackageReference "ChartView" */,
+				49B1022C2593334A00A7F890 /* XCRemoteSwiftPackageReference "ChartView" */,
+				49B102322593337100A7F890 /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			productRefGroup = 4954F5CF24E7F4D300399145 /* Products */;
 			projectDirPath = "";
@@ -1360,15 +1360,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		493F1A022590763B0084B130 /* XCRemoteSwiftPackageReference "Reachability" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.0;
-			};
-		};
-		493F1A05259076490084B130 /* XCRemoteSwiftPackageReference "ChartView" */ = {
+		49B1022C2593334A00A7F890 /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppPear/ChartView";
 			requirement = {
@@ -1376,18 +1368,26 @@
 				minimumVersion = 1.5.4;
 			};
 		};
+		49B102322593337100A7F890 /* XCRemoteSwiftPackageReference "Reachability" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		493F1A032590763B0084B130 /* Reachability */ = {
+		49B1022D2593334A00A7F890 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 493F1A022590763B0084B130 /* XCRemoteSwiftPackageReference "Reachability" */;
-			productName = Reachability;
-		};
-		493F1A06259076490084B130 /* SwiftUICharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 493F1A05259076490084B130 /* XCRemoteSwiftPackageReference "ChartView" */;
+			package = 49B1022C2593334A00A7F890 /* XCRemoteSwiftPackageReference "ChartView" */;
 			productName = SwiftUICharts;
+		};
+		49B102332593337100A7F890 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49B102322593337100A7F890 /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
