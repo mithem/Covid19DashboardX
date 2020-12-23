@@ -121,7 +121,7 @@ struct SummaryView: View {
     
     var RefreshButton: some View {
         Button("Refresh") {
-            manager.execute(task: .summary)
+            refresh()
         }
         .buttonStyle(CustomButtonStyle())
     }
@@ -171,6 +171,10 @@ struct SummaryView: View {
         center.removeDeliveredNotifications(withIdentifiers: identifiers) // Do not remove all for future-proofing
         ud.set([String](), forKey: UserDefaultsKeys.notificationIdentifiers)
     }
+    
+    func refresh() {
+        refreshSummaries(on: manager)
+    }
 }
 
 fileprivate struct AttachToRefreshContextMenu: ViewModifier {
@@ -179,7 +183,7 @@ fileprivate struct AttachToRefreshContextMenu: ViewModifier {
         content
             .contextMenu {
                 Button(action: {
-                    manager.execute(task: .summary)
+                    refreshSummaries(on: manager)
                 }) {
                     Text("Refresh summaries")
                     Image(systemName: "arrow.clockwise")
@@ -188,7 +192,7 @@ fileprivate struct AttachToRefreshContextMenu: ViewModifier {
                     DispatchQueue.main.async {
                         manager.reset()
                     }
-                    manager.execute(task: .summary)
+                    refreshSummaries(on: manager)
                 }) {
                     Text("Reset all data")
                     Image(systemName: "trash")
@@ -199,6 +203,11 @@ fileprivate struct AttachToRefreshContextMenu: ViewModifier {
 
 fileprivate enum ActionSheetConfig {
     case sort, error
+}
+
+fileprivate func refreshSummaries(on manager: DataManager) {
+    manager.execute(task: .summary)
+    manager.execute(task: .globalSummary)
 }
 
 struct SummaryView_Previews: PreviewProvider {

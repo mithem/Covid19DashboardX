@@ -324,9 +324,11 @@ class DataManager: ObservableObject {
                 self.error = .noNetworkConnection
                 self.loadingTasks = .init()
                 self.pendingTasks.insert(.summary)
+                self.pendingTasks.insert(.globalSummary)
             }
         } else {
             execute(task: .summary)
+            execute(task: .globalSummary)
         }
     }
     
