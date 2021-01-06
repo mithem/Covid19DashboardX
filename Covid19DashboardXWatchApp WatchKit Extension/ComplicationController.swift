@@ -14,8 +14,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
         let descriptors = [
-            CLKComplicationDescriptor(identifier: "complication", displayName: "Covid19DashboardX", supportedFamilies: CLKComplicationFamily.allCases)
-            // Multiple complication support can be added here with more descriptors
+            ComplicationDescriptors.globalActive,
+            ComplicationDescriptors.globalConfirmed
         ]
         
         // Call the handler with the currently supported complication descriptors
@@ -41,13 +41,38 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Timeline Population
     
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
-        // Call the handler with the current timeline entry
-        handler(nil)
+        var colorTresholdForDeltas = UserDefaults().double(forKey: UserDefaultsKeys.colorTresholdForDeltas)
+        if colorTresholdForDeltas == .zero {
+            colorTresholdForDeltas = DefaultSettings.colorTresholdForDeltas
+        }
+        guard let complication = ComplicationIdentifier(rawValue: complication.identifier) else { handler(nil); return }
+        DataManager.getGlobalSummary { result in
+            switch result {
+            case .success(let latest):
+                guard let na = latest.value(for: complication) else { handler(nil); return }
+                let ratio = Float(na) / Float(latest.active)
+                var fillFraction = ratio / Float(colorTresholdForDeltas)
+                if fillFraction > 1 {
+                    fillFraction = 1
+                } else if fillFraction < 0 {
+                    fillFraction = 0
+                }
+                let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: CLKComplicationTemplateGraphicCornerGaugeText(gaugeProvider: CLKSimpleGaugeProvider(style: .ring, gaugeColors: [.green, .red], gaugeColorLocations: [0 as NSNumber, 1 as NSNumber], fillFraction: fillFraction), outerTextProvider: CLKSimpleTextProvider(text: latest.string(for: complication))))
+                handler(entry)
+            case .failure(_):
+                handler(nil)
+            }
+        }
     }
     
     func getTimelineEntries(for complication: CLKComplication, after date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
-        // Call the handler with the timeline entries after the given date
-        handler(nil)
+        getCurrentTimelineEntry(for: complication) { entry in
+            if let entry = entry {
+                handler([entry])
+            } else {
+                handler(nil)
+            }
+        }
     }
 
     // MARK: - Sample Templates
