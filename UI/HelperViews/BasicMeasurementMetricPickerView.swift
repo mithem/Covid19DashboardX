@@ -10,12 +10,21 @@ import SwiftUI
 struct BasicMeasurementMetricPickerView: View {
     @Binding var activeMetric: BasicMeasurementMetric
     var body: some View {
+        #if os(watchOS)
+        Content
+            .pickerStyle(DefaultPickerStyle())
+        #else
+        Content
+            .pickerStyle(SegmentedPickerStyle())
+        #endif
+    }
+    
+    var Content: some View {
         Picker("Measurement metric", selection: $activeMetric) {
             ForEach(BasicMeasurementMetric.allCases) { value in
                 Text(value.shortDescription).tag(value)
             }
         }
-        .pickerStyle(SegmentedPickerStyle())
     }
 }
 

@@ -9,7 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
+        #if os(watchOS)
         SummaryView(manager: DataManager())
+        #else
+        SummaryView(manager: DataManagerWithReachablity())
+        #endif
     }
 }
 

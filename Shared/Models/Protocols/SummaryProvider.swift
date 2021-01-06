@@ -26,7 +26,8 @@ protocol SummaryProvider: Identifiable, Searchable {
     /// Number of days it takes for active cases to double
     var doublingTime: TimeInterval? { get }
     
-    func newSummaryElement(total: Int, new: Int, colorTreshold: Double, colorGrayArea: Double) -> Text
+    func newSummaryElement(metric: BasicMeasurementMetric, colorTresholdForDeltas: Double, colorGrayAreaForDeltas: Double) -> Text
+    func newSummaryElement(total: Int, new: Int, colorTresholdForDeltas: Double, colorGrayAreaForDeltas: Double) -> Text
     
     func confirmedSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
     func deathsSummary(colorNumbers: Bool, colorDeltaTreshold: Double, colorDeltaGrayArea: Double, reversed: Bool) -> Text
@@ -53,6 +54,7 @@ protocol SummaryProvider: Identifiable, Searchable {
     func summaryFor(metric: BasicMeasurementMetric) -> String
     
     func value(for metric: MeasurementMetric) -> String
+    func value(for metric: BasicMeasurementMetric, significantDigits: Int) -> String
 }
 
 extension SummaryProvider {
@@ -91,21 +93,43 @@ extension SummaryProvider {
         return calculateDoublingRate(new: newActive, total: active, in: 1)
     }
     
-    func newSummaryElement(total: Int, new: Int, colorTreshold: Double, colorGrayArea: Double) -> Text {
-        let ratio = Double(new) / Double(total)
-        return newSummaryElement(new: new, ratio: ratio, colorTreshold: colorTreshold, colorGrayArea: colorGrayArea)
+    func newSummaryElement(metric: BasicMeasurementMetric, colorTresholdForDeltas: Double, colorGrayAreaForDeltas: Double) -> Text {
+        let total: Int?
+        let new: Int?
+        switch metric {
+        case .confirmed:
+            total = totalConfirmed
+            new = newConfirmed
+        case .recovered:
+            total = totalRecovered
+            new = newRecovered
+        case .deaths:
+            total = totalDeaths
+            new = newDeaths
+        case .active:
+            total = activeCases
+            new = newActive
+        }
+        guard let t = total, let n = new else { return Text(Constants.notAvailableString) }
+        return newSummaryElement(total: t, new: n, colorTresholdForDeltas: colorTresholdForDeltas, colorGrayAreaForDeltas: colorGrayAreaForDeltas)
     }
     
-    func newSummaryElement(new: Int, ratio: Double, colorTreshold: Double, colorGrayArea: Double) -> Text {
+    func newSummaryElement(total: Int, new: Int, colorTresholdForDeltas: Double, colorGrayAreaForDeltas: Double) -> Text {
+        let ratio = Double(new) / Double(total)
+        return newSummaryElement(new: new, ratio: ratio, colorTresholdForDeltas: colorTresholdForDeltas, colorGrayAreaForDeltas: colorGrayAreaForDeltas)
+    }
+    
+    func newSummaryElement(new: Int, ratio: Double, colorTresholdForDeltas: Double, colorGrayAreaForDeltas: Double) -> Text {
         let formatter = NumberFormatter()
-        formatter.usesGroupingSeparator = true
-        formatter.numberStyle = .decimal
+        formatter.numberStyle = .scientific
+        formatter.maximumSignificantDigits = 5
+        
         let sign = new > 0 ? "+" : (new < 0 ? "-" : "=")
         var s = "\(sign)\(formatter.string(from: NSNumber(value: new)) ?? Constants.notAvailableString)"
         if new != 0 {
             s += ", \(PercentageFormatter(precision: 2).string(from: NSNumber(value: ratio)) ?? Constants.notAvailableString)"
         }
-        return Text(s).foregroundColor(getColor(ratio: ratio, treshold: colorTreshold, grayArea: colorGrayArea))
+        return Text(s).foregroundColor(getColor(ratio: ratio, treshold: colorTresholdForDeltas, grayArea: colorGrayAreaForDeltas))
     }
     
     
@@ -117,7 +141,7 @@ extension SummaryProvider {
         if let new = new {
             let ratio = Double(new) / Double(total)
             let t1 = Text("\(numberFormatter.string(from: NSNumber(value: total)) ?? Constants.notAvailableString) (")
-            let t2 = newSummaryElement(new: new, ratio: ratio, colorTreshold: colorDeltaTreshold, colorGrayArea: colorDeltaGrayArea)
+            let t2 = newSummaryElement(new: new, ratio: ratio, colorTresholdForDeltas: colorDeltaTreshold, colorGrayAreaForDeltas: colorDeltaGrayArea)
             let t3 = Text(")")
             if colorNumbers {
                 let color = getColor(ratio: ratio, treshold: colorDeltaTreshold, grayArea: colorDeltaGrayArea)
@@ -285,7 +309,6 @@ extension SummaryProvider {
             vIsTimeInterval = true
         }
         let formatter = NumberFormatter()
-        formatter.usesGroupingSeparator = true
         if let v = v as? Int {
             formatter.numberStyle = .scientific
             formatter.maximumSignificantDigits = 5
@@ -300,5 +323,24 @@ extension SummaryProvider {
         } else {
             return Constants.notAvailableString
         }
+    }
+    
+    func value(for metric: BasicMeasurementMetric, significantDigits: Int = 5) -> String {
+        let value: NSNumber?
+        switch metric {
+        case .confirmed:
+            value = totalConfirmed as NSNumber
+        case .deaths:
+            value = totalDeaths as NSNumber
+        case .recovered:
+            value = totalRecovered as NSNumber
+        case .active:
+            value = activeCases as NSNumber?
+        }
+        guard let v = value else { return Constants.notAvailableString }
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .scientific
+        formatter.maximumSignificantDigits = significantDigits
+        return formatter.string(from: v) ?? Constants.notAvailableString
     }
 }

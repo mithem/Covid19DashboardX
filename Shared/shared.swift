@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if !os(watchOS)
 import CoreSpotlight
+#endif
 
 func getData(_ data: [Double], dataRepresentation: DataRepresentationType) -> [Double] {
     func appropriateFunction(_ y: Double) -> Double {
@@ -56,6 +58,7 @@ func resetSettingsToDefaults() {
     ud.set(ds.dataRepresentationType.rawValue, forKey: uk.dataRepresentationType)
 }
 
+#if !os(watchOS)
 func indexForSpotlight(countries: [Country]) {
     var items = [CSSearchableItem]()
     let formatter = DateFormatter()
@@ -136,10 +139,12 @@ func indexGlobalMeasurementForSpotlight(_ measurement: GlobalMeasurement) {
     }
 }
 
+@available(iOS 14, *)
 func deleteIndexForSpotlight(completion: @escaping (Error?) -> Void) {
     let index = CSSearchableIndex.default()
     index.deleteAllSearchableItems(completionHandler: completion)
 }
+#endif
 
 func calculateDoublingRate(new: Int, total: Int, in days: Int) -> Double {
     let ratio = (Double(new) / Double(total)) / Double(days)

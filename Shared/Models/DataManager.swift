@@ -8,7 +8,6 @@
 import Foundation
 import Network
 import SwiftUI
-import Reachability
 
 class DataManager: ObservableObject {
     @Published var countries: [Country]
@@ -16,26 +15,25 @@ class DataManager: ObservableObject {
     @Published var error: NetworkError?
     @Published var loadingTasks: Set<DataTask>
     
-    private var pendingTasks: Set<DataTask>
-    private let reachability: Reachability
-    private var _sortBy: CountrySortingCriteria
+    var _pendingTasks: Set<DataTask>
+    var _sortBy: CountrySortingCriteria
     var sortBy: CountrySortingCriteria {
         get {
             _sortBy
         }
         set {
             _sortBy = newValue
-            sortCountries()
+            _sortCountries()
         }
     }
-    private var _reversed: Bool
+    var _reversed: Bool
     var reversed: Bool {
         get {
             _reversed
         }
         set {
             _reversed = newValue
-            sortCountries()
+            _sortCountries()
         }
     }
     
@@ -82,17 +80,19 @@ class DataManager: ObservableObject {
         Self.getSummary { result in
             switch Self.parseSummary(result) {
             case .success(let countries):
-                self.pendingTasks.remove(.summary)
+                self._pendingTasks.remove(.summary)
+                #if !os(watchOS)
                 DispatchQueue.global().async {
                     indexForSpotlight(countries: countries)
                 }
+                #endif
                 DispatchQueue.main.async {
-                    self.sortCountries()
+                    self._sortCountries()
                     self.countries = countries
                     self.error = nil
                 }
             case .failure(let error):
-                self.handleError(error, task: .summary)
+                self._handleError(error, task: .summary)
             }
             DispatchQueue.main.async {
                 self.loadingTasks.remove(.summary)
@@ -118,14 +118,16 @@ class DataManager: ObservableObject {
         Self.getGlobalSummary { result in
             switch result {
             case .success(let globalMeasurement):
+                #if !os(watchOS) // yes, I could probably put this in `DataManagerWithReachability`. Would lead to quite a bit of repitition, though.
                 DispatchQueue.global().async {
                     indexGlobalMeasurementForSpotlight(globalMeasurement)
                 }
+                #endif
                 DispatchQueue.main.async {
                     self.latestGlobal = globalMeasurement
                 }
             case .failure(let error):
-                self.handleError(error, task: .summary)
+                self._handleError(error, task: .summary)
             }
             DispatchQueue.main.async {
                 self.loadingTasks.remove(.globalSummary)
@@ -169,7 +171,7 @@ class DataManager: ObservableObject {
         Self.getHistoryData(for: country) { result in
             switch Self.parseHistoryData(result) {
             case .success(let country):
-                self.pendingTasks.remove(.historyData(countryCode: countryCode))
+                self._pendingTasks.remove(.historyData(countryCode: countryCode))
                 DispatchQueue.main.async {
                     if let idx = self.countries.firstIndex(of: country) {
                         self.countries[idx] = country
@@ -177,7 +179,7 @@ class DataManager: ObservableObject {
                     self.error = nil
                 }
             case .failure(let error):
-                self.handleError(error, task: .historyData(countryCode: countryCode))
+                self._handleError(error, task: .historyData(countryCode: countryCode))
             }
             DispatchQueue.main.async {
                 self.loadingTasks.remove(.historyData(countryCode: countryCode))
@@ -233,18 +235,20 @@ class DataManager: ObservableObject {
         DataManager.getProvinceData(for: country) { result in
             switch Self.parseProvinceData(result, country: country) {
             case .success(let country):
-                self.pendingTasks.remove(.provinceData(countryCode: countryCode))
+                self._pendingTasks.remove(.provinceData(countryCode: countryCode))
                 DispatchQueue.main.async {
                     if let idx = self.countries.firstIndex(of: country) {
                         self.countries[idx] = country
                     }
                     self.error = nil
                 }
+                #if !os(watchOS)
                 DispatchQueue.global().async {
                     indexForSpotlight(countries: self.countries)
                 }
+                #endif
             case .failure(let error):
-                self.handleError(error, task: .provinceData(countryCode: countryCode))
+                self._handleError(error, task: .provinceData(countryCode: countryCode))
             }
             DispatchQueue.main.async {
                 self.loadingTasks.remove(.provinceData(countryCode: countryCode))
@@ -256,7 +260,7 @@ class DataManager: ObservableObject {
     // MARK: sortCountries()
     
     
-    private func sortCountries() {
+    func _sortCountries() {
         countries.sort(by: { lhs, rhs in
             var lt: Bool
             switch sortBy {
@@ -296,40 +300,12 @@ class DataManager: ObservableObject {
         countries = [Country]()
         _sortBy = .countryCode
         _reversed = false
-        pendingTasks = .init()
+        _pendingTasks = .init()
         loadingTasks = .init()
         
-        self.reachability = try! Reachability()
+        execute(task: .summary)
+        execute(task: .globalSummary)
         
-        self.reachability.whenReachable = { reachability in
-            if reachability.connection != .unavailable {
-                if self.error == .some(.constrainedNetwork) || self.error == .some(.noNetworkConnection) {
-                    DispatchQueue.main.async {
-                        self.error = nil
-                    }
-                }
-                for task in self.pendingTasks {
-                    self.execute(task: task)
-                }
-            }
-        }
-        do {
-            try reachability.startNotifier()
-        } catch {
-            print("Couldn't start Reachability notifier: \(error.localizedDescription)")
-        }
-        
-        if reachability.connection == .unavailable {
-            DispatchQueue.main.async {
-                self.error = .noNetworkConnection
-                self.loadingTasks = .init()
-                self.pendingTasks.insert(.summary)
-                self.pendingTasks.insert(.globalSummary)
-            }
-        } else {
-            execute(task: .summary)
-            execute(task: .globalSummary)
-        }
     }
     
     func reset() {
@@ -338,7 +314,7 @@ class DataManager: ObservableObject {
         error = nil
         sortBy = .countryCode
         reversed = false
-        pendingTasks = .init() // summary loading to be invoked somewhere else
+        _pendingTasks = .init() // summary loading to be invoked somewhere else
         loadingTasks = .init()
     }
     
@@ -346,12 +322,12 @@ class DataManager: ObservableObject {
     // MARK: Error handling
     
     
-    private func handleError(_ error: NetworkError?, task: DataTask) {
+    private func _handleError(_ error: NetworkError?, task: DataTask) {
         DispatchQueue.main.async {
             self.error = error
         }
         if error == .noNetworkConnection || error == .constrainedNetwork {
-            pendingTasks.insert(task)
+            _pendingTasks.insert(task)
         }
     }
     
