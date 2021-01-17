@@ -12,17 +12,15 @@ struct SummaryResponse: CustomCodable, Equatable {
         required init() {
             super.init()
             keyDecodingStrategy = .convertFromPascalCase
-            dateDecodingStrategy = .iso8601
         }
     }
     class Encoder: CustomJSONEncoder {
-        required init() {
-            super.init()
+        required convenience init() {
+            self.init()
             keyEncodingStrategy = .convertToPascalCase
-            dateEncodingStrategy = .iso8601
         }
     }
     
+    let message: String
     let countries: [CountrySummaryMeasurementForDecodingOnly]
-    let date: Date
 }

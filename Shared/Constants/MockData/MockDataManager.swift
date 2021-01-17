@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MockDataManager: DataManager {
+final class MockDataManager: DataManager {
     static var forceError: Error? = nil
     
     override class func getSummary(completion: @escaping (Result<SummaryResponse, NetworkError>) -> Void) {

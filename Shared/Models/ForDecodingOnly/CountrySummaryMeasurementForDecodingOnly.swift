@@ -12,7 +12,6 @@ struct CountrySummaryMeasurementForDecodingOnly: Codable, Identifiable, Equatabl
     var id: String { countryCode }
     let country: String
     let countryCode: String
-    let date: Date
     let totalConfirmed: Int
     let newConfirmed: Int
     let totalDeaths: Int
@@ -24,10 +23,9 @@ struct CountrySummaryMeasurementForDecodingOnly: Codable, Identifiable, Equatabl
     let caseFatalityRate: Double?
     let slug: String?
     
-    init(country: String, countryCode: String, date: Date, totalConfirmed: Int, newConfirmed: Int, totalDeaths: Int, newDeaths: Int, totalRecovered: Int, newRecovered: Int, slug: String? = nil, active: Int? = nil, newActive: Int? = nil, caseFatalityRate: Double?) {
+    init(country: String, countryCode: String, totalConfirmed: Int, newConfirmed: Int, totalDeaths: Int, newDeaths: Int, totalRecovered: Int, newRecovered: Int, slug: String? = nil, active: Int? = nil, newActive: Int? = nil, caseFatalityRate: Double?) {
         self.country = country
         self.countryCode = countryCode
-        self.date = date
         self.totalConfirmed = totalConfirmed
         self.newConfirmed = newConfirmed
         self.totalDeaths = totalDeaths
@@ -41,6 +39,6 @@ struct CountrySummaryMeasurementForDecodingOnly: Codable, Identifiable, Equatabl
     }
     
     func toCountrySummaryMeasurement() -> CountrySummaryMeasurement {
-        return .init(date: date, totalConfirmed: totalConfirmed, newConfirmed: newConfirmed, totalDeaths: totalDeaths, newDeaths: newDeaths, totalRecovered: totalRecovered, newRecovered: newRecovered, active: active, newActive: newActive, caseFatalityRate: caseFatalityRate)
+        return .init(totalConfirmed: totalConfirmed, newConfirmed: newConfirmed, totalDeaths: totalDeaths, newDeaths: newDeaths, totalRecovered: totalRecovered, newRecovered: newRecovered, active: active, newActive: newActive, caseFatalityRate: caseFatalityRate)
     }
 }
