@@ -13,7 +13,6 @@
 		4914D306258C75DD00E6C082 /* FutureEstimationProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914D305258C75DD00E6C082 /* FutureEstimationProviderView.swift */; };
 		4914F3E82544032A00CBC521 /* SummaryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914F3E72544032A00CBC521 /* SummaryProvider.swift */; };
 		4914F3F4254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4914F3F3254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift */; };
-		491955C425B412920088CF9C /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 491955C325B412920088CF9C /* Reachability */; };
 		491AC43A2585E0AC00674477 /* CustomDecodableError+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC4392585E0AC00674477 /* CustomDecodableError+Equatable.swift */; };
 		491AC43B2585E0AC00674477 /* CustomDecodableError+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC4392585E0AC00674477 /* CustomDecodableError+Equatable.swift */; };
 		491AC4432585E0CE00674477 /* CustomDecodableError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC4422585E0CE00674477 /* CustomDecodableError+LocalizedError.swift */; };
@@ -37,7 +36,6 @@
 		493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E08252383A70060BA27 /* ModelDecodableTests.swift */; };
 		493F1A0F25907EB60084B130 /* APIConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F1A0E25907EB60084B130 /* APIConfigTests.swift */; };
 		494149ED258B49A1003351AC /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
-		4942089625B412CA00D22D04 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 4942089525B412CA00D22D04 /* SwiftUICharts */; };
 		494A26AF25723CF80022A49E /* Country+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26AE25723CF80022A49E /* Country+Hashable.swift */; };
 		494A26B025723CF80022A49E /* Country+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26AE25723CF80022A49E /* Country+Hashable.swift */; };
 		494A26C025723E230022A49E /* Province+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26BF25723E230022A49E /* Province+Hashable.swift */; };
@@ -188,6 +186,8 @@
 		49B90EDC25432EB900E89F5D /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EDB25432EB900E89F5D /* CustomButtonStyle.swift */; };
 		49B90EFC2543460100E89F5D /* SummaryProviderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EFB2543460100E89F5D /* SummaryProviderDetailView.swift */; };
 		49C6A6D725A465E100F4C226 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49C6A6D625A465E100F4C226 /* SwiftUICharts */; };
+		49D0D12825C1F59B00D37BEB /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 49D0D12725C1F59B00D37BEB /* Reachability */; };
+		49D0D13125C1F5BB00D37BEB /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49D0D13025C1F5BB00D37BEB /* SwiftUICharts */; };
 		49D5A21D259EE8EE003C8F00 /* Covid19DashboardXWatchApp WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 49D5A21C259EE8EE003C8F00 /* Covid19DashboardXWatchApp WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		49D5A222259EE8EF003C8F00 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49D5A221259EE8EF003C8F00 /* Assets.xcassets */; };
 		49D5A229259EE8EF003C8F00 /* Covid19DashboardXWatchApp WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 49D5A228259EE8EF003C8F00 /* Covid19DashboardXWatchApp WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -527,8 +527,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				491955C425B412920088CF9C /* Reachability in Frameworks */,
-				4942089625B412CA00D22D04 /* SwiftUICharts in Frameworks */,
+				49D0D12825C1F59B00D37BEB /* Reachability in Frameworks */,
+				49D0D13125C1F5BB00D37BEB /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -942,8 +942,8 @@
 			);
 			name = "Covid19DashboardX (iOS)";
 			packageProductDependencies = (
-				491955C325B412920088CF9C /* Reachability */,
-				4942089525B412CA00D22D04 /* SwiftUICharts */,
+				49D0D12725C1F59B00D37BEB /* Reachability */,
+				49D0D13025C1F5BB00D37BEB /* SwiftUICharts */,
 			);
 			productName = "Covid19DashboardX (iOS)";
 			productReference = 4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */;
@@ -1063,8 +1063,8 @@
 			);
 			mainGroup = 4954F5C124E7F4D200399145;
 			packageReferences = (
-				491955C225B412920088CF9C /* XCRemoteSwiftPackageReference "Reachability" */,
-				4942089425B412CA00D22D04 /* XCRemoteSwiftPackageReference "ChartView" */,
+				49D0D12625C1F59B00D37BEB /* XCRemoteSwiftPackageReference "Reachability" */,
+				49D0D12F25C1F5BB00D37BEB /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = 4954F5CF24E7F4D300399145 /* Products */;
 			projectDirPath = "";
@@ -1909,7 +1909,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		491955C225B412920088CF9C /* XCRemoteSwiftPackageReference "Reachability" */ = {
+		49D0D12625C1F59B00D37BEB /* XCRemoteSwiftPackageReference "Reachability" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
 			requirement = {
@@ -1917,7 +1917,7 @@
 				minimumVersion = 5.1.0;
 			};
 		};
-		4942089425B412CA00D22D04 /* XCRemoteSwiftPackageReference "ChartView" */ = {
+		49D0D12F25C1F5BB00D37BEB /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppPear/ChartView";
 			requirement = {
@@ -1928,18 +1928,18 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		491955C325B412920088CF9C /* Reachability */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 491955C225B412920088CF9C /* XCRemoteSwiftPackageReference "Reachability" */;
-			productName = Reachability;
-		};
-		4942089525B412CA00D22D04 /* SwiftUICharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4942089425B412CA00D22D04 /* XCRemoteSwiftPackageReference "ChartView" */;
-			productName = SwiftUICharts;
-		};
 		49C6A6D625A465E100F4C226 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = SwiftUICharts;
+		};
+		49D0D12725C1F59B00D37BEB /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49D0D12625C1F59B00D37BEB /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
+		};
+		49D0D13025C1F5BB00D37BEB /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49D0D12F25C1F5BB00D37BEB /* XCRemoteSwiftPackageReference "ChartView" */;
 			productName = SwiftUICharts;
 		};
 /* End XCSwiftPackageProductDependency section */

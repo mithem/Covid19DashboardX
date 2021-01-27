@@ -15,8 +15,8 @@ struct SummaryResponse: CustomCodable, Equatable {
         }
     }
     class Encoder: CustomJSONEncoder {
-        required convenience init() {
-            self.init()
+        required init() {
+            super.init()
             keyEncodingStrategy = .convertToPascalCase
         }
     }
