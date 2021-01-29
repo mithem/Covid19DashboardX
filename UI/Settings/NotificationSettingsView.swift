@@ -18,12 +18,16 @@ struct NotificationSettingsView: View {
         Form {
             Section {
                 Toggle("Enable notifications", isOn: $notificationsEnabled)
-                DatePicker("Remind me at", selection: $notificationDate, displayedComponents: [.hourAndMinute])
-                    .onAppear {
-                        prevDate = notificationDate
-                        prevToggle = notificationsEnabled
-                        loadNotificationSettings()
-                    }
+                HStack {
+                    Text("Remind me at")
+                    DatePicker("Remind me at", selection: $notificationDate, displayedComponents: [.hourAndMinute])
+                        .onAppear {
+                            prevDate = notificationDate
+                            prevToggle = notificationsEnabled
+                            loadNotificationSettings()
+                        }
+                        .datePickerStyle(GraphicalDatePickerStyle())
+                }
             }
             .onDisappear {
                 if notificationDate != prevDate || notificationsEnabled != prevToggle { // no idea why this executes on load; removing half the notifications still is better than none; wanna use identifiers
