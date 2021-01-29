@@ -36,15 +36,22 @@ struct FutureEstimationProviderView<Provider: SummaryProvider>: View {
                 .padding(.vertical)
             }
             Text("Please note that this is of course a way over-simplified modeling, based on the numbers of just the last day, modeled by just an exponential function. This is not a realistic estimation or prediction by any means.")
-            Button("Calculate intersect") {
-                showingProviderSelectionSheet = true
+            if futureEstimationProvider.provider is Country {
+                Button("Calculate intersect") {
+                    showingProviderSelectionSheet = true
+                }
+                .buttonStyle(CustomButtonStyle())
             }
-            .buttonStyle(CustomButtonStyle())
         }
         .sheet(isPresented: $showingProviderSelectionSheet) {
-            SummaryProviderSelectionView(isPresented: $showingProviderSelectionSheet, providers: manager.countries, provider: futureEstimationProvider.provider as! Country) { isPresented, provider -> FutureEstimationProviderCaseNumbersIntersectionView<Provider> in
-                showingProviderSelectionSheet = isPresented.wrappedValue
-                return FutureEstimationProviderCaseNumbersIntersectionView(provider1: futureEstimationProvider, provider2: FutureEstimationProvider(provider: provider as! Provider), isPresented: $showingProviderSelectionSheet)
+            if let summaryProvider = futureEstimationProvider.provider as? Country { // just wanna be safe (saw what happens)
+                SummaryProviderSelectionView(isPresented: $showingProviderSelectionSheet, providers: manager.countries, provider: summaryProvider) { isPresented, provider -> FutureEstimationProviderCaseNumbersIntersectionView<Provider> in
+                    showingProviderSelectionSheet = isPresented.wrappedValue
+                    return FutureEstimationProviderCaseNumbersIntersectionView(provider1: futureEstimationProvider, provider2: FutureEstimationProvider(provider: provider as! Provider ), isPresented: $showingProviderSelectionSheet)
+                }
+            } else {
+                Text("Internal error (FutureEstimationProviderView.swift:51). By the way, this sheet should not have appeared 😅.")
+                    .padding()
             }
         }
         .padding()
