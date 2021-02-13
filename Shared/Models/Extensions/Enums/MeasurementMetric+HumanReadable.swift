@@ -27,8 +27,8 @@ extension MeasurementMetric {
             return "New deaths"
         case .caseFatalityRate:
             return "Case fatality rate"
-        case .momentaryDoublingTime:
-            return "Active case doubling time"
+        case .exponentialProperty:
+            return "Case doubling/halving time"
         }
     }
 }

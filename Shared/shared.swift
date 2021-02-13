@@ -147,10 +147,33 @@ func deleteIndexForSpotlight(completion: @escaping (Error?) -> Void) {
 #endif
 
 func calculateDoublingRate(new: Int, total: Int, in days: Int) -> Double {
+    guard new >= 0 else { return .nan }
+    if new == 0 { return .infinity }
     let ratio = (Double(new) / Double(total)) / Double(days)
     let growthFactor = 1 + ratio
     let days = ln(2) / ln(growthFactor)
     return days
+}
+
+func calculateHalvingTime(new: Int, total: Int, in days: Int) -> Double {
+    guard new <= 0 else { return .nan }
+    if new == 0 { return .infinity }
+    let ratio = (Double(new) / Double(total)) / Double(days) // negative
+    let growthFactor = 1 + ratio
+    let days = ln(0.5) / ln(growthFactor)
+    return days
+}
+
+/// Based on the given numbers, either calculate the case doubling time or halving time, assuming the change is exponential.
+func calculateExponentialProperty(new: Int, total: Int, in days: Int) -> ExponentialProperty {
+    if new == 0 {
+        return .none
+    }
+    if new > 0 {
+        return .doublingTime(calculateDoublingRate(new: new, total: total, in: days))
+    } else {
+        return .halvingTime(calculateHalvingTime(new: new, total: total, in: days))
+    }
 }
 
 /// natural log

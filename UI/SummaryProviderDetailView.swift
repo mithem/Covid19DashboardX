@@ -15,7 +15,7 @@ struct SummaryProviderDetailView<Provider: SummaryProvider>: View {
         VStack {
             LazyVGrid(columns: columns) {
                 ForEach(MeasurementMetric.allCases) { metric in
-                    Card(metric: metric, value: provider.value(for: metric))
+                    Card(metric: metric, value: provider.value(for: metric), exponentialProperty: provider.exponentialProperty)
                 }
             }
             NavigationLink("Future estimations", destination: FutureEstimationProviderView(futureEstimationProvider: FutureEstimationProvider(provider: provider), manager: manager))
@@ -30,6 +30,7 @@ fileprivate struct Card: View {
     @Environment(\.colorScheme) private var colorScheme
     let metric: MeasurementMetric
     let value: String
+    let exponentialProperty: ExponentialProperty
     
     var body: some View {
         ZStack {
@@ -38,13 +39,13 @@ fileprivate struct Card: View {
                 .opacity(colorScheme == .dark ? 0.7 : 1)
             VStack {
                 HStack {
-                    Text(metric.humanReadable)
+                    Text(metric == .exponentialProperty ? exponentialProperty.humanReadable : metric.humanReadable)
                         .font(.subheadline)
                         .foregroundColor(foregroundColor)
                     Spacer()
                 }
                 .padding(.horizontal, 5)
-                Text(value)
+                Text(metric == .exponentialProperty ? exponentialProperty.value?.daysHumanReadable ?? Constants.notAvailableString : value)
                     .foregroundColor(foregroundColor)
                     .font(.title)
                     .bold()
@@ -83,7 +84,7 @@ fileprivate struct Card: View {
 struct Card_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            Card(metric: .active, value: "100")
+            Card(metric: .active, value: "100", exponentialProperty: .doublingTime(20))
         }
         .padding()
         .previewLayout(.sizeThatFits)

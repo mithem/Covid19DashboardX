@@ -23,8 +23,8 @@ protocol SummaryProvider: Identifiable, Searchable {
     /// Used to display in SummaryProviderDetailView
     var description: String { get }
     
-    /// Number of days it takes for active cases to double
-    var doublingTime: TimeInterval? { get }
+    /// Number of days it takes for active cases to double or halve
+    var exponentialProperty: ExponentialProperty { get }
     
     func newSummaryElement(metric: BasicMeasurementMetric, colorTresholdForDeltas: Double, colorGrayAreaForDeltas: Double) -> Text
     func newSummaryElement(total: Int, new: Int, colorTresholdForDeltas: Double, colorGrayAreaForDeltas: Double) -> Text
@@ -87,10 +87,10 @@ extension SummaryProvider {
     
     var description: String { Constants.notAvailableString }
     
-    var doublingTime: TimeInterval? {
-        guard let newActive = newActive else { return nil }
-        guard let active = activeCases else { return nil }
-        return calculateDoublingRate(new: newActive, total: active, in: 1)
+    var exponentialProperty: ExponentialProperty {
+        guard let newActive = newActive else { return .none }
+        guard let active = activeCases else { return .none }
+        return calculateExponentialProperty(new: newActive, total: active, in: 1)
     }
     
     func newSummaryElement(metric: BasicMeasurementMetric, colorTresholdForDeltas: Double, colorGrayAreaForDeltas: Double) -> Text {
@@ -283,7 +283,7 @@ extension SummaryProvider {
     }
     
     func value(for metric: MeasurementMetric) -> String {
-        var v: Any
+        var v: Any?
         var vIsTimeInterval = false
         switch metric {
         case .active:
@@ -304,9 +304,17 @@ extension SummaryProvider {
             v =  newDeaths
         case .caseFatalityRate:
             v =  caseFatalityRate as Any
-        case .momentaryDoublingTime:
-            v = doublingTime as Any
-            vIsTimeInterval = true
+        case .exponentialProperty:
+            switch exponentialProperty {
+            case .doublingTime(let value), .halvingTime(let value):
+                v = value
+                vIsTimeInterval = true
+            default:
+                v = nil
+            }
+        }
+        if v == nil {
+            return Constants.notAvailableString
         }
         let formatter = NumberFormatter()
         if let v = v as? Int {

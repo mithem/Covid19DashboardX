@@ -8,6 +8,6 @@
 import Foundation
 
 enum MeasurementMetric: CaseIterable, Identifiable {
-    var id: MeasurementMetric { self }
-    case active, newActive, totalConfirmed, newConfirmed, totalRecovered, newRecovered, totalDeaths, newDeaths, caseFatalityRate, momentaryDoublingTime
+    var id: Self { self }
+    case active, newActive, totalConfirmed, newConfirmed, totalRecovered, newRecovered, totalDeaths, newDeaths, caseFatalityRate, exponentialProperty
 }
