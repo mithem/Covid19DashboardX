@@ -26,9 +26,7 @@ struct FutureEstimationProviderView<Provider: SummaryProvider>: View {
                 futureEstimationProvider.estimationInterval = new
             }), in: (1...maximumEstimationInterval))
             if let data = futureEstimationProvider.data {
-                LineChart()
-                    .data(data)
-                    .chartStyle(.default)
+                LineView(data: data)
             } else {
                 VStack {
                     Spacer()

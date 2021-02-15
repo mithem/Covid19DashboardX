@@ -1,5 +1,5 @@
 //
-//  ComparisonDetailViewTable.swift
+//  ComparisonDetailView.swift
 //  Covid19DashboardX (iOS)
 //
 //  Created by Miguel Themann on 22.10.20.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ComparisonDetailViewTable: View {
+struct ComparisonDetailView: View {
     @Binding var isPresented: Bool
     let countries: (Country, Country)
     let columns: [GridItem] = Array(repeating: .init(.fixed(35)), count: 7)
@@ -49,6 +49,6 @@ struct ComparisonDetailViewTable: View {
 
 struct ComparisonDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ComparisonDetailViewTable(isPresented: .constant(false), countries: (MockData.countries[0], MockData.countries[1]))
+        ComparisonDetailView(isPresented: .constant(false), countries: (MockData.countries[0], MockData.countries[1]))
     }
 }

@@ -110,9 +110,7 @@ struct CountryView: View {
                         calcMovingAvg()
                     })
                 }
-                LineChart()
-                    .data(alteredData)
-                    .chartStyle(.default)
+                LineView(data: alteredData)
                     .onAppear {
                         calcMovingAvg()
                     }
@@ -134,9 +132,9 @@ struct CountryView: View {
                 }
                 .buttonStyle(CustomButtonStyle())
                 .sheet(isPresented: $showingComparisonView) {
-                    SummaryProviderSelectionView(isPresented: $showingComparisonView, providers: manager.countries, provider: country) { isPresented, country -> ComparisonDetailViewGraph in
+                    SummaryProviderSelectionView(isPresented: $showingComparisonView, providers: manager.countries, provider: country) { isPresented, country -> ComparisonDetailView in
                         showingComparisonView = isPresented.wrappedValue
-                        return ComparisonDetailViewGraph(isPresented: $showingComparisonView, countries: (self.country, country))
+                        return ComparisonDetailView(isPresented: $showingComparisonView, countries: (self.country, country))
                     }
                 }
             }
