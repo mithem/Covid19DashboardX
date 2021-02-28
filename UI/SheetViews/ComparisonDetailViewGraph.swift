@@ -13,10 +13,7 @@ struct ComparisonDetailViewGraph: View {
     let countries: (Country, Country)
     var body: some View {
         VStack {
-            // TODO: Implement multi-line chart view
-            LineChart()
-                .data(countries.0.measurements.map {$0.metric(for: .confirmed)})
-                .chartStyle(.default)
+            MultiLineChartView(data: [(countries.0.measurements.map {$0.metric(for: .confirmed)}, .default), (countries.1.measurements.map {$0.metric(for: .confirmed)}, GradientColor.default.reversed)], title: BasicMeasurementMetric.confirmed.humanReadable) // Greetings, Swift 5.4! (https://swiftbysundell.com/tips/chained-implicit-member-expressions/)
             NavigationLink("Show numbers", destination: ComparisonDetailViewTable(isPresented: $isPresented, countries: countries))
                 .buttonStyle(CustomButtonStyle())
                 .navigationBarItems(trailing: Button("Done") {

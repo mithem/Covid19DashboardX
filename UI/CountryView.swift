@@ -110,9 +110,7 @@ struct CountryView: View {
                         calcMovingAvg()
                     })
                 }
-                LineChart()
-                    .data(alteredData)
-                    .chartStyle(.default)
+                LineView(data: alteredData)
                     .onAppear {
                         calcMovingAvg()
                     }
@@ -136,6 +134,7 @@ struct CountryView: View {
                 .sheet(isPresented: $showingComparisonView) {
                     SummaryProviderSelectionView(isPresented: $showingComparisonView, providers: manager.countries, provider: country) { isPresented, country -> ComparisonDetailViewGraph in
                         showingComparisonView = isPresented.wrappedValue
+                        manager.execute(task: .historyData(countryCode: country.code)) // data might not be loaded already (aka user didn't visit country before)
                         return ComparisonDetailViewGraph(isPresented: $showingComparisonView, countries: (self.country, country))
                     }
                 }
