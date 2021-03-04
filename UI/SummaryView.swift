@@ -17,6 +17,7 @@ struct SummaryView: View {
     @State private var searchTerm = ""
     @State private var favorites = [String]()
     @State private var lowercasedSearchTerm = ""
+    @State private var scaleOrderAndRefreshBtn = false
     
     @AppStorage(UserDefaultsKeys.measurementMetric) var activeMetric = DefaultSettings.measurementMetric
     @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = DefaultSettings.colorNumbers
@@ -97,6 +98,7 @@ struct SummaryView: View {
                     showingActionSheet = true
                 }
                 removeNotifications()
+                initScalingTimer()
             }
             .navigationBarItems(leading:
                                     Button(action: {
@@ -105,6 +107,8 @@ struct SummaryView: View {
                                     }) {
                                         Image(systemName: "arrow.up.arrow.down")
                                             .padding(UIConstants.navigationBarItemsPadding)
+                                            .scaleEffect(scaleOrderAndRefreshBtn ? 1.5 : 1)
+                                            .animation(.interpolatingSpring(mass: 0.1, stiffness: 1, damping: 0.25))
                                     }.onLongPressGesture {
                                         manager.reversed.toggle()
                                     }
@@ -174,6 +178,16 @@ struct SummaryView: View {
     
     func refresh() {
         refreshSummaries(on: manager)
+    }
+    
+    func initScalingTimer() {
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
+            if manager.error != nil {
+                scaleOrderAndRefreshBtn.toggle()
+            } else {
+                scaleOrderAndRefreshBtn = false
+            }
+        }
     }
 }
 
