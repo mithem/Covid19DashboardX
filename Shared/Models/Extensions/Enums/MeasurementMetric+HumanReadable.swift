@@ -8,27 +8,30 @@
 import Foundation
 extension MeasurementMetric {
     var humanReadable: String {
+        func s(_ key: String) -> String {
+            return NSLocalizedString(key, comment: key)
+        }
         switch self {
         case .active:
-            return "Active"
+            return s("active")
         case .newActive:
-            return "New active"
+            return s("new_active")
         case .totalConfirmed:
-            return "Total confirmed"
+            return s("total_confirmed")
         case .newConfirmed:
-            return "New confirmed"
+            return s("new_confirmed")
         case .totalRecovered:
-            return "Total recovered"
+            return s("total_recovered")
         case .newRecovered:
-            return "New recovered"
+            return s("new_recovered")
         case .totalDeaths:
-            return "Total deaths"
+            return s("total_deaths")
         case .newDeaths:
-            return "New deaths"
+            return s("new_deaths")
         case .caseFatalityRate:
-            return "Case fatality rate"
+            return s("case_fatality_rate")
         case .exponentialProperty:
-            return "Case doubling/halving time"
+            return s("case_doubling_or_halving_time")
         }
     }
 }

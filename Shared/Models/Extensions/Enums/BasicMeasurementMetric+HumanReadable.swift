@@ -9,15 +9,18 @@ import Foundation
 
 extension BasicMeasurementMetric {
     var humanReadable: String {
+        func s(_ key: String) -> String {
+            return NSLocalizedString(key, comment: key)
+        }
         switch self {
         case .confirmed:
-            return "Confirmed cases"
+            return s("confirmed_cases")
         case .deaths:
-            return "Deaths"
+            return s("deaths")
         case .recovered:
-            return "Recovered"
+            return s("recovered")
         case .active:
-            return "Active cases"
+            return s("active_cases")
         }
     }
 }

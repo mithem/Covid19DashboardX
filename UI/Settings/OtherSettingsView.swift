@@ -13,25 +13,25 @@ struct OtherSettingsView: View {
         Form {
             Section {
             Link(destination: UsefulURLs.newFeatureSuggestion) {
-                Item(image: "star.circle", title: "Suggest a feature")
+                Item(image: "star.circle", title: NSLocalizedString("suggest_a_feature", comment: "suggest_a_feature"))
             }
             Link(destination: UsefulURLs.newBugReport) {
-                Item(image: "exclamationmark.triangle", title: "File a bug report")
+                Item(image: "exclamationmark.triangle", title: NSLocalizedString("file_a_bug_report", comment: "file_a_bug_report"))
             }
             Link(destination: UsefulURLs.mailToMe) {
-                Item(image: "envelope", title: "Get support")
+                Item(image: "envelope", title: NSLocalizedString("get_support", comment: "get_support"))
             }
             }
             Section {
-                Button("Reset to defaults") {
+                Button("reset_to_defaults") {
                     showingResetToDefaultsActionSheet = true
                 }
                 .actionSheet(isPresented: $showingResetToDefaultsActionSheet) {
-                    ActionSheet(title: Text("Reset to defaults?"), message: Text("Are you sure you want to reset to defaults? This cannot be undone."), buttons: [.destructive(Text("Reset")) {resetSettingsToDefaults()}, .cancel()])
+                    ActionSheet(title: Text("reset_to_defaults_question"), message: Text("reset_to_defaults_question_confirmation"), buttons: [.destructive(Text("reset")) {resetSettingsToDefaults()}, .cancel()])
                 }
             }
         }
-        .navigationTitle("Other")
+        .navigationTitle("other")
     }
 }
 

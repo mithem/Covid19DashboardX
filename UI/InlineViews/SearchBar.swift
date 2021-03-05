@@ -13,7 +13,7 @@ struct SearchBar: View {
     @State private var hoverOnCancelBtn = false
     var body: some View {
         HStack {
-            TextField("Search", text: $searchTerm)
+            TextField("search", text: $searchTerm)
                 .padding(7)
                 .padding(.horizontal, 25)
                 .background(Color(.systemGray6))
@@ -50,7 +50,7 @@ struct SearchBar: View {
                                 .opacity(0.2)
                                 .frame(width: 70, height: 30)
                         }
-                        Text("Cancel")
+                        Text("cancel")
                     }
                 }
                 .padding(.trailing, 10)

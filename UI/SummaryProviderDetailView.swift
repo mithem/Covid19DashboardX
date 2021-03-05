@@ -18,7 +18,7 @@ struct SummaryProviderDetailView<Provider: SummaryProvider>: View {
                     Card(metric: metric, value: provider.value(for: metric), exponentialProperty: provider.exponentialProperty)
                 }
             }
-            NavigationLink("Future estimations", destination: FutureEstimationProviderView(futureEstimationProvider: FutureEstimationProvider(provider: provider), manager: manager))
+            NavigationLink("future_estimations", destination: FutureEstimationProviderView(futureEstimationProvider: FutureEstimationProvider(provider: provider), manager: manager))
                 .buttonStyle(CustomButtonStyle())
                 .padding(.vertical)
         }

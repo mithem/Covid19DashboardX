@@ -1,0 +1,185 @@
+/* 
+  Localizable.strings
+  Covid19DashboardX
+
+  Created by Miguel Themann on 05.03.21.
+  
+*/
+
+// MARK: SettingsView
+"general" = "General";
+"notifications" = "Notifications";
+"spotlight" = "Spotlight";
+"other" = "Other";
+"attributions" = "Attributions";
+"settings" = "Settings";
+// end SettingsView
+
+// MARK: SpotlightIndexSettingsView
+"enable_spotlight" = "Enable spotlight";
+"clear_index" = "Clear index";
+"spotlight_indexing_description" = "Enabling spotlight indexing makes the countries and provinces you viewed searchable from Apple's Spotlight search. You can clear the index if it seems like something went wrong indexing.";
+"cleared_index" = "Cleared index";
+"error_clearing_index" = "Error clearing index";
+"you_can_close_this" = "You can close this.";
+// end SpotlightIndexSettingsView
+
+// MARK: NotificationSettingsView
+"enable_notifications" = "Enable notifications";
+"remind_me_at" = "Remind me at";
+"notifications_disabled_info" = "You have disabled notifications for this app.";
+"reminder.title" = "Reminder";
+"reminder.body" = "Check back on the latest numbers";
+// end NotificationsSettingsView
+
+// MARK: AttributionsSettingsView
+"data_from_colon" = "Data from: ";
+// end AttributionsSettingsView
+
+// MARK: OtherSettingsView
+"suggest_a_feature" = "Suggest a feature";
+"file_a_bug_report" = "File a bug report";
+"get_support" = "Get support";
+"reset_to_defaults" = "Reset to defaults";
+"reset_to_defaults_question" = "Reset to defaults?";
+"reset_to_defaults_question_confirmation" = "Are you sure you want to reset to defaults? This cannot be undone.";
+"reset" = "Reset";
+// end OtherSettingsView
+
+// MARK: GeneralSettingsView
+"color_numbers" = "Color numbers";
+"max_moving_avg_interval_colon" = "Maximum moving average interval: ";
+"max_future_estimation_interval_colon" = "Maximum future estimation interval: ";
+"ignore_low_data_mode" = "Ignore low data mode";
+"cfr_color_treshold_colon" = "CFR color treshold: ";
+"cfr_color_gray_area_colon" = "CFR color gray area: ";
+"cfrs_of" = "CFRs of";
+"with_a_derivation_of_plusminus" = "with a derivation of ±";
+"will_be_displayed_etc" = "will be displayed gray, above red, below green.";
+"new_cases_proportion_color_treshold_colon" = "New cases proportion color treshold: ";
+"new_cases_proportion_gray_area_colon" = "New cases proportion gray area: ";
+"when_the_ratio_of_new_cases_to_total_ones" = "When the ratio of new cases to total ones (confirmed, recovered, etc.) exceeds";
+"comma_it_will_be_displayed_etc" = ", it will be displayed green or red, respectively.";
+// end GeneralSettingsView
+
+// MARK: BasicMeasurementMetricPickerView
+"measurement_metric" = "Measurement metric";
+// end BasicMeasurementMetricPickerView
+
+// MARK: ProvinceSummaryMetricPickerView
+"summary_metric" = "Summary metric";
+// end ProvinceSummaryMetricPickerView
+
+// MARK: SearchBar
+"search" = "Search";
+"cancel" = "Cancel";
+// end SearchBar
+
+// MARK: SummaryProviderSelectionView
+"select_country" = "Select country";
+// end SummaryProviderSelectionView
+
+// MARK: ComparisonDetailView
+"country" = "Country";
+"compare_countries" = "Compare countries";
+"done" = "Done";
+// end ComparisonDetailView
+
+// MARK: SummaryView (and probably others)
+"country_code" = "Country code";
+"country_name" = "Country name";
+"total_confirmed" = "Total confirmed";
+"new_confirmed" = "New confirmed";
+"total_deaths" = "Total deaths";
+"new_deaths" = "New deaths";
+"total_recovered" = "Total recovered";
+"new_recovered" = "New recovered";
+"active_cases" = "Active cases";
+"reverse" = "Reverse";
+"dereverse" = "Dereverse";
+"sort_countries" = "Sort countries";
+"sort_countries_criteria_question" = "By which criteria would you like to sort countries?";
+"unable_to_load_data" = "Unable to load data";
+"unkown_error_period" = "Unkown error.";
+"ok" = "OK";
+"loading.uppercase" = "Loading...";
+"loading.lowercase" = "loading...";
+"server_is_caching" = "The server is currently caching the newest data. Please try again in a bit.";
+"no_data_present" = "🤷 No data";
+"summary_view_nav_title" = "Covid19 Summary";
+"refresh" = "Refresh";
+"global_colon" = "Global: ";
+"global_colon_loading" = "Global: loading...";
+"stay_safe" = "Stay safe ❤️";
+"refresh_summaries" = "Refresh summaries";
+"reset_all_data" = "Reset all data";
+// end SummaryView
+
+// MARK: CountryView
+"low_data_mode_on_period" = "Low data mode on.";
+"ignore" = "Ignore";
+"details" = "Details";
+"compare" = "Compare";
+"moving_avg_colon" = "Moving average: ";
+// end CountryView
+
+// MARK: CountryProvincesDetailView
+"total_colon" = "Total: ";
+"no_province_data_for_country" = "For this country, there isn't province data available.";
+"error_getting_provinces_data_colon" = "Error getting provinces data:";
+"details_colon" = "Details: ";
+"refresh_provinces" = "Refresh provinces";
+// end CountryProvincesDetailView
+
+// MARK: SummaryProviderDetailView
+"future_estimations" = "Future estimations";
+// end SummaryProviderDetailView
+
+// MARK: CountryViewSettingsView
+"data_representation" = "Data representation";
+"visualization_settings" = "Visualization settings";
+// end CountryViewSettingsView
+
+// MARK: FutureEstimationProviderView
+"estimation_interval_colon" = "Estimation interval: ";
+"no_data_available_for_region" = "There is no such data available for this region. Please try another metric.";
+"future_estimation_disclaimer" = "Please note that this is of course a way over-simplified modeling, based on the numbers of just the last day, modeled by just an exponential function. This is not a realistic estimation or prediction by any means.";
+"calculate_intersect" = "Calculate intersect";
+"future_estimation_interval_error_that_shouldnt_happen" = "Internal error (FutureEstimationProviderView.swift:51). By the way, this sheet should not have appeared 😅.";
+"future_estimations" = "Future estimations";
+// end FutureEstimationProviderView
+
+// MARK: FutureEstimationProviderCaseNumbersIntersectionView
+"based_on_current_rates_comma" = "Based on current rates, ";
+"and" = "and";
+"will_have_the_same" = "will have the same";
+"in" = "in";
+"days_comma_making_it" = "days, making it";
+"case_intersect" = "Case intersect";
+// end FutureEstimationProviderCaseNumbersIntersectionView
+
+// MARK: CustomDecodableError+LocalizedError
+"decoding_error_colon" = "Decoding error: ";
+// end CustomDecodableError+LocalizedError
+
+// MARK: MeasurementMetric+humanReadable
+"case_fatality_rate" = "Case fatality rate";
+"case_doubling_or_halving_time" = "Case doubling/halving time";
+// end MeasurementMetric+humanReadable
+
+// MARK: BasicMeasurementMetric+shortDescription
+"confirmed" = "Confirmed";
+"deaths" = "Deaths";
+"recovered" = "Recovered";
+"active" = "Active";
+// end BasicMeasurementMetric+shortDescription
+
+// MARK: BasicMeasurementMetric+HumanReadable
+"confirmed_cases" = "Confirmed cases";
+"active_cases" = "Active cases";
+// end BasicMeasurementMetric+HumanReadable
+
+// MARK: ExponentialProperty+HumanReadable
+"doubling_time" = "Doubling time";
+"halving_time" = "Halving time";
+"none" = "None";

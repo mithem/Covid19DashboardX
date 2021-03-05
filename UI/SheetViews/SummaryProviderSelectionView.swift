@@ -30,8 +30,8 @@ struct SummaryProviderSelectionView<Provider: SummaryProvider, Destination: View
             .onChange(of: searchTerm) { value in
                 lowercasedSearchTerm = value.lowercased()
             }
-            .navigationTitle("Select country")
-            .navigationBarItems(leading: Button("Cancel") {
+            .navigationTitle("select_country")
+            .navigationBarItems(leading: Button("cancel") {
                 isPresented = false
             })
         }

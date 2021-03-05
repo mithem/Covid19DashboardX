@@ -17,10 +17,10 @@ struct NotificationSettingsView: View {
     var body: some View {
         Form {
             Section {
-                Toggle("Enable notifications", isOn: $notificationsEnabled)
+                Toggle("enable_notifications", isOn: $notificationsEnabled)
                 HStack {
-                    Text("Remind me at")
-                    DatePicker("Remind me at", selection: $notificationDate, displayedComponents: [.hourAndMinute])
+                    Text("remind_me_at")
+                    DatePicker("remind_me_at", selection: $notificationDate, displayedComponents: [.hourAndMinute])
                         .onAppear {
                             prevDate = notificationDate
                             prevToggle = notificationsEnabled
@@ -39,16 +39,16 @@ struct NotificationSettingsView: View {
             .disabled(notificationAuthorizationDenied)
             if notificationAuthorizationDenied {
                 VStack {
-                    Text("You have disabled notifications for this app.")
+                    Text("notifications_disabled_info")
                         .foregroundColor(.secondary)
-                    Button("Settings") {
+                    Button("settings") {
                         UIApplication.shared.open(UsefulURLs.notificationSettings)
                     }
                     .buttonStyle(CustomButtonStyle())
                 }
             }
         }
-        .navigationTitle("Notifications")
+        .navigationTitle("notifications")
     }
     
     func loadNotificationSettings() {
@@ -79,8 +79,8 @@ struct NotificationSettingsView: View {
         center.removeAllPendingNotificationRequests()
         
         let content = UNMutableNotificationContent()
-        content.title = "Reminder"
-        content.body = "Check back on the latest numbers"
+        content.title = NSLocalizedString("reminder.title", comment: "reminder.title")
+        content.body = NSLocalizedString("reminder.body", comment: "reminder.body")
         
         let components = Calendar.current.dateComponents([.hour, .minute], from: notificationDate)
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)

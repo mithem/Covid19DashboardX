@@ -30,23 +30,23 @@ struct CountryProvincesDetailView: View {
                             lowercasedSearchTerm = value.lowercased()
                         }
                 }
-                NavigationLink("Total: \(country.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, colorPercentagesTreshold: colorPercentagesTreshold, colorPercentagesGrayArea: colorPercentagesGrayArea, reversed: false))", destination: SummaryProviderDetailView(manager: manager, provider: country))
+                NavigationLink("\(NSLocalizedString("total_colon", comment: "total_colon"))\(country.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorDeltaTreshold, colorDeltaGrayArea: colorDeltaGrayArea, colorPercentagesTreshold: colorPercentagesTreshold, colorPercentagesGrayArea: colorPercentagesGrayArea, reversed: false))", destination: SummaryProviderDetailView(manager: manager, provider: country))
                 if manager.loadingTasks.contains(.provinceData(countryCode: country.code)) {
                     HStack(spacing: 10) {
                         ProgressView()
-                        Text("Loading…")
+                        Text("loading.uppercase")
                     }
                 } else if country.provinces.isEmpty {
-                    Text("For this country, there isn't province data available.")
+                    Text("no_province_data_for_country")
                 }
                 if let error = manager.error {
                     if error == .constrainedNetwork {
-                        Text("Low data mode")
+                        Text("low_data_mode_on_period")
                             .foregroundColor(.yellow)
                         ProvincesList
                     } else {
-                        Text("Error getting provinces data: \(error.localizedDescription)")
-                        Button("Refresh") {
+                        Text("\(NSLocalizedString("error_getting_provinces_data_colon", comment: "error_getting_provinces_data_colon"))\(error.localizedDescription)")
+                        Button("refresh") {
                             manager.loadProvinceData(for: country)
                         }
                         .foregroundColor(.accentColor)
@@ -58,7 +58,7 @@ struct CountryProvincesDetailView: View {
             .animation(.easeInOut)
         }
         .padding()
-        .navigationTitle("Details: \(country.name.localizedCapitalized)")
+        .navigationTitle("\(NSLocalizedString("details_colon", comment: "details_colon"))\(country.name.localizedCapitalized)")
     }
     
     var ProvincesList: some View {
@@ -68,7 +68,7 @@ struct CountryProvincesDetailView: View {
                     Button(action: {
                         manager.loadProvinceData(for: country)
                     }) {
-                        Text("Refresh provinces")
+                        Text("refresh_provinces")
                         Image(systemName: "arrow.clockwise")
                     }
                 }

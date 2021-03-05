@@ -20,13 +20,13 @@ struct FutureEstimationProviderCaseNumbersIntersectionView<Provider: SummaryProv
                 .onChange(of: metric) {_ in
                     calculateIntersection()
                 }
-            Text("Based on current rates, \(provider1.provider.description.localizedCapitalized) and \(provider2.provider.description.localizedCapitalized) will have the same \(metric.humanReadable.lowercased()) in \(intersection?.t.daysHumanReadable ?? Constants.notAvailableString) days, making it \(intersection?.y.daysHumanReadable ?? Constants.notAvailableString) \(metric.shortDescription.lowercased()).")
+            Text("\(NSLocalizedString("based_on_current_rates_comma", comment: "based_on_current_rates_comma"))\(provider1.provider.description.localizedCapitalized) \(NSLocalizedString("and", comment: "and")) \(provider2.provider.description.localizedCapitalized) \(NSLocalizedString("will_have_the_same", comment: "will_have_the_same")) \(metric.humanReadable.lowercased()) \(NSLocalizedString("in", comment: "in (preposition)")) \(intersection?.t.daysHumanReadable ?? Constants.notAvailableString) \(NSLocalizedString("days_comma_making_it", comment: "days_comma_making_it")) \(intersection?.y.daysHumanReadable ?? Constants.notAvailableString) \(metric.shortDescription.lowercased()).")
                 .onAppear(perform: calculateIntersection)
             Spacer()
         }
         .padding()
-        .navigationTitle("Case intersect")
-        .navigationBarItems(trailing: Button("Done"){
+        .navigationTitle("case_intersect")
+        .navigationBarItems(trailing: Button("done"){
             isPresented = false
         })
     }

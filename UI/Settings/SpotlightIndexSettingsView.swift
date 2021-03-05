@@ -13,7 +13,7 @@ struct SpotlightIndexSettingsView: View {
     @AppStorage(UserDefaultsKeys.disableSpotlightIndexing) var disableSpotlightIndexing = DefaultSettings.disableSpotlightIndexing
     var body: some View {
         Form {
-            Toggle("Enable spotlight", isOn: Binding(get: {!disableSpotlightIndexing}, set: { newValue in
+            Toggle("enable_spotlight", isOn: Binding(get: {!disableSpotlightIndexing}, set: { newValue in
                 disableSpotlightIndexing = !newValue
                 if disableSpotlightIndexing {
                     deleteIndexForSpotlight { error in
@@ -21,18 +21,18 @@ struct SpotlightIndexSettingsView: View {
                     }
                 }
             }))
-            Button("Clear index") {
+            Button("clear_index") {
                 deleteIndexForSpotlight { error in
                     presentActionSheet(error)
                 }
             }
             .disabled(disableSpotlightIndexing)
-            Text("Enabling spotlight indexing makes the countries and provinces you viewed searchable from Apple's Spotlight search. You can clear the index if it seems like something went wrong indexing.")
+            Text("spotlight_indexing_description")
         }
         .actionSheet(isPresented: $showingActionSheet) {
-            ActionSheet(title: Text(error == nil ? "Cleared index" : "Error clearing index"), message: Text(error?.localizedDescription ?? "You can close this."), buttons: [.default(Text("OK"))])
+            ActionSheet(title: Text(error == nil ? "cleared_index" : "error_clearing_index"), message: Text(error?.localizedDescription ?? "you_can_close_this"), buttons: [.default(Text("ok"))])
         }
-        .navigationTitle("Spotlight")
+        .navigationTitle("spotlight")
     }
     
     func presentActionSheet(_ error: Error?) {

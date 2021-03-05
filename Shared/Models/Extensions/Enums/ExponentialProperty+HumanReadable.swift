@@ -9,13 +9,16 @@ import Foundation
 
 extension ExponentialProperty {
     var humanReadable: String {
+        func s(_ key: String) -> String {
+            return NSLocalizedString(key, comment: key)
+        }
         switch self {
         case .doublingTime(_):
-            return "Doubling time"
+            return s("doubling_time")
         case .halvingTime(_):
-            return "Halving time"
+            return s("halving_time")
         case .none:
-            return "None"
+            return s("none")
         }
     }
 }

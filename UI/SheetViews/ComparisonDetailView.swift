@@ -14,19 +14,19 @@ struct ComparisonDetailView: View {
     var body: some View {
         ScrollView(.init([.vertical, .horizontal])) {
             LazyHGrid(rows: columns) {
-                Text("Country")
+                Text("country")
                     .bold()
-                Text("Total confirmed")
+                Text("total_confirmed")
                     .bold()
-                Text("Total recovered")
+                Text("total_recovered")
                     .bold()
-                Text("Total deaths")
+                Text("total_deaths")
                     .bold()
-                Text("New confirmed")
+                Text("new_confirmed")
                     .bold()
-                Text("New recovered")
+                Text("new_recovered")
                     .bold()
-                Text("New deaths")
+                Text("new_deaths")
                     .bold()
                 ForEach([countries.0, countries.1]) { country in // just for less repitition
                     Text(country.name.localizedCapitalized)
@@ -40,8 +40,8 @@ struct ComparisonDetailView: View {
             }
             .padding()
         }
-        .navigationTitle("Compare countries")
-        .navigationBarItems(trailing: Button("Done"){
+        .navigationTitle("compare_countries")
+        .navigationBarItems(trailing: Button("done"){
             isPresented = false
         })
     }

@@ -20,7 +20,7 @@ struct FutureEstimationProviderView<Provider: SummaryProvider>: View {
             }, set: { value, _ in
                 futureEstimationProvider.metric = value
             }))
-            Stepper("Estimation interval: \(futureEstimationProvider.estimationInterval.nDaysHumanReadable)", value: .init(get: {
+            Stepper("\(NSLocalizedString("estimation_interval_colon", comment: "estimation_interval_colon"))\(futureEstimationProvider.estimationInterval.nDaysHumanReadable)", value: .init(get: {
                 futureEstimationProvider.estimationInterval
             }, set: { new, _ in
                 futureEstimationProvider.estimationInterval = new
@@ -30,14 +30,14 @@ struct FutureEstimationProviderView<Provider: SummaryProvider>: View {
             } else {
                 VStack {
                     Spacer()
-                    Text("There is no such data available for this region. Please try another metric.")
+                    Text("no_data_available_for_region")
                     Spacer()
                 }
                 .padding(.vertical)
             }
-            Text("Please note that this is of course a way over-simplified modeling, based on the numbers of just the last day, modeled by just an exponential function. This is not a realistic estimation or prediction by any means.")
+            Text("future_estimation_disclaimer")
             if futureEstimationProvider.provider is Country {
-                Button("Calculate intersect") {
+                Button("calculate_intersect") {
                     showingProviderSelectionSheet = true
                 }
                 .buttonStyle(CustomButtonStyle())
@@ -50,12 +50,12 @@ struct FutureEstimationProviderView<Provider: SummaryProvider>: View {
                     return FutureEstimationProviderCaseNumbersIntersectionView(provider1: futureEstimationProvider, provider2: FutureEstimationProvider(provider: provider as! Provider ), isPresented: $showingProviderSelectionSheet)
                 }
             } else {
-                Text("Internal error (FutureEstimationProviderView.swift:51). By the way, this sheet should not have appeared 😅.")
+                Text("future_estimation_interval_error_that_shouldnt_happen")
                     .padding()
             }
         }
         .padding()
-        .navigationTitle("Future estimations")
+        .navigationTitle("future_estimations")
     }
 }
 

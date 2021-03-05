@@ -10,7 +10,7 @@ import SwiftUI
 struct AttributionsSettingsView: View {
     var body: some View {
         VStack(spacing: 25) {
-            Text("Data from:")
+            Text("data_from_colon")
                 .bold()
             VStack {
                 Link(UsefulURLs.covid19apiDotCom.host!, destination: UsefulURLs.covid19apiDotCom)
@@ -19,7 +19,7 @@ struct AttributionsSettingsView: View {
                     .buttonStyle(CustomButtonStyle())
             }
         }
-        .navigationTitle("Attributions")
+        .navigationTitle("attributions")
     }
 }
 

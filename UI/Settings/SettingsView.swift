@@ -12,16 +12,16 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section {
-                NavigationLink("General", destination: GeneralSettingsView())
-                NavigationLink("Notifications", destination: NotificationSettingsView())
-                NavigationLink("Spotlight", destination: SpotlightIndexSettingsView())
+                NavigationLink("general", destination: GeneralSettingsView())
+                NavigationLink("notifications", destination: NotificationSettingsView())
+                NavigationLink("spotlight", destination: SpotlightIndexSettingsView())
             }
             Section {
-                NavigationLink("Other", destination: OtherSettingsView())
-                NavigationLink("Attributions", destination: AttributionsSettingsView())
+                NavigationLink("other", destination: OtherSettingsView())
+                NavigationLink("attributions", destination: AttributionsSettingsView())
             }
         }
-        .navigationTitle("Settings")
+        .navigationTitle("settings")
     }
 }
 

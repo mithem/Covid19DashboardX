@@ -40,13 +40,13 @@ struct CountryView: View {
                 if error == .constrainedNetwork {
                     if country.measurements.isEmpty {
                         VStack {
-                            Text("Low data mode on.")
+                            Text("low_data_mode_on_period")
                                 .padding()
                             HStack {
-                                Button("Settings") {
+                                Button("settings") {
                                     UIApplication.shared.open(UsefulURLs.cellularSettings)
                                 }
-                                Button("Ignore") {
+                                Button("ignore") {
                                     UserDefaults().set(true, forKey: UserDefaultsKeys.ignoreLowDataMode)
                                     manager.loadHistoryData(for: country)
                                 }
@@ -71,7 +71,7 @@ struct CountryView: View {
                 Spacer()
             } else {
                 VStack {
-                    Text("🤷 No data.")
+                    Text("no_data_present")
                     RefreshButton
                 }
             }
@@ -121,13 +121,13 @@ struct CountryView: View {
             
             HStack {
                 NavigationLink(destination: provincesDetailView, isActive: $showingCountryProvincesDetailView) {
-                    Button("Details") {
+                    Button("details") {
                         provincesDetailView.loadData()
                         showingCountryProvincesDetailView = true
                     }
                     .buttonStyle(CustomButtonStyle())
                 }
-                Button("Compare") {
+                Button("compare") {
                     showingComparisonView = true
                 }
                 .buttonStyle(CustomButtonStyle())
@@ -139,7 +139,7 @@ struct CountryView: View {
                 }
             }
             if maximumN > 1 {
-                Stepper("Moving average: \(n.nDaysHumanReadable)", value: $n, in: 1...(country.measurements.count == 0 ? 1 : (country.measurements.count < maximumN ? country.measurements.count : maximumN)))
+                Stepper("\(NSLocalizedString("moving_avg_colon", comment: "moving_avg_colon"))\(n.nDaysHumanReadable)", value: $n, in: 1...(country.measurements.count == 0 ? 1 : (country.measurements.count < maximumN ? country.measurements.count : maximumN)))
                     .onChange(of: n, perform: { _ in
                         calcMovingAvg()
                     })
@@ -151,7 +151,7 @@ struct CountryView: View {
     var LoadingView: some View {
         VStack(spacing: 10) {
             ProgressView()
-            Text("Loading…")
+            Text("loading.uppercase")
         }
         .onAppear {
             manager.loadHistoryData(for: country)
@@ -159,7 +159,7 @@ struct CountryView: View {
     }
     
     var RefreshButton: some View {
-        Button("Refresh") {
+        Button("refresh") {
             manager.loadHistoryData(for: country)
         }
         .buttonStyle(CustomButtonStyle())

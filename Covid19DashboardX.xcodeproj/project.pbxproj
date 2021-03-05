@@ -45,7 +45,6 @@
 		494A26C125723E230022A49E /* Province+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26BF25723E230022A49E /* Province+Hashable.swift */; };
 		494F8CED257CE1790058857A /* Array+CustomDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494F8CEC257CE1790058857A /* Array+CustomDecodable.swift */; };
 		494F8CEE257CE1790058857A /* Array+CustomDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494F8CEC257CE1790058857A /* Array+CustomDecodable.swift */; };
-		4952C8BA25F13E6100030D72 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 4952C8B925F13E6100030D72 /* Reachability */; };
 		4952C8C325F13E7D00030D72 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 4952C8C225F13E7D00030D72 /* SwiftUICharts */; };
 		4954F5DE24E7F4D300399145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4954F5C924E7F4D300399145 /* Assets.xcassets */; };
 		4966E0F025A45B7E009D3E8F /* DataManagerWithReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4966E0EF25A45B7E009D3E8F /* DataManagerWithReachability.swift */; };
@@ -188,6 +187,7 @@
 		4986883D256A6F7A00C833AA /* SpotlightIndexSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868830256A6F7000C833AA /* SpotlightIndexSettingsView.swift */; };
 		4995BB9B2572A6A10098A176 /* Covid19DashboardXUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4995BB9A2572A6A10098A176 /* Covid19DashboardXUITests.swift */; };
 		499A5420255ED68200D1D3D8 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499A541F255ED68200D1D3D8 /* Searchable.swift */; };
+		499C8AB725F2932A00C083F0 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 499C8AB625F2932A00C083F0 /* Reachability */; };
 		49B90EDC25432EB900E89F5D /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EDB25432EB900E89F5D /* CustomButtonStyle.swift */; };
 		49B90EFC2543460100E89F5D /* SummaryProviderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EFB2543460100E89F5D /* SummaryProviderDetailView.swift */; };
 		49BFD1F125D50B6B007C8775 /* ExponentialProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BFD1F025D50B6B007C8775 /* ExponentialProperty.swift */; };
@@ -264,6 +264,7 @@
 		49D9B0AD257BF01D00B80B3E /* GlobalMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D9B0AB257BF01D00B80B3E /* GlobalMeasurementForDecodingOnly.swift */; };
 		49DD25C6254EBCE200452A92 /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DD25C5254EBCE200452A92 /* NotificationSettingsView.swift */; };
 		49DD9EFE2545C69B006B1866 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DD9EFD2545C69B006B1866 /* UIConstants.swift */; };
+		49DE057F25F2925A00761DAA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49DE058125F2925A00761DAA /* Localizable.strings */; };
 		49DF960A2583CBA30076600C /* UsefulURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498687952569984D00C833AA /* UsefulURLs.swift */; };
 		49DF960B2583CBA30076600C /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986877A256997ED00C833AA /* UserDefaultsKeys.swift */; };
 		49DF960C2583CBA30076600C /* SpecialCountries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4986878F2569982100C833AA /* SpecialCountries.swift */; };
@@ -503,6 +504,7 @@
 		49D9B0AB257BF01D00B80B3E /* GlobalMeasurementForDecodingOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalMeasurementForDecodingOnly.swift; sourceTree = "<group>"; };
 		49DD25C5254EBCE200452A92 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
 		49DD9EFD2545C69B006B1866 /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
+		49DE058025F2925A00761DAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		49DF961B2583D03C0076600C /* ServerCachingInProgressResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCachingInProgressResponse.swift; sourceTree = "<group>"; };
 		49E3E5EF25A59E670092D1B8 /* ComplicationConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationConstants.swift; sourceTree = "<group>"; };
 		49E3E60B25A5A1530092D1B8 /* SummaryProvider+string.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SummaryProvider+string.swift"; sourceTree = "<group>"; };
@@ -535,8 +537,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4952C8BA25F13E6100030D72 /* Reachability in Frameworks */,
 				4952C8C325F13E7D00030D72 /* SwiftUICharts in Frameworks */,
+				499C8AB725F2932A00C083F0 /* Reachability in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -890,6 +892,7 @@
 				491022DF257254E600027B68 /* SummaryProviderSquareView.swift */,
 				4914D305258C75DD00E6C082 /* FutureEstimationProviderView.swift */,
 				496FAADC258F3D40003BD6DC /* FutureEstimationProviderCaseNumbersIntersectionView.swift */,
+				49DE058125F2925A00761DAA /* Localizable.strings */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -952,8 +955,8 @@
 			);
 			name = "Covid19DashboardX (iOS)";
 			packageProductDependencies = (
-				4952C8B925F13E6100030D72 /* Reachability */,
 				4952C8C225F13E7D00030D72 /* SwiftUICharts */,
+				499C8AB625F2932A00C083F0 /* Reachability */,
 			);
 			productName = "Covid19DashboardX (iOS)";
 			productReference = 4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */;
@@ -1073,8 +1076,8 @@
 			);
 			mainGroup = 4954F5C124E7F4D200399145;
 			packageReferences = (
-				4952C8B825F13E6100030D72 /* XCRemoteSwiftPackageReference "Reachability" */,
 				4952C8C125F13E7D00030D72 /* XCRemoteSwiftPackageReference "ChartView" */,
+				499C8AB525F2932A00C083F0 /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			productRefGroup = 4954F5CF24E7F4D300399145 /* Products */;
 			projectDirPath = "";
@@ -1104,6 +1107,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4910220A2572464700027B68 /* Launch Screen.storyboard in Resources */,
+				49DE057F25F2925A00761DAA /* Localizable.strings in Resources */,
 				49370B2A2542AA56009BFE4C /* ISO_CountryCodes.plist in Resources */,
 				4954F5DE24E7F4D300399145 /* Assets.xcassets in Resources */,
 			);
@@ -1484,6 +1488,17 @@
 			targetProxy = 49D5A22A259EE8EF003C8F00 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		49DE058125F2925A00761DAA /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				49DE058025F2925A00761DAA /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		493C2DFF252383620060BA27 /* Debug */ = {
@@ -1925,14 +1940,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4952C8B825F13E6100030D72 /* XCRemoteSwiftPackageReference "Reachability" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.0;
-			};
-		};
 		4952C8C125F13E7D00030D72 /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppPear/ChartView";
@@ -1941,18 +1948,26 @@
 				minimumVersion = 1.5.4;
 			};
 		};
+		499C8AB525F2932A00C083F0 /* XCRemoteSwiftPackageReference "Reachability" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4952C8B925F13E6100030D72 /* Reachability */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4952C8B825F13E6100030D72 /* XCRemoteSwiftPackageReference "Reachability" */;
-			productName = Reachability;
-		};
 		4952C8C225F13E7D00030D72 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4952C8C125F13E7D00030D72 /* XCRemoteSwiftPackageReference "ChartView" */;
 			productName = SwiftUICharts;
+		};
+		499C8AB625F2932A00C083F0 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 499C8AB525F2932A00C083F0 /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
 		};
 		49C6A6D625A465E100F4C226 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;

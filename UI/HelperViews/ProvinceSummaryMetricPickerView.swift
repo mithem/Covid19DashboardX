@@ -10,7 +10,7 @@ import SwiftUI
 struct ProvinceSummaryMetricPickerView: View {
     @Binding var activeMetric: Province.SummaryMetric
     var body: some View {
-        Picker("Summary metric", selection: $activeMetric) {
+        Picker("summary_metric", selection: $activeMetric) {
             ForEach(Province.SummaryMetric.allCases) { value in
                 Text(value.shortDescription).tag(value)
             }

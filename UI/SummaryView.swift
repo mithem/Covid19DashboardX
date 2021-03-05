@@ -27,12 +27,12 @@ struct SummaryView: View {
     @AppStorage(UserDefaultsKeys.colorGrayAreaForDeltas) var colorDeltaGrayArea = DefaultSettings.colorGrayAreaForDeltas
     
     var actionSheetButtonsForSorting: [ActionSheet.Button] {
-        var buttons: [ActionSheet.Button] = [.default(Text("Refresh")) {manager.execute(task: .summary)}, .default(Text("Country code"), action: {manager.sortBy = .countryCode}), .default(Text("Country name"), action: {manager.sortBy = .countryName})]
+        var buttons: [ActionSheet.Button] = [.default(Text("refresh")) {manager.execute(task: .summary)}, .default(Text("country_code"), action: {manager.sortBy = .countryCode}), .default(Text("country_name"), action: {manager.sortBy = .countryName})]
         
-        let confirmed: [ActionSheet.Button] = [.default(Text("Total confirmed"), action: {manager.sortBy = .totalConfirmed}), .default(Text("New confirmed"), action: {manager.sortBy = .newConfirmed})]
-        let deaths: [ActionSheet.Button] = [.default(Text("Total deaths"), action: {manager.sortBy = .totalDeaths}), .default(Text("New deaths"), action: {manager.sortBy = .newDeaths})]
-        let recovered: [ActionSheet.Button] = [.default(Text("Total recovered"), action: {manager.sortBy = .totalRecovered}), .default(Text("New recovered"), action: {manager.sortBy = .newRecovered})]
-        let active: [ActionSheet.Button] = [.default(Text("Active cases"), action: {manager.sortBy = .activeCases})]
+        let confirmed: [ActionSheet.Button] = [.default(Text("total_confirmed"), action: {manager.sortBy = .totalConfirmed}), .default(Text("new_confirmed"), action: {manager.sortBy = .newConfirmed})]
+        let deaths: [ActionSheet.Button] = [.default(Text("total_deaths"), action: {manager.sortBy = .totalDeaths}), .default(Text("new_deaths"), action: {manager.sortBy = .newDeaths})]
+        let recovered: [ActionSheet.Button] = [.default(Text("total_recovered"), action: {manager.sortBy = .totalRecovered}), .default(Text("new_recovered"), action: {manager.sortBy = .newRecovered})]
+        let active: [ActionSheet.Button] = [.default(Text("active_cases"), action: {manager.sortBy = .activeCases})]
         
         switch activeMetric {
         case .confirmed:
@@ -45,7 +45,7 @@ struct SummaryView: View {
             buttons.append(contentsOf: active)
         }
         
-        buttons.append(contentsOf: [.default(Text(manager.reversed ? "Dereverse" : "Reverse"), action: {manager.reversed.toggle()}), .cancel()])
+        buttons.append(contentsOf: [.default(Text(manager.reversed ? "dereverse" : "reverse"), action: {manager.reversed.toggle()}), .cancel()])
         
         return buttons
     }
@@ -53,9 +53,9 @@ struct SummaryView: View {
     var actionSheet: ActionSheet {
         switch actionSheetConfig {
         case .sort:
-            return ActionSheet(title: Text("Sort countries"), message: Text("By which criteria would you like to sort countries?"), buttons: actionSheetButtonsForSorting)
+            return ActionSheet(title: Text("sort_countries"), message: Text("sort_countries_criteria_question"), buttons: actionSheetButtonsForSorting)
         case .error:
-            return ActionSheet(title: Text("Unable to load data"), message: Text(manager.error?.localizedDescription ?? "unkown error."), buttons: [.default(Text("OK"))])
+            return ActionSheet(title: Text("unable_to_load_data"), message: Text(manager.error?.localizedDescription ?? "unkown_error_period"), buttons: [.default(Text("ok"))])
         }
     }
     
@@ -67,12 +67,12 @@ struct SummaryView: View {
                 } else if manager.loadingTasks.contains(.summary) {
                     VStack(spacing: 10) {
                         ProgressView()
-                        Text("Loading...")
+                        Text("loading.uppercase")
                     }
                 } else if let error = manager.error {
                     if error == NetworkError.cachingInProgress {
                         VStack {
-                            Text("The server is currently caching the newest data. Please try again in a bit.")
+                            Text("server_is_caching")
                             RefreshButton
                         }
                     } else {
@@ -81,7 +81,7 @@ struct SummaryView: View {
                     }
                 } else {
                     VStack {
-                        Text("🤷 No data")
+                        Text("no_data_present")
                         RefreshButton
                     }
                 }
@@ -119,12 +119,12 @@ struct SummaryView: View {
                                             .padding(UIConstants.navigationBarItemsPadding)
                                     }
             )
-            .navigationTitle("Covid19 Summary")
+            .navigationTitle("summary_view_nav_title")
         }
     }
     
     var RefreshButton: some View {
-        Button("Refresh") {
+        Button("refresh") {
             refresh()
         }
         .buttonStyle(CustomButtonStyle())
@@ -137,12 +137,12 @@ struct SummaryView: View {
                 SearchBar(searchTerm: $searchTerm)
                 if let latestGlobal = manager.latestGlobal {
                     NavigationLink(destination: SummaryProviderDetailView(manager: manager, provider: latestGlobal)) {
-                        Text("Global: ") + (latestGlobal.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorPercentagesTreshold, colorDeltaGrayArea: colorPercentagesGrayArea, reversed: false))
+                        Text("global_colon") + (latestGlobal.summaryFor(metric: activeMetric, colorNumbers: colorNumbers, colorDeltaTreshold: colorPercentagesTreshold, colorDeltaGrayArea: colorPercentagesGrayArea, reversed: false))
                     }
                     .modifier(AttachToRefreshContextMenu(manager: manager))
                 } else if manager.loadingTasks.contains(.globalSummary) {
                     HStack {
-                        Text("Global: loading…")
+                        Text("global_colon_loading")
                         ProgressView()
                     }
                 }
@@ -154,7 +154,7 @@ struct SummaryView: View {
                 }
                 HStack {
                     Spacer()
-                    Text("Stay safe ❤️")
+                    Text("stay_safe")
                         .foregroundColor(.secondary)
                         .grayscale(0.35)
                     Spacer()
@@ -199,7 +199,7 @@ fileprivate struct AttachToRefreshContextMenu: ViewModifier {
                 Button(action: {
                     refreshSummaries(on: manager)
                 }) {
-                    Text("Refresh summaries")
+                    Text("refresh_summaries")
                     Image(systemName: "arrow.clockwise")
                 }
                 Button(action: {
@@ -208,7 +208,7 @@ fileprivate struct AttachToRefreshContextMenu: ViewModifier {
                     }
                     refreshSummaries(on: manager)
                 }) {
-                    Text("Reset all data")
+                    Text("reset_all_data")
                     Image(systemName: "trash")
                 }
             }

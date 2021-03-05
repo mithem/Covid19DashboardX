@@ -20,7 +20,7 @@ struct BasicMeasurementMetricPickerView: View {
     }
     
     var Content: some View {
-        Picker("Measurement metric", selection: $activeMetric) {
+        Picker("measurement_metric", selection: $activeMetric) {
             ForEach(BasicMeasurementMetric.allCases) { value in
                 Text(value.shortDescription).tag(value)
             }

@@ -13,13 +13,13 @@ struct CountryViewSettingsView: View {
     @State private var showingMovingAveragesConfigurationScreen = false
     var body: some View {
         Form {
-            Picker("Data representation", selection: $dataRepresentationType) {
+            Picker("data_representation", selection: $dataRepresentationType) {
                 ForEach(DataRepresentationType.allCases) { reprType in
                     Text(reprType.rawValue).tag(reprType)
                 }
             }
         }
-        .navigationTitle("Visualization settings")
+        .navigationTitle("visualization_settings")
     }
 }
 
