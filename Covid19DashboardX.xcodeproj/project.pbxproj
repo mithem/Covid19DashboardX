@@ -34,7 +34,6 @@
 		49370B2225429E0B009BFE4C /* ProvinceInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */; };
 		49370B2A2542AA56009BFE4C /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
 		493ACC6325F34DE40023111F /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 493ACC6225F34DE40023111F /* Reachability */; };
-		493ACC6C25F34E700023111F /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 493ACC6B25F34E700023111F /* SwiftUICharts */; };
 		493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E08252383A70060BA27 /* ModelDecodableTests.swift */; };
 		493F1A0F25907EB60084B130 /* APIConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F1A0E25907EB60084B130 /* APIConfigTests.swift */; };
 		4940B38725D5106400ECE39D /* ExponentialProperty+HumanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4940B38625D5106400ECE39D /* ExponentialProperty+HumanReadable.swift */; };
@@ -262,6 +261,7 @@
 		49D5A2C3259EEA41003C8F00 /* CustomJSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF1D21258528E800B2164F /* CustomJSONDecoder.swift */; };
 		49D9B0AC257BF01D00B80B3E /* GlobalMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D9B0AB257BF01D00B80B3E /* GlobalMeasurementForDecodingOnly.swift */; };
 		49D9B0AD257BF01D00B80B3E /* GlobalMeasurementForDecodingOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D9B0AB257BF01D00B80B3E /* GlobalMeasurementForDecodingOnly.swift */; };
+		49DD155C25F35392000D0EA2 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49DD155B25F35392000D0EA2 /* SwiftUICharts */; };
 		49DD25C6254EBCE200452A92 /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DD25C5254EBCE200452A92 /* NotificationSettingsView.swift */; };
 		49DD9EFE2545C69B006B1866 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DD9EFD2545C69B006B1866 /* UIConstants.swift */; };
 		49DE057F25F2925A00761DAA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49DE058125F2925A00761DAA /* Localizable.strings */; };
@@ -539,7 +539,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				493ACC6325F34DE40023111F /* Reachability in Frameworks */,
-				493ACC6C25F34E700023111F /* SwiftUICharts in Frameworks */,
+				49DD155C25F35392000D0EA2 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -957,7 +957,7 @@
 			name = "Covid19DashboardX (iOS)";
 			packageProductDependencies = (
 				493ACC6225F34DE40023111F /* Reachability */,
-				493ACC6B25F34E700023111F /* SwiftUICharts */,
+				49DD155B25F35392000D0EA2 /* SwiftUICharts */,
 			);
 			productName = "Covid19DashboardX (iOS)";
 			productReference = 4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */;
@@ -1079,7 +1079,7 @@
 			mainGroup = 4954F5C124E7F4D200399145;
 			packageReferences = (
 				493ACC6125F34DE40023111F /* XCRemoteSwiftPackageReference "Reachability" */,
-				493ACC6A25F34E700023111F /* XCRemoteSwiftPackageReference "ChartView" */,
+				49DD155A25F35392000D0EA2 /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = 4954F5CF24E7F4D300399145 /* Products */;
 			projectDirPath = "";
@@ -1953,7 +1953,7 @@
 				minimumVersion = 5.1.0;
 			};
 		};
-		493ACC6A25F34E700023111F /* XCRemoteSwiftPackageReference "ChartView" */ = {
+		49DD155A25F35392000D0EA2 /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppPear/ChartView";
 			requirement = {
@@ -1969,13 +1969,13 @@
 			package = 493ACC6125F34DE40023111F /* XCRemoteSwiftPackageReference "Reachability" */;
 			productName = Reachability;
 		};
-		493ACC6B25F34E700023111F /* SwiftUICharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 493ACC6A25F34E700023111F /* XCRemoteSwiftPackageReference "ChartView" */;
-			productName = SwiftUICharts;
-		};
 		49C6A6D625A465E100F4C226 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = SwiftUICharts;
+		};
+		49DD155B25F35392000D0EA2 /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49DD155A25F35392000D0EA2 /* XCRemoteSwiftPackageReference "ChartView" */;
 			productName = SwiftUICharts;
 		};
 /* End XCSwiftPackageProductDependency section */

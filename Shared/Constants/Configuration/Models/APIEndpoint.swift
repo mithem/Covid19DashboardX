@@ -30,6 +30,15 @@ extension APIEndpoint {
     }
     
     static func parseResponse(data: Data?, response: URLResponse?, error: Error?, completion: @escaping ResponseCompletionHandler) {
+        
+        func checkForServiceNotAvailable(string: String) -> Bool {
+            if string.lowercased().contains("service temporarily unavailable") {
+                completion(.failure(.serviceTemporarilyNotAvailable))
+                return true
+            }
+            return false
+        }
+        
         if let error = error {
             completion(.failure(.init(error: error)))
         } else if let data = data {
@@ -40,7 +49,9 @@ extension APIEndpoint {
             case .failure(let error):
                 if DataType.self == FallbackDataType.self {
                     let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
-                    completion(.failure(.invalidResponse(response: string)))
+                    if !checkForServiceNotAvailable(string: string) {
+                        completion(.failure(.invalidResponse(response: string)))
+                    }
                 } else {
                     switch error {
                     case .decodingError(_):
@@ -50,7 +61,9 @@ extension APIEndpoint {
                             completion(.fallbackSuccessful(data))
                         case .failure(_):
                             let string = String(data: data, encoding: .utf8) ?? Constants.notAvailableString
-                            completion(.failure(.invalidResponse(response: string)))
+                            if !checkForServiceNotAvailable(string: string) {
+                                completion(.failure(.invalidResponse(response: string)))
+                            }
                         }
                     case .noData:
                         completion(.failure(.noResponse))

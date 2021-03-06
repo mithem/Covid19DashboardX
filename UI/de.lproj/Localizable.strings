@@ -183,3 +183,12 @@
 "doubling_time" = "Verdoppelungszeit";
 "halving_time" = "Halbierungszeit";
 "none" = "Keine";
+// end ExponentialProperty+HumanReadable
+
+// MARK: NetworkError+LocalizedError
+"network_err_invalid_response" = "Ungültige Serverantwort: ";
+"network_err_no_response" = "Keine Serverantwort.";
+"network_err_no_network_connection" = "Keine Netzwerkverbindung.";
+"network_err_constrained_network" = "Datensparmodus aktiviert.";
+"network_err_caching_in_progress" = "Der Server ist dabei, einen Cache anzulegen. Bitte versuchen Sie es später nochmals.";
+// end NetworkError+LocalizedError

@@ -9,23 +9,28 @@ import Foundation
 
 extension NetworkError: LocalizedError {
     var localizedDescription: String {
+        func s(_ key: String) -> String {
+            return NSLocalizedString(key, comment: key)
+        }
         switch self {
+        case .serviceTemporarilyNotAvailable:
+            return "network_err_temporarily_not_available"
         case .invalidResponse(response: let response):
-            return "Invalid response from server: \(response)"
+            return "\(s("network_err_invalid_response"))\(response)"
         case .noResponse:
-            return "No response from server."
+            return s("network_err_no_response")
         case .urlError(let error):
             return error.localizedDescription
         case .noNetworkConnection:
-            return "No network connection."
+            return s("network_err_no_network_connection")
         case .constrainedNetwork:
-            return "Low data mode is on."
+            return s("network_err_contrained_network")
         case .cachingInProgress:
-            return "Serverside caching in progress. Please try again later."
+            return s("network_err_caching_in_progress")
         case .otherWith(error: let error):
             return error.localizedDescription
         case .other:
-            return "Unkown."
+            return s("unkown_error")
         }
     }
 }

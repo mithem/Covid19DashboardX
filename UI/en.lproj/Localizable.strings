@@ -183,3 +183,12 @@
 "doubling_time" = "Doubling time";
 "halving_time" = "Halving time";
 "none" = "None";
+// end ExponentialProperty+HumanReadable
+
+// MARK: NetworkError+LocalizedError
+"network_err_invalid_response" = "Invalid response from server: ";
+"network_err_no_response" = "No response from server.";
+"network_err_no_network_connection" = "No network connection.";
+"network_err_constrained_network" = "Low data mode is on.";
+"network_err_caching_in_progress" = "Serverside caching in progress. Please try again later.";
+// end NetworkError+LocalizedError

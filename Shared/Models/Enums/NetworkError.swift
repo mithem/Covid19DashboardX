@@ -8,6 +8,7 @@
 import Foundation
 
 enum NetworkError: Error {
+    case serviceTemporarilyNotAvailable
     case invalidResponse(response: String)
     case noResponse // don't actually know whether that can happen without a timeout error 🤔
     case urlError(_ error: URLError)
