@@ -1,0 +1,185 @@
+/* 
+  Localizable.strings
+  Covid19DashboardX
+
+  Created by Miguel Themann on 05.03.21.
+  
+*/
+
+// MARK: SettingsView
+"general" = "Allgemein";
+"notifications" = "Benachrichtigungen";
+"spotlight" = "Spotlight";
+"other" = "Andere";
+"attributions" = "Zuschreibungen";
+"settings" = "Einstellungen";
+// end SettingsView
+
+// MARK: SpotlightIndexSettingsView
+"enable_spotlight" = "Spotlight aktivieren";
+"clear_index" = "Index löschen";
+"spotlight_indexing_description" = "Das Aktivieren von Spotlight-Indexing macht die Länder und Regionen, die Sie sich ansehen, in Apples Spotlight-Suchmaschine verfügbar. Sie können den Index jederzeit löschen, falls etwas schiefgegangen zu sein scheint.";
+"cleared_index" = "Index gelöscht";
+"error_clearing_index" = "Fehler beim Löschen des Indexes";
+"you_can_close_this" = "Sie können dies nun schließen.";
+// end SpotlightIndexSettingsView
+
+// MARK: NotificationSettingsView
+"enable_notifications" = "Benachrichtigungen aktivieren";
+"remind_me_at" = "Mich erinnern um";
+"notifications_disabled_info" = "Sie haben Benachrichtigungen für diese App deaktiviert.";
+"reminder.title" = "Erinnerung";
+"reminder.body" = "Sehen Sie sich die neuesten Zahlen an.";
+// end NotificationsSettingsView
+
+// MARK: AttributionsSettingsView
+"data_from_colon" = "Daten von: ";
+// end AttributionsSettingsView
+
+// MARK: OtherSettingsView
+"suggest_a_feature" = "Feature vorschlagen";
+"file_a_bug_report" = "Bug melden";
+"get_support" = "Hilfe erhalten";
+"reset_to_defaults" = "Einstellungen zurücksetzen";
+"reset_to_defaults_question" = "Alle Einstellungen zurücksetzen?";
+"reset_to_defaults_question_confirmation" = "Sind Sie sicher, dass Sie alle Einstellungen zurücksetzen möchten? Dies kann nicht rückgängig gemacht werden.";
+"reset" = "Zurücksetzen";
+// end OtherSettingsView
+
+// MARK: GeneralSettingsView
+"color_numbers" = "Zahlen einfärben";
+"max_moving_avg_interval_colon" = "Höchstes Interval des gleitenden Durchschnitts: ";
+"max_future_estimation_interval_colon" = "Höchstes Interval der Vorausschätzung: ";
+"ignore_low_data_mode" = "Datensparmodus ignorieren";
+"cfr_color_treshold_colon" = "CFR Grenze der Farbunterschiede: ";
+"cfr_color_gray_area_colon" = "CFR Graufläche der Farbunterschiede: ";
+"cfrs_of" = "CFRs von";
+"with_a_derivation_of_plusminus" = "mit einer Abweichung von ±";
+"will_be_displayed_etc" = "werden grau dargestellt, darüber rot, darunter grün.";
+"new_cases_proportion_color_treshold_colon" = "Neue Fallzahlen Grenze der Farbunterschiede: ";
+"new_cases_proportion_gray_area_colon" = "Neue Fallzahlen Graufläche der Farbunterschiede: ";
+"when_the_ratio_of_new_cases_to_total_ones" = "Wenn das Verhältnis neuer zu bestehenden Fallzahlen";
+"comma_it_will_be_displayed_etc" = "überschreitet, wird es grün bzw. rot dargestellt.";
+// end GeneralSettingsView
+
+// MARK: BasicMeasurementMetricPickerView
+"measurement_metric" = "Messmetrik";
+// end BasicMeasurementMetricPickerView
+
+// MARK: ProvinceSummaryMetricPickerView
+"summary_metric" = "Zusammenfassungsmetrik";
+// end ProvinceSummaryMetricPickerView
+
+// MARK: SearchBar
+"search" = "Suchen";
+"cancel" = "Abbrechen";
+// end SearchBar
+
+// MARK: SummaryProviderSelectionView
+"select_country" = "Land auswählen";
+// end SummaryProviderSelectionView
+
+// MARK: ComparisonDetailView
+"country" = "Land";
+"compare_countries" = "Länder vergleichen";
+"done" = "Fertig";
+// end ComparisonDetailView
+
+// MARK: SummaryView (and probably others)
+"country_code" = "Landesabkürzung";
+"country_name" = "Landesname";
+"total_confirmed" = "Gesamt bestätigte Fälle";
+"new_confirmed" = "Neue bestätigte Fälle";
+"total_deaths" = "Gesamte Todesfälle";
+"new_deaths" = "Neue Todesfälle";
+"total_recovered" = "Gesamt erholte Fälle";
+"new_recovered" = "Neu erholte Fälle";
+"active_cases" = "Aktive Fälle";
+"reverse" = "Umkehren";
+"dereverse" = "Unumkehren";
+"sort_countries" = "Länder sortieren";
+"sort_countries_criteria_question" = "Nach welchen Kritierien sollen die Länder sortiert werden?";
+"unable_to_load_data" = "Daten können nicht geladen werden.";
+"unkown_error_period" = "Unbekannter Fehler.";
+"ok" = "OK";
+"loading.uppercase" = "Laden...";
+"server_is_caching" = "Der Server lädt gerade die neuesten Daten. Bitte später erneut versuchen.";
+"no_data_present" = "🤷 No data";
+"summary_view_nav_title" = "Covid19 Zusammenfassung";
+"refresh" = "Aktualisieren";
+"global_colon" = "Global: ";
+"global_colon_loading" = "Global: laden...";
+"stay_safe" = "Bleiben Sie gesund!"; // heart doesn't seem to fit in German culture, I think...
+"refresh_summaries" = "Zusammenfassungen aktualisieren";
+"reset_all_data" = "Geladene Daten löschen";
+// end SummaryView
+
+// MARK: CountryView
+"low_data_mode_on_period" = "Datensparmodus aktiviert.";
+"ignore" = "Ignorieren";
+"details" = "Details";
+"compare" = "Vergleichen";
+"moving_avg_colon" = "Gleitender Durchschnitt: ";
+// end CountryView
+
+// MARK: CountryProvincesDetailView
+"total_colon" = "Insgesamt: ";
+"no_province_data_for_country" = "Für dieses Land stehen keine regionalen Daten zur Verfügung.";
+"error_getting_provinces_data_colon" = "Fehler beim Erhalten der regionalen Daten: ";
+"details_colon" = "Details: ";
+"refresh_provinces" = "Regionen aktualisieren";
+// end CountryProvincesDetailView
+
+// MARK: SummaryProviderDetailView
+"future_estimations" = "Vorausschätzungen";
+"new_active" = "Neue aktive";
+// end SummaryProviderDetailView
+
+// MARK: CountryViewSettingsView
+"data_representation" = "Datendarstellung";
+"visualization_settings" = "Anzeigeeinstellungen";
+// end CountryViewSettingsView
+
+// MARK: FutureEstimationProviderView
+"estimation_interval_colon" = "Interval der Vorausschätzung: ";
+"no_data_available_for_region" = "Für dieses Land stehen die benötigten Daten nicht zur Verfügung. Probieren Sie doch eine andere Metrik.";
+"future_estimation_disclaimer" = "Natürlich stellt dies eine viel zu grobe Abschätzung dar, welche lediglich auf einer Expontialfunktion basiert. Entsprechend stellt sie keine realistische Vorausschätzung oder Vorhersage dar.";
+"calculate_intersect" = "Schnittpunkt berechnen";
+"future_estimation_interval_error_that_shouldnt_happen" = "Interner Fehler (FutureEstimationProviderView.swift:51). Dieser Fehler sollte übrigens nicht erschienen sein 😅.";
+"future_estimations" = "Vorausschätzungen";
+// end FutureEstimationProviderView
+
+// MARK: FutureEstimationProviderCaseNumbersIntersectionView
+"based_on_current_rates_comma" = "Basierend auf den aktuellen Fallzahlen werden";
+"and" = "und";
+"will_have_the_same" = "dieselben";
+"in" = "in";
+"days_comma_making_it" = "Tagen haben, das wären dann etw. ";
+"case_intersect" = "Fallzahlschnittpunkt";
+// end FutureEstimationProviderCaseNumbersIntersectionView
+
+// MARK: CustomDecodableError+LocalizedError
+"decoding_error_colon" = "Dekodierungsfehler: ";
+// end CustomDecodableError+LocalizedError
+
+// MARK: MeasurementMetric+humanReadable
+"case_fatality_rate" = "Fallsterblichkeitsrate";
+"case_doubling_or_halving_time" = "Verdoppelungs-/Halbierungszeit";
+// end MeasurementMetric+humanReadable
+
+// MARK: BasicMeasurementMetric+shortDescription
+"confirmed" = "Bestätigt";
+"deaths" = "Tote";
+"recovered" = "Erholte";
+"active" = "Aktive";
+// end BasicMeasurementMetric+shortDescription
+
+// MARK: BasicMeasurementMetric+HumanReadable
+"confirmed_cases" = "Bestätigte Fälle";
+"active_cases" = "Aktive Fälle";
+// end BasicMeasurementMetric+HumanReadable
+
+// MARK: ExponentialProperty+HumanReadable
+"doubling_time" = "Verdoppelungszeit";
+"halving_time" = "Halbierungszeit";
+"none" = "Keine";

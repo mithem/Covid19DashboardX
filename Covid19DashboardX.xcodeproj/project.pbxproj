@@ -33,6 +33,8 @@
 		49370B1A25429832009BFE4C /* CountryProvincesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B1925429832009BFE4C /* CountryProvincesDetailView.swift */; };
 		49370B2225429E0B009BFE4C /* ProvinceInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */; };
 		49370B2A2542AA56009BFE4C /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
+		493ACC6325F34DE40023111F /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 493ACC6225F34DE40023111F /* Reachability */; };
+		493ACC6C25F34E700023111F /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 493ACC6B25F34E700023111F /* SwiftUICharts */; };
 		493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E08252383A70060BA27 /* ModelDecodableTests.swift */; };
 		493F1A0F25907EB60084B130 /* APIConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F1A0E25907EB60084B130 /* APIConfigTests.swift */; };
 		4940B38725D5106400ECE39D /* ExponentialProperty+HumanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4940B38625D5106400ECE39D /* ExponentialProperty+HumanReadable.swift */; };
@@ -45,7 +47,6 @@
 		494A26C125723E230022A49E /* Province+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26BF25723E230022A49E /* Province+Hashable.swift */; };
 		494F8CED257CE1790058857A /* Array+CustomDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494F8CEC257CE1790058857A /* Array+CustomDecodable.swift */; };
 		494F8CEE257CE1790058857A /* Array+CustomDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494F8CEC257CE1790058857A /* Array+CustomDecodable.swift */; };
-		4952C8C325F13E7D00030D72 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 4952C8C225F13E7D00030D72 /* SwiftUICharts */; };
 		4954F5DE24E7F4D300399145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4954F5C924E7F4D300399145 /* Assets.xcassets */; };
 		4966E0F025A45B7E009D3E8F /* DataManagerWithReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4966E0EF25A45B7E009D3E8F /* DataManagerWithReachability.swift */; };
 		4966E0F125A45B7E009D3E8F /* DataManagerWithReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4966E0EF25A45B7E009D3E8F /* DataManagerWithReachability.swift */; };
@@ -187,7 +188,6 @@
 		4986883D256A6F7A00C833AA /* SpotlightIndexSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49868830256A6F7000C833AA /* SpotlightIndexSettingsView.swift */; };
 		4995BB9B2572A6A10098A176 /* Covid19DashboardXUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4995BB9A2572A6A10098A176 /* Covid19DashboardXUITests.swift */; };
 		499A5420255ED68200D1D3D8 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499A541F255ED68200D1D3D8 /* Searchable.swift */; };
-		499C8AB725F2932A00C083F0 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 499C8AB625F2932A00C083F0 /* Reachability */; };
 		49B90EDC25432EB900E89F5D /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EDB25432EB900E89F5D /* CustomButtonStyle.swift */; };
 		49B90EFC2543460100E89F5D /* SummaryProviderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EFB2543460100E89F5D /* SummaryProviderDetailView.swift */; };
 		49BFD1F125D50B6B007C8775 /* ExponentialProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BFD1F025D50B6B007C8775 /* ExponentialProperty.swift */; };
@@ -398,6 +398,7 @@
 		49370B1925429832009BFE4C /* CountryProvincesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryProvincesDetailView.swift; sourceTree = "<group>"; };
 		49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvinceInlineView.swift; sourceTree = "<group>"; };
 		49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ISO_CountryCodes.plist; sourceTree = "<group>"; };
+		493ACC5A25F345EC0023111F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		493B2C66252D79B0003B551E /* CountryViewSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryViewSettingsView.swift; sourceTree = "<group>"; };
 		493B2C6F252D7BF9003B551E /* BasicMeasurementMetricPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicMeasurementMetricPickerView.swift; sourceTree = "<group>"; };
 		493C2DF8252383620060BA27 /* Covid19DashboardXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Covid19DashboardXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -537,8 +538,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4952C8C325F13E7D00030D72 /* SwiftUICharts in Frameworks */,
-				499C8AB725F2932A00C083F0 /* Reachability in Frameworks */,
+				493ACC6325F34DE40023111F /* Reachability in Frameworks */,
+				493ACC6C25F34E700023111F /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -955,8 +956,8 @@
 			);
 			name = "Covid19DashboardX (iOS)";
 			packageProductDependencies = (
-				4952C8C225F13E7D00030D72 /* SwiftUICharts */,
-				499C8AB625F2932A00C083F0 /* Reachability */,
+				493ACC6225F34DE40023111F /* Reachability */,
+				493ACC6B25F34E700023111F /* SwiftUICharts */,
 			);
 			productName = "Covid19DashboardX (iOS)";
 			productReference = 4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */;
@@ -1073,11 +1074,12 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 4954F5C124E7F4D200399145;
 			packageReferences = (
-				4952C8C125F13E7D00030D72 /* XCRemoteSwiftPackageReference "ChartView" */,
-				499C8AB525F2932A00C083F0 /* XCRemoteSwiftPackageReference "Reachability" */,
+				493ACC6125F34DE40023111F /* XCRemoteSwiftPackageReference "Reachability" */,
+				493ACC6A25F34E700023111F /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = 4954F5CF24E7F4D300399145 /* Products */;
 			projectDirPath = "";
@@ -1494,6 +1496,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				49DE058025F2925A00761DAA /* en */,
+				493ACC5A25F345EC0023111F /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1555,6 +1558,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1614,6 +1618,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1940,15 +1945,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4952C8C125F13E7D00030D72 /* XCRemoteSwiftPackageReference "ChartView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AppPear/ChartView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.4;
-			};
-		};
-		499C8AB525F2932A00C083F0 /* XCRemoteSwiftPackageReference "Reachability" */ = {
+		493ACC6125F34DE40023111F /* XCRemoteSwiftPackageReference "Reachability" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
 			requirement = {
@@ -1956,18 +1953,26 @@
 				minimumVersion = 5.1.0;
 			};
 		};
+		493ACC6A25F34E700023111F /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4952C8C225F13E7D00030D72 /* SwiftUICharts */ = {
+		493ACC6225F34DE40023111F /* Reachability */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4952C8C125F13E7D00030D72 /* XCRemoteSwiftPackageReference "ChartView" */;
-			productName = SwiftUICharts;
-		};
-		499C8AB625F2932A00C083F0 /* Reachability */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 499C8AB525F2932A00C083F0 /* XCRemoteSwiftPackageReference "Reachability" */;
+			package = 493ACC6125F34DE40023111F /* XCRemoteSwiftPackageReference "Reachability" */;
 			productName = Reachability;
+		};
+		493ACC6B25F34E700023111F /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 493ACC6A25F34E700023111F /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
 		};
 		49C6A6D625A465E100F4C226 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;

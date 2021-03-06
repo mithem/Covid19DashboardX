@@ -103,7 +103,6 @@
 "unkown_error_period" = "Unkown error.";
 "ok" = "OK";
 "loading.uppercase" = "Loading...";
-"loading.lowercase" = "loading...";
 "server_is_caching" = "The server is currently caching the newest data. Please try again in a bit.";
 "no_data_present" = "🤷 No data";
 "summary_view_nav_title" = "Covid19 Summary";
@@ -133,6 +132,7 @@
 
 // MARK: SummaryProviderDetailView
 "future_estimations" = "Future estimations";
+"new_active" = "New active";
 // end SummaryProviderDetailView
 
 // MARK: CountryViewSettingsView
