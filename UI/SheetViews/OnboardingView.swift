@@ -36,6 +36,9 @@ struct OnboardingView: View {
             }
             .padding(.bottom, 100)
         }
+        .onDisappear {
+            save()
+        }
     }
     
     func save() {
