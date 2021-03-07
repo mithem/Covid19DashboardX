@@ -194,7 +194,7 @@
 "network_err_no_network_connection" = "Keine Netzwerkverbindung.";
 "network_err_constrained_network" = "Datensparmodus aktiviert.";
 "network_err_caching_in_progress" = "Der Server ist dabei, einen Cache anzulegen. Bitte versuchen Sie es später nochmals.";
-"network_err_temporarily_not_available" = "Server: zeitweise nicht verfügbar.";
+"network_err_temporarily_not_available" = "Server: zeitweise nicht verfügbar. Dies ist eine Nachricht von covid19api.com und weder wir noch Sie können etwas tun, um die Situation zu beheben. Bitte probieren Sie es später erneut.";
 // end NetworkError+LocalizedError
 
 // MARK: OnboardingView

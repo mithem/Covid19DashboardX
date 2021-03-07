@@ -194,7 +194,7 @@
 "network_err_no_network_connection" = "No network connection.";
 "network_err_constrained_network" = "Low data mode is on.";
 "network_err_caching_in_progress" = "Serverside caching in progress. Please try again later.";
-"network_err_temporarily_not_available" = "Server: temporarily not available.";
+"network_err_temporarily_not_available" = "Server: temporarily not available. This is a message from covid19api.com and we or you for that matter cannot do anything about it. Please try again later.";
 // end NetworkError+LocalizedError
 
 // MARK: OnboardingView
