@@ -11,6 +11,8 @@ import UserNotifications
 
 struct SummaryView: View {
     
+    @State private var dontShowOnboardingView = UserDefaults().bool(forKey: UserDefaultsKeys.dontShowOnboardingScreen)
+    
     @ObservedObject var manager: DataManager
     @State private var showingActionSheet = false
     @State private var actionSheetConfig = ActionSheetConfig.sort
@@ -99,6 +101,12 @@ struct SummaryView: View {
                 }
                 removeNotifications()
                 initScalingTimer()
+            }
+            .onDisappear {
+                UserDefaults().set(true, forKey: UserDefaultsKeys.dontShowOnboardingScreen)
+            }
+            .sheet(isPresented: .init(get: {!dontShowOnboardingView}, set: {dontShowOnboardingView = !$0})) {
+                OnboardingView()
             }
             .navigationBarItems(leading:
                                     Button(action: {

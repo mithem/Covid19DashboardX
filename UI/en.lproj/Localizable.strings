@@ -44,6 +44,9 @@
 "reset_to_defaults_question" = "Reset to defaults?";
 "reset_to_defaults_question_confirmation" = "Are you sure you want to reset to defaults? This cannot be undone.";
 "reset" = "Reset";
+"onboarding_view" = "Onboarding screen";
+"show_now" = "Show now";
+"show_next_time" = "Show next time";
 // end OtherSettingsView
 
 // MARK: GeneralSettingsView
@@ -191,4 +194,14 @@
 "network_err_no_network_connection" = "No network connection.";
 "network_err_constrained_network" = "Low data mode is on.";
 "network_err_caching_in_progress" = "Serverside caching in progress. Please try again later.";
+"network_err_temporarily_not_available" = "Server: temporarily not available.";
 // end NetworkError+LocalizedError
+
+// MARK: OnboardingView
+"onb_overview_title" = "Get your overview";
+"onb_overview_body" = "It's easy to get the most important information.";
+"onb_compare_title" = "Compare countries";
+"onb_compare_body" = "See the most important numbers right besides each other.";
+"onb_spotlight_title" = "Spotlight integration";
+"onb_spotlight_body" = "All countries or regions you view can be indexed by Spotlight.";
+// end OnboardingView

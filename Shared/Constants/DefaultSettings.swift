@@ -24,4 +24,5 @@ struct DefaultSettings {
     static let dataRepresentationType = DataRepresentationType.normal
     static let estimationInterval = 7
     static let maximumEstimationInterval = 180
+    static let dontShowOnboardingScreen = false
 }

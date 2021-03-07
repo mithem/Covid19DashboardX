@@ -9,18 +9,27 @@ import SwiftUI
 
 struct OtherSettingsView: View {
     @State private var showingResetToDefaultsActionSheet = false
+    @State private var showingOnboardingView = false
     var body: some View {
         Form {
             Section {
-            Link(destination: UsefulURLs.newFeatureSuggestion) {
-                Item(image: "star.circle", title: NSLocalizedString("suggest_a_feature", comment: "suggest_a_feature"))
+                Link(destination: UsefulURLs.newFeatureSuggestion) {
+                    Item(image: "star.circle", title: NSLocalizedString("suggest_a_feature", comment: "suggest_a_feature"))
+                }
+                Link(destination: UsefulURLs.newBugReport) {
+                    Item(image: "exclamationmark.triangle", title: NSLocalizedString("file_a_bug_report", comment: "file_a_bug_report"))
+                }
+                Link(destination: UsefulURLs.mailToMe) {
+                    Item(image: "envelope", title: NSLocalizedString("get_support", comment: "get_support"))
+                }
             }
-            Link(destination: UsefulURLs.newBugReport) {
-                Item(image: "exclamationmark.triangle", title: NSLocalizedString("file_a_bug_report", comment: "file_a_bug_report"))
-            }
-            Link(destination: UsefulURLs.mailToMe) {
-                Item(image: "envelope", title: NSLocalizedString("get_support", comment: "get_support"))
-            }
+            Section(header: Text("onboarding_view")) {
+                Button("show_now") {
+                    showingOnboardingView = true
+                }
+                Button("show_next_time") {
+                    UserDefaults().set(false, forKey: UserDefaultsKeys.dontShowOnboardingScreen)
+                }
             }
             Section {
                 Button("reset_to_defaults") {
@@ -30,6 +39,9 @@ struct OtherSettingsView: View {
                     ActionSheet(title: Text("reset_to_defaults_question"), message: Text("reset_to_defaults_question_confirmation"), buttons: [.destructive(Text("reset")) {resetSettingsToDefaults()}, .cancel()])
                 }
             }
+        }
+        .sheet(isPresented: $showingOnboardingView) {
+            OnboardingView()
         }
         .navigationTitle("other")
     }

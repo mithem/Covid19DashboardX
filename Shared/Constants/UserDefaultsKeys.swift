@@ -37,4 +37,6 @@ struct UserDefaultsKeys {
     
     static let estimationInterval = "estimationInterval"
     static let maximumEstimationInterval = "maximumEstimationInterval"
+    
+    static let dontShowOnboardingScreen = "dontShowOnboardingScreen"
 }

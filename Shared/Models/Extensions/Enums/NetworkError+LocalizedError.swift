@@ -14,7 +14,7 @@ extension NetworkError: LocalizedError {
         }
         switch self {
         case .serviceTemporarilyNotAvailable:
-            return "network_err_temporarily_not_available"
+            return s("network_err_temporarily_not_available")
         case .invalidResponse(response: let response):
             return "\(s("network_err_invalid_response"))\(response)"
         case .noResponse:

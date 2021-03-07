@@ -44,6 +44,9 @@
 "reset_to_defaults_question" = "Alle Einstellungen zurücksetzen?";
 "reset_to_defaults_question_confirmation" = "Sind Sie sicher, dass Sie alle Einstellungen zurücksetzen möchten? Dies kann nicht rückgängig gemacht werden.";
 "reset" = "Zurücksetzen";
+"onboarding_view" = "Onboarding-Anzeige";
+"show_now" = "Jetzt anzeigen";
+"show_next_time" = "Beim nächsten Start anzeigen";
 // end OtherSettingsView
 
 // MARK: GeneralSettingsView
@@ -191,4 +194,14 @@
 "network_err_no_network_connection" = "Keine Netzwerkverbindung.";
 "network_err_constrained_network" = "Datensparmodus aktiviert.";
 "network_err_caching_in_progress" = "Der Server ist dabei, einen Cache anzulegen. Bitte versuchen Sie es später nochmals.";
+"network_err_temporarily_not_available" = "Server: zeitweise nicht verfügbar.";
 // end NetworkError+LocalizedError
+
+// MARK: OnboardingView
+"onb_overview_title" = "Übersicht";
+"onb_overview_body" = "Die wichtigsten Informationen stehen unmittelbar zur Verfügung.";
+"onb_compare_title" = "Länder vergleichen";
+"onb_compare_body" = "Die wichtigsten Zahlen zweier Länder direkt nebeneinander.";
+"onb_spotlight_title" = "Spotlight-Integration";
+"onb_spotlight_body" = "Alle Länder oder Regionen, die Sie besuchen, können von Spotlight durchsucht werden.";
+// end OnboardingView
