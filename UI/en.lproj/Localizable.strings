@@ -205,3 +205,9 @@
 "onb_spotlight_title" = "Spotlight integration";
 "onb_spotlight_body" = "All countries or regions you view can be indexed by Spotlight.";
 // end OnboardingView
+
+// MARK: WatchOS Complications
+"complication_identifier_very_short_global_confirmed" = "Con.";
+"complication_identifier_very_short_global_active" = "Act.";
+"global" = "Global";
+// end WatchOS Complications

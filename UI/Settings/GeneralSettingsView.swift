@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WatchConnectivity
 
 struct GeneralSettingsView: View {
     @AppStorage(UserDefaultsKeys.colorNumbers) var colorNumbers = DefaultSettings.colorNumbers
@@ -43,6 +44,7 @@ struct GeneralSettingsView: View {
                 Text("\(NSLocalizedString("when_the_ratio_of_new_cases_to_total_ones", comment: "when_the_ratio_of_new_cases_to_total_ones")) \(percent(colorDeltaTreshold)), ±\(percent(colorDeltaGrayArea))\(NSLocalizedString("comma_it_will_be_displayed_etc", comment: "comma_it_will_be_displayed_etc"))")
                     .foregroundColor(.secondary)
             }
+            .onDisappear(perform: invalidateWatchOSComplicationTimeline)
         }
         .navigationTitle("general")
     }

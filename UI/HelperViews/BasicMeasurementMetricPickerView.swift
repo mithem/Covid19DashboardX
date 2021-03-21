@@ -12,7 +12,6 @@ struct BasicMeasurementMetricPickerView: View {
     var body: some View {
         #if os(watchOS)
         Content
-            .pickerStyle(DefaultPickerStyle())
         #else
         Content
             .pickerStyle(SegmentedPickerStyle())

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WatchConnectivity
 #if !os(watchOS)
 import CoreSpotlight
 #endif

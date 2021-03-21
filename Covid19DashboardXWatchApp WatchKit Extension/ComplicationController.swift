@@ -45,19 +45,18 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         if colorTresholdForDeltas == .zero {
             colorTresholdForDeltas = DefaultSettings.colorTresholdForDeltas
         }
-        guard let complication = ComplicationIdentifier(rawValue: complication.identifier) else { handler(nil); return }
+        guard let complicationId = ComplicationIdentifier(rawValue: complication.identifier) else { handler(nil); return }
         DataManager.getGlobalSummary { result in
             switch result {
             case .success(let latest):
-                guard let na = latest.value(for: complication) else { handler(nil); return }
-                let ratio = Float(na) / Float(latest.active)
+                guard let ratio = latest.ratio(for: complicationId) else { handler(nil); return }
                 var fillFraction = ratio / Float(colorTresholdForDeltas)
                 if fillFraction > 1 {
                     fillFraction = 1
                 } else if fillFraction < 0 {
                     fillFraction = 0
                 }
-                let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: CLKComplicationTemplateGraphicCornerGaugeText(gaugeProvider: CLKSimpleGaugeProvider(style: .ring, gaugeColors: [.green, .red], gaugeColorLocations: [0 as NSNumber, 1 as NSNumber], fillFraction: fillFraction), outerTextProvider: CLKSimpleTextProvider(text: latest.string(for: complication))))
+                let entry = complication.getTimelineEntry(fillFraction: fillFraction, latestMeasurement: latest)
                 handler(entry)
             case .failure(_):
                 handler(nil)
