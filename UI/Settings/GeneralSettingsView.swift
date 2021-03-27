@@ -24,6 +24,10 @@ struct GeneralSettingsView: View {
         return percentageFormatter.string(from: NSNumber(value: percent)) ?? Constants.notAvailableString
     }
     
+    private var sharedWCSessionDelegate: SharedWCSessionDelegate = {
+        return SharedWCSessionDelegate()
+    }()
+    
     var body: some View {
         Form {
             Section {
@@ -47,6 +51,14 @@ struct GeneralSettingsView: View {
             .onDisappear(perform: invalidateWatchOSComplicationTimeline)
         }
         .navigationTitle("general")
+    }
+    
+    func invalidateWatchOSComplicationTimeline() {
+        WCSession.default.delegate = sharedWCSessionDelegate
+        if WCSession.default.activationState != .activated {
+            WCSession.default.activate()
+        }
+        WCSession.default.send(.reloadComplications)
     }
 }
 

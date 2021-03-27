@@ -10,6 +10,11 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var manager: DataManager
     @AppStorage(UserDefaultsKeys.measurementMetric) var measurementMetric = DefaultSettings.measurementMetric
+    
+    var sharedWCSessionDelegate: SharedWCSessionDelegate = {
+        return SharedWCSessionDelegate()
+    }()
+    
     var body: some View {
         if let error = manager.error {
             VStack {

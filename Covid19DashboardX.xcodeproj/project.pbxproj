@@ -30,22 +30,30 @@
 		491AC46A2585E9F700674477 /* SharedFunctionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC4692585E9F700674477 /* SharedFunctionTests.swift */; };
 		491AC46F2585F37800674477 /* TimeInterval+shortDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC46E2585F37800674477 /* TimeInterval+shortDescription.swift */; };
 		491AC4702585F37800674477 /* TimeInterval+shortDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AC46E2585F37800674477 /* TimeInterval+shortDescription.swift */; };
+		49206712260E0CBA00A0BA72 /* SharedWCSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49206711260E0CBA00A0BA72 /* SharedWCSessionDelegate.swift */; };
+		49206713260E0CBA00A0BA72 /* SharedWCSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49206711260E0CBA00A0BA72 /* SharedWCSessionDelegate.swift */; };
+		49206714260E0CBA00A0BA72 /* SharedWCSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49206711260E0CBA00A0BA72 /* SharedWCSessionDelegate.swift */; };
 		49370B1A25429832009BFE4C /* CountryProvincesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B1925429832009BFE4C /* CountryProvincesDetailView.swift */; };
 		49370B2225429E0B009BFE4C /* ProvinceInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */; };
 		49370B2A2542AA56009BFE4C /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
 		493C2E09252383A70060BA27 /* ModelDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493C2E08252383A70060BA27 /* ModelDecodableTests.swift */; };
+		493D7E38260B99E8007B09BC /* MessageForWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493D7E37260B99E8007B09BC /* MessageForWatch.swift */; };
 		493F1A0F25907EB60084B130 /* APIConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493F1A0E25907EB60084B130 /* APIConfigTests.swift */; };
 		4940B38725D5106400ECE39D /* ExponentialProperty+HumanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4940B38625D5106400ECE39D /* ExponentialProperty+HumanReadable.swift */; };
 		4940B38825D5106400ECE39D /* ExponentialProperty+HumanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4940B38625D5106400ECE39D /* ExponentialProperty+HumanReadable.swift */; };
 		4940B38925D5106400ECE39D /* ExponentialProperty+HumanReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4940B38625D5106400ECE39D /* ExponentialProperty+HumanReadable.swift */; };
 		494149ED258B49A1003351AC /* ISO_CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49370B292542AA56009BFE4C /* ISO_CountryCodes.plist */; };
-		494424B62605D682009213DE /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 494424B52605D682009213DE /* SwiftUICharts */; };
 		494A26AF25723CF80022A49E /* Country+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26AE25723CF80022A49E /* Country+Hashable.swift */; };
 		494A26B025723CF80022A49E /* Country+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26AE25723CF80022A49E /* Country+Hashable.swift */; };
 		494A26C025723E230022A49E /* Province+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26BF25723E230022A49E /* Province+Hashable.swift */; };
 		494A26C125723E230022A49E /* Province+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A26BF25723E230022A49E /* Province+Hashable.swift */; };
 		494F8CED257CE1790058857A /* Array+CustomDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494F8CEC257CE1790058857A /* Array+CustomDecodable.swift */; };
 		494F8CEE257CE1790058857A /* Array+CustomDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494F8CEC257CE1790058857A /* Array+CustomDecodable.swift */; };
+		49531DD7260BA60D00DF27DA /* WCSession+send.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49531DD6260BA60D00DF27DA /* WCSession+send.swift */; };
+		49531E68260BB4CE00DF27DA /* WCSession+send.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49531DD6260BA60D00DF27DA /* WCSession+send.swift */; };
+		49531E6F260BB4CF00DF27DA /* WCSession+send.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49531DD6260BA60D00DF27DA /* WCSession+send.swift */; };
+		49531E7D260BB4DB00DF27DA /* MessageForWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493D7E37260B99E8007B09BC /* MessageForWatch.swift */; };
+		49531E7E260BB4DB00DF27DA /* MessageForWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493D7E37260B99E8007B09BC /* MessageForWatch.swift */; };
 		4954F5DE24E7F4D300399145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4954F5C924E7F4D300399145 /* Assets.xcassets */; };
 		4966E0F025A45B7E009D3E8F /* DataManagerWithReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4966E0EF25A45B7E009D3E8F /* DataManagerWithReachability.swift */; };
 		4966E0F125A45B7E009D3E8F /* DataManagerWithReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4966E0EF25A45B7E009D3E8F /* DataManagerWithReachability.swift */; };
@@ -188,11 +196,9 @@
 		4995BB9B2572A6A10098A176 /* Covid19DashboardXUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4995BB9A2572A6A10098A176 /* Covid19DashboardXUITests.swift */; };
 		499A5420255ED68200D1D3D8 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499A541F255ED68200D1D3D8 /* Searchable.swift */; };
 		499F4F7C2605BEA5005EE672 /* CLKComplication+getEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499F4F7B2605BEA5005EE672 /* CLKComplication+getEntry.swift */; };
+		49B89993260F094B0096F6DE /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 49B89992260F094B0096F6DE /* SwiftUICharts */; };
 		49B8E7F725FB8FD200D20564 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 49B8E7F625FB8FD200D20564 /* Reachability */; };
 		49B8E80E25FB97EA00D20564 /* SummaryProvider+ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B8E80D25FB97EA00D20564 /* SummaryProvider+ratio.swift */; };
-		49B8E82325FB9EEF00D20564 /* iOSWatchConnectivitySessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B8E82225FB9EEF00D20564 /* iOSWatchConnectivitySessionDelegate.swift */; };
-		49B8E84425FBA49800D20564 /* watchOSWatchConnectivitySessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B8E84325FBA49800D20564 /* watchOSWatchConnectivitySessionDelegate.swift */; };
-		49B8E85925FBA57E00D20564 /* invalidateWatchOSComplicationTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B8E84B25FBA57400D20564 /* invalidateWatchOSComplicationTimeline.swift */; };
 		49B90EDC25432EB900E89F5D /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EDB25432EB900E89F5D /* CustomButtonStyle.swift */; };
 		49B90EFC2543460100E89F5D /* SummaryProviderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B90EFB2543460100E89F5D /* SummaryProviderDetailView.swift */; };
 		49BFD1F125D50B6B007C8775 /* ExponentialProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BFD1F025D50B6B007C8775 /* ExponentialProperty.swift */; };
@@ -400,6 +406,7 @@
 		491AC4632585E93800674477 /* Double+EulersNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+EulersNumber.swift"; sourceTree = "<group>"; };
 		491AC4692585E9F700674477 /* SharedFunctionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFunctionTests.swift; sourceTree = "<group>"; };
 		491AC46E2585F37800674477 /* TimeInterval+shortDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+shortDescription.swift"; sourceTree = "<group>"; };
+		49206711260E0CBA00A0BA72 /* SharedWCSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedWCSessionDelegate.swift; sourceTree = "<group>"; };
 		49325AE52529B29200A438C4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		49370B1925429832009BFE4C /* CountryProvincesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryProvincesDetailView.swift; sourceTree = "<group>"; };
 		49370B2125429E0B009BFE4C /* ProvinceInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvinceInlineView.swift; sourceTree = "<group>"; };
@@ -410,12 +417,14 @@
 		493C2DF8252383620060BA27 /* Covid19DashboardXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Covid19DashboardXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		493C2DFC252383620060BA27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		493C2E08252383A70060BA27 /* ModelDecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDecodableTests.swift; sourceTree = "<group>"; };
+		493D7E37260B99E8007B09BC /* MessageForWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageForWatch.swift; sourceTree = "<group>"; };
 		493F1A0E25907EB60084B130 /* APIConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfigTests.swift; sourceTree = "<group>"; };
 		4940B38625D5106400ECE39D /* ExponentialProperty+HumanReadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExponentialProperty+HumanReadable.swift"; sourceTree = "<group>"; };
 		4942F2D925299AB100EE2959 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		494A26AE25723CF80022A49E /* Country+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Country+Hashable.swift"; sourceTree = "<group>"; };
 		494A26BF25723E230022A49E /* Province+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Province+Hashable.swift"; sourceTree = "<group>"; };
 		494F8CEC257CE1790058857A /* Array+CustomDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+CustomDecodable.swift"; sourceTree = "<group>"; };
+		49531DD6260BA60D00DF27DA /* WCSession+send.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WCSession+send.swift"; sourceTree = "<group>"; };
 		4954F5C724E7F4D200399145 /* Covid19DashboardXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Covid19DashboardXApp.swift; sourceTree = "<group>"; };
 		4954F5C824E7F4D200399145 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4954F5C924E7F4D300399145 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -492,9 +501,6 @@
 		49B5562E2531F694000D2030 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		49B7D1C12529DB2000AE2B9B /* CountryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryView.swift; sourceTree = "<group>"; };
 		49B8E80D25FB97EA00D20564 /* SummaryProvider+ratio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SummaryProvider+ratio.swift"; sourceTree = "<group>"; };
-		49B8E82225FB9EEF00D20564 /* iOSWatchConnectivitySessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSWatchConnectivitySessionDelegate.swift; sourceTree = "<group>"; };
-		49B8E84325FBA49800D20564 /* watchOSWatchConnectivitySessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchOSWatchConnectivitySessionDelegate.swift; sourceTree = "<group>"; };
-		49B8E84B25FBA57400D20564 /* invalidateWatchOSComplicationTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = invalidateWatchOSComplicationTimeline.swift; sourceTree = "<group>"; };
 		49B90EDB25432EB900E89F5D /* CustomButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyle.swift; sourceTree = "<group>"; };
 		49B90EFB2543460100E89F5D /* SummaryProviderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryProviderDetailView.swift; sourceTree = "<group>"; };
 		49BCE214253199F20099138F /* CountryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryInlineView.swift; sourceTree = "<group>"; };
@@ -551,7 +557,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49B8E7F725FB8FD200D20564 /* Reachability in Frameworks */,
-				494424B62605D682009213DE /* SwiftUICharts in Frameworks */,
+				49B89993260F094B0096F6DE /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,7 +652,6 @@
 			isa = PBXGroup;
 			children = (
 				4954F5D124E7F4D300399145 /* Info.plist */,
-				49B8E84B25FBA57400D20564 /* invalidateWatchOSComplicationTimeline.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -691,7 +696,8 @@
 				4984D9322568140000CDCEA5 /* CovidDashApiDotComJSONDecoder.swift */,
 				49E6DA28258BB68400D9FE49 /* FutureEstimationProvider.swift */,
 				49BFD1F025D50B6B007C8775 /* ExponentialProperty.swift */,
-				49B8E82225FB9EEF00D20564 /* iOSWatchConnectivitySessionDelegate.swift */,
+				493D7E37260B99E8007B09BC /* MessageForWatch.swift */,
+				49206711260E0CBA00A0BA72 /* SharedWCSessionDelegate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -775,6 +781,7 @@
 				491AC4632585E93800674477 /* Double+EulersNumber.swift */,
 				491AC46E2585F37800674477 /* TimeInterval+shortDescription.swift */,
 				496FAAE7258F466B003BD6DC /* Double+daysHumanReadable.swift */,
+				49531DD6260BA60D00DF27DA /* WCSession+send.swift */,
 			);
 			path = ExtensionsNonInternal;
 			sourceTree = "<group>";
@@ -865,7 +872,6 @@
 				49E3E61F25A5A2F50092D1B8 /* SummaryProvider+value.swift */,
 				49B8E80D25FB97EA00D20564 /* SummaryProvider+ratio.swift */,
 				49E3E5EF25A59E670092D1B8 /* ComplicationConstants.swift */,
-				49B8E84325FBA49800D20564 /* watchOSWatchConnectivitySessionDelegate.swift */,
 				49D5A237259EE8F0003C8F00 /* Assets.xcassets */,
 				49D5A23C259EE8F0003C8F00 /* Info.plist */,
 				49D5A23D259EE8F0003C8F00 /* PushNotificationPayload.apns */,
@@ -975,7 +981,7 @@
 			name = "Covid19DashboardX (iOS)";
 			packageProductDependencies = (
 				49B8E7F625FB8FD200D20564 /* Reachability */,
-				494424B52605D682009213DE /* SwiftUICharts */,
+				49B89992260F094B0096F6DE /* SwiftUICharts */,
 			);
 			productName = "Covid19DashboardX (iOS)";
 			productReference = 4954F5CE24E7F4D300399145 /* Covid19DashboardX.app */;
@@ -1098,7 +1104,7 @@
 			mainGroup = 4954F5C124E7F4D200399145;
 			packageReferences = (
 				49B8E7F525FB8FD200D20564 /* XCRemoteSwiftPackageReference "Reachability" */,
-				494424B42605D682009213DE /* XCRemoteSwiftPackageReference "ChartView" */,
+				49B89991260F094B0096F6DE /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = 4954F5CF24E7F4D300399145 /* Products */;
 			projectDirPath = "";
@@ -1182,6 +1188,7 @@
 				498687BA256A2D9400C833AA /* MovingAverage.swift in Sources */,
 				498687D5256A2D9F00C833AA /* Country+Identifiable.swift in Sources */,
 				498687C8256A2D9A00C833AA /* ProvinceMeasurementForDecodingOnly.swift in Sources */,
+				49531E6F260BB4CF00DF27DA /* WCSession+send.swift in Sources */,
 				498687BB256A2D9400C833AA /* DataManager.swift in Sources */,
 				49FF1D4D258533D100B2164F /* String+firstCharUppercased.swift in Sources */,
 				498687B6256A2D9400C833AA /* Province.swift in Sources */,
@@ -1198,6 +1205,7 @@
 				498687D0256A2D9F00C833AA /* Country+Equatable.swift in Sources */,
 				498687DE256A2DA600C833AA /* NetworkError.swift in Sources */,
 				49D9B0AD257BF01D00B80B3E /* GlobalMeasurementForDecodingOnly.swift in Sources */,
+				49531E7D260BB4DB00DF27DA /* MessageForWatch.swift in Sources */,
 				4977E658257CBB1300E4015E /* CustomJSONDecoderProtocol.swift in Sources */,
 				49DF960E2583CBA30076600C /* MockDataManager.swift in Sources */,
 				498687BC256A2D9400C833AA /* CountryHistoryMeasurement.swift in Sources */,
@@ -1257,6 +1265,7 @@
 				498687D1256A2D9F00C833AA /* Province+Searchable.swift in Sources */,
 				498687F8256A2DC100C833AA /* shared.swift in Sources */,
 				49868823256A3BC800C833AA /* DataManagerTests.swift in Sources */,
+				49206713260E0CBA00A0BA72 /* SharedWCSessionDelegate.swift in Sources */,
 				498687DD256A2DA600C833AA /* MeasurementMetric.swift in Sources */,
 				491AC4702585F37800674477 /* TimeInterval+shortDescription.swift in Sources */,
 			);
@@ -1269,7 +1278,6 @@
 				4977E657257CBB1300E4015E /* CustomJSONDecoderProtocol.swift in Sources */,
 				4914F3F4254415EF00CBC521 /* ProvinceSummaryMetricPickerView.swift in Sources */,
 				49DF96142583CBA40076600C /* MockData.swift in Sources */,
-				49B8E85925FBA57E00D20564 /* invalidateWatchOSComplicationTimeline.swift in Sources */,
 				499A5420255ED68200D1D3D8 /* Searchable.swift in Sources */,
 				4986869C2569749700C833AA /* CountryProvincesResponse.swift in Sources */,
 				49DF96132583CBA40076600C /* SpecialCountries.swift in Sources */,
@@ -1284,6 +1292,7 @@
 				498617782585FC5D00C9AF17 /* APIConfig.swift in Sources */,
 				498686FC256994C500C833AA /* GlobalMeasurement.swift in Sources */,
 				497E012B2531FD52006CEF67 /* DataManager.swift in Sources */,
+				49531DD7260BA60D00DF27DA /* WCSession+send.swift in Sources */,
 				49370B1A25429832009BFE4C /* CountryProvincesDetailView.swift in Sources */,
 				491AC4642585E93800674477 /* Double+EulersNumber.swift in Sources */,
 				491022E0257254E600027B68 /* SummaryProviderSquareView.swift in Sources */,
@@ -1293,6 +1302,7 @@
 				49E6DA29258BB68400D9FE49 /* FutureEstimationProvider.swift in Sources */,
 				49FF1D182585285E00B2164F /* CustomCodable.swift in Sources */,
 				4986874D256996B800C833AA /* JSONDecoder.KeyDecodingStrategy+convertFromPascalCase.swift in Sources */,
+				49206712260E0CBA00A0BA72 /* SharedWCSessionDelegate.swift in Sources */,
 				496FAADD258F3D40003BD6DC /* FutureEstimationProviderCaseNumbersIntersectionView.swift in Sources */,
 				49FF1D12258527E200B2164F /* CustomEncodable.swift in Sources */,
 				498687A8256A2B3400C833AA /* DataManager+Equatable.swift in Sources */,
@@ -1338,6 +1348,7 @@
 				49868702256994D900C833AA /* DataRepresentationType.swift in Sources */,
 				4986876E2569977D00C833AA /* Optional<Int>+humanReadable.swift in Sources */,
 				491AC4432585E0CE00674477 /* CustomDecodableError+LocalizedError.swift in Sources */,
+				49531E7E260BB4DB00DF27DA /* MessageForWatch.swift in Sources */,
 				4986873F2569961300C833AA /* Province+Searchable.swift in Sources */,
 				498687242569958800C833AA /* Province+Identifiable.swift in Sources */,
 				49B90EFC2543460100E89F5D /* SummaryProviderDetailView.swift in Sources */,
@@ -1348,7 +1359,6 @@
 				49868736256995FB00C833AA /* Country+Searchable.swift in Sources */,
 				491AC4552585E19600674477 /* BasicMeasurementMetric+HumanReadable.swift in Sources */,
 				49FF1D4C258533D100B2164F /* String+firstCharUppercased.swift in Sources */,
-				49B8E82325FB9EEF00D20564 /* iOSWatchConnectivitySessionDelegate.swift in Sources */,
 				498686842569741900C833AA /* SummaryResponse.swift in Sources */,
 				498686F6256994A800C833AA /* CountryHistoryMeasurement.swift in Sources */,
 				49BFD1F125D50B6B007C8775 /* ExponentialProperty.swift in Sources */,
@@ -1405,6 +1415,7 @@
 				49D5A294259EEA31003C8F00 /* BasicMeasurementMetric+shortDescription.swift in Sources */,
 				49D5A291259EEA31003C8F00 /* Country+Identifiable.swift in Sources */,
 				4966E11725A45E9D009D3E8F /* ProvinceMeasurementForDecodingOnly.swift in Sources */,
+				49206714260E0CBA00A0BA72 /* SharedWCSessionDelegate.swift in Sources */,
 				49D5A29B259EEA31003C8F00 /* CountryHistoryMeasurement+Identifiable.swift in Sources */,
 				49D5A29D259EEA31003C8F00 /* Province+Hashable.swift in Sources */,
 				49D5A232259EE8EF003C8F00 /* NotificationController.swift in Sources */,
@@ -1424,6 +1435,7 @@
 				49D5A22E259EE8EF003C8F00 /* Covid19DashboardXApp.swift in Sources */,
 				49E3E60C25A5A1530092D1B8 /* SummaryProvider+string.swift in Sources */,
 				49D5A2A2259EEA31003C8F00 /* DataManager+Equatable.swift in Sources */,
+				49531E68260BB4CE00DF27DA /* WCSession+send.swift in Sources */,
 				49D5A295259EEA31003C8F00 /* Country+Searchable.swift in Sources */,
 				49D5A26E259EEA16003C8F00 /* SpecialCountries.swift in Sources */,
 				4966E13C25A45ED2009D3E8F /* shared.swift in Sources */,
@@ -1441,7 +1453,6 @@
 				49D5A297259EEA31003C8F00 /* Province+Identifiable.swift in Sources */,
 				49D5A264259EE978003C8F00 /* UserDefaultsKeys.swift in Sources */,
 				49D5A288259EEA29003C8F00 /* GlobalMeasurement.swift in Sources */,
-				49B8E84425FBA49800D20564 /* watchOSWatchConnectivitySessionDelegate.swift in Sources */,
 				49D5A289259EEA29003C8F00 /* FutureEstimationProvider.swift in Sources */,
 				49D5A26B259EEA16003C8F00 /* Constants.swift in Sources */,
 				49D5A277259EEA1D003C8F00 /* APIConfig.swift in Sources */,
@@ -1466,6 +1477,7 @@
 				49D5A234259EE8EF003C8F00 /* NotificationView.swift in Sources */,
 				49BFD1F325D50B6B007C8775 /* ExponentialProperty.swift in Sources */,
 				49D5A299259EEA31003C8F00 /* ProvinceMeasurementForDecodingOnly+Equatable.swift in Sources */,
+				493D7E38260B99E8007B09BC /* MessageForWatch.swift in Sources */,
 				4966E12E25A45ECC009D3E8F /* String+firstCharLowercased.swift in Sources */,
 				4966E11825A45E9D009D3E8F /* SummaryResponse.swift in Sources */,
 				49D5A256259EE95C003C8F00 /* MockData.swift in Sources */,
@@ -1840,7 +1852,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 7.2;
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
 			};
 			name = Debug;
 		};
@@ -1861,7 +1873,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 7.2;
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
 			};
 			name = Release;
 		};
@@ -1983,12 +1995,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		494424B42605D682009213DE /* XCRemoteSwiftPackageReference "ChartView" */ = {
+		49B89991260F094B0096F6DE /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppPear/ChartView";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.4;
+				minimumVersion = 1.5.5;
 			};
 		};
 		49B8E7F525FB8FD200D20564 /* XCRemoteSwiftPackageReference "Reachability" */ = {
@@ -2002,9 +2014,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		494424B52605D682009213DE /* SwiftUICharts */ = {
+		49B89992260F094B0096F6DE /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 494424B42605D682009213DE /* XCRemoteSwiftPackageReference "ChartView" */;
+			package = 49B89991260F094B0096F6DE /* XCRemoteSwiftPackageReference "ChartView" */;
 			productName = SwiftUICharts;
 		};
 		49B8E7F625FB8FD200D20564 /* Reachability */ = {
